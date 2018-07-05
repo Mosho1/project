@@ -10,6 +10,8 @@ const history = require('connect-history-api-fallback');
 const path = require('path');
 const webpackConfig = require('./webpack.config');
 const opn = require('opn');
+const { spawn } = require('child_process');
+
 
 /**
  * Always dev enviroment when running webpack dev server
@@ -26,23 +28,48 @@ const env = {
 
 const devServerConfig = {};
 
-try {
-  const app = express();
-  const compiler = webpack(webpackConfig(env));
-  const devMiddleware = WebpackDevMiddleware(compiler, devServerConfig);
-  const hotMiddleware = WebpackHotMiddleware(compiler);
-  app.use(history());
-  app.use(devMiddleware);
-  app.use(hotMiddleware);
-  app.listen(port, 'localhost', err => {
-    if (err) {
-      console.error(err);
-    }
-    console.log(`Server listening to port ${port}`);
-    opn(`http://localhost:${port}`);
+const cssWatch = spawn('npm.cmd', ['run', 'css:watch']);
+const log = data => console.log(`[tcm] ${data}`);
+cssWatch.stdout.on('data', log);
+cssWatch.stderr.on('data', log);
+
+const app = express();
+const compiler = webpack(webpackConfig(env));
+const devMiddleware = WebpackDevMiddleware(compiler, devServerConfig);
+const hotMiddleware = WebpackHotMiddleware(compiler);
+app.use(history());
+app.use(devMiddleware);
+app.use(hotMiddleware);
+app.listen(port, 'localhost', err => {
+  if (err) {
+    console.error(err);
+  }
+  console.log(`Server listening to port ${port}`);
+  opn(`http://localhost:${port}`);
+});
+
+var WebSocketServer = require("ws").Server;
+var wss = new WebSocketServer({ port: 4001 });
+
+var connections = {};
+
+wss.on("connection", function connection(ws) {
+  var uuid = "" + Math.random()
+  connections[uuid] = ws;
+  ws.on("message", function incoming(message) {
+    message.sender = ws.uuid;
+    broadcast(uuid, message);
   });
-} catch (e) {
-  console.error(e);
+});
+
+function broadcast(sender, message) {
+  // console.log("\n" + message)
+  for (var key in connections)
+    if (key !== sender) {
+      try {
+        connections[key].send(message);
+      } catch (e) {
+        delete connections[key];
+      }
+    }
 }
-
-

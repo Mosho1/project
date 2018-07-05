@@ -17,16 +17,11 @@ module.exports = (env) => {
     entry: {
       app: removeEmpty([
         ifDev(`webpack-hot-middleware/client?http://localhost:${env.port}`),
-        path.join(__dirname, '../src/index.ts')
+        './src/index.ts'
       ]),
     },
 
     resolve: {
-      /*
-       * An array of extensions that should be used to resolve modules.
-       *
-       * See: http://webpack.github.io/docs/configuration.html#resolve-extensions
-       */
       extensions: ['.ts', '.tsx', '.js', '.json'],
     },
     output: {
