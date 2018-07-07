@@ -17,6 +17,9 @@ export const Arrow = pouch.model('Arrow', {
                 self.input.x,
                 self.input.y,
             );
+        },
+        get isExec() {
+            return self.input.isExec;
         }
     };
 });

@@ -26,19 +26,41 @@ class SocketView extends Component<{ socket: SocketType }> {
         e.cancelBubble = true;
     };
 
+    renderExecSocket() {
+        const { x, y, arrows } = this.props.socket;
+
+        return <Rect
+            x={x - 6}
+            y={y - 6}
+            height={12}
+            width={12}
+            fill={arrows.length > 0 ? '#dacfcf' : 'black'}
+            stroke={'#dacfcf'}
+            onMouseDown={this.onMouseDown}
+            onMouseUp={this.onMouseUp}
+            onClick={this.onClick}
+        />
+    }
+
+    renderSocket() {
+        const { x, y, arrows } = this.props.socket;
+
+        return <Circle
+            x={x}
+            y={y}
+            radius={6}
+            fill={arrows.length > 0 ? 'green' : 'black'}
+            stroke={'green'}
+            onMouseDown={this.onMouseDown}
+            onMouseUp={this.onMouseUp}
+            onClick={this.onClick}
+        />
+    }
+
     render() {
-        const { x, y, name, socketType, arrows } = this.props.socket;
+        const { x, y, name, socketType, isExec } = this.props.socket;
         return <Group>
-            <Circle
-                x={x}
-                y={y}
-                radius={6}
-                fill={arrows.length > 0 ? 'green' : 'black'}
-                stroke={'green'}
-                onMouseDown={this.onMouseDown}
-                onMouseUp={this.onMouseUp}
-                onClick={this.onClick}
-            />
+            {isExec ? this.renderExecSocket() : this.renderSocket()}
             <Text
                 x={x + (socketType === 'input' ? 15 : -40)}
                 y={y - 5}
@@ -96,6 +118,12 @@ class BoxView extends Component<{ box: BoxType }> {
     //     })
     // };
 
+    socketView = (s: SocketType) =>
+        <SocketView
+            socket={s}
+            key={s.id}
+        />
+
     render() {
         const { box } = this.props;
         return (
@@ -118,18 +146,7 @@ class BoxView extends Component<{ box: BoxType }> {
                     onDragStart={this.handleDragStart}
                     onClick={this.handleClick}
                 />
-                {box.leftSockets.map((s) =>
-                    <SocketView
-                        socket={s}
-                        key={s.id}
-                    />
-                )}
-                {box.rightSockets.map(s =>
-                    <SocketView
-                        socket={s}
-                        key={s.id}
-                    />
-                )}
+                {box.sockets.map(this.socketView)}
                 {/* {box.isSelected && <Transformer onClick={e => e.cancelBubble = true} ref={this.attachTransformer} />} */}
             </Group>
         );

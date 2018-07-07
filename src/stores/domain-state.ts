@@ -20,6 +20,8 @@ export const Store = pouch.store('Store', {
             const box = Box.create({ name, x, y, sockets: [] });
             box.addSocket('input');
             box.addSocket('output');
+            box.addSocket('execInput');
+            box.addSocket('execOutput');
             self.boxes.put(box);
             return box;
         };
@@ -68,10 +70,10 @@ export const Store = pouch.store('Store', {
             self.draggedArrow = null;
             if (self.draggedFromSocket &&
                 socket &&
-                socket.socketType !== self.draggedFromSocket.socketType &&
+                socket.isCompatibleWith(self.draggedFromSocket) &&
                 !hasArrow(self.draggedFromSocket, socket)) {
-                const input = socket.socketType === 'input' ? socket : self.draggedFromSocket;
-                const output = socket.socketType === 'output' ? socket : self.draggedFromSocket;
+                const input = socket.isInput ? socket : self.draggedFromSocket;
+                const output = !socket.isInput ? socket : self.draggedFromSocket;
                 if (input.arrows.length === 0) {
                     self.arrows.put(Arrow.create({ input, output }));
                 }

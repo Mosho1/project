@@ -25,10 +25,10 @@ class Sidebar extends Component {
         return selection ? (
             <div className={`${styles.sidebar} ${styles.sidebarOpen}`}>
                 inputs: <button onClick={this.onAddSocket('input')}>+</button>
-                {selection.leftSockets.map(this.getSocketInput)}
+                {selection.inputs.map(this.getSocketInput)}
                     < hr />
                 outputs: <button onClick={this.onAddSocket('output')}>+</button>
-                {selection.rightSockets.map(this.getSocketInput)}
+                {selection.outputs.map(this.getSocketInput)}
                 {/* <input onChange={this.onChange} value={selection.name} /> */}
             </div>
         ) : (

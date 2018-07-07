@@ -29,7 +29,7 @@ class Canvas extends Component<any> {
                         <Line
                             key={a._id}
                             points={a.points}
-                            stroke="green"
+                            stroke={a.isExec ? '#dacfcf' : 'green'}
                             bezier
                         />
                         // </Group> 

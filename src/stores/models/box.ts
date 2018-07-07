@@ -1,6 +1,6 @@
 import { types, getParent, hasParent } from 'mobx-state-tree'
 import { pouch } from '../utils/pouchdb-model';
-import { Socket } from './socket';
+import { Socket, SocketTypeEnum } from './socket';
 import { Store } from '../domain-state';
 
 interface BoxEditableProps {
@@ -24,12 +24,19 @@ export const Box = pouch.model('Box',
         get store(): typeof Store.Type {
             return getParent(self, 2);
         },
-        get leftSockets() {
+        get inputs() {
             return self.sockets.filter(({ socketType }) => socketType === 'input');
         },
-        get rightSockets() {
+        get outputs() {
             return self.sockets.filter(({ socketType }) => socketType === 'output');
         },
+        get execInputs() {
+            return self.sockets.filter(({ socketType }) => socketType === 'execInput');
+        },
+        get execOutputs() {
+            return self.sockets.filter(({ socketType }) => socketType === 'execOutput');
+        },
+
     }))
     .views(self => ({
         get isSelected() {
@@ -37,7 +44,10 @@ export const Box = pouch.model('Box',
             return self.store.selection === self
         },
         get height() {
-            return 50 + Math.max(self.leftSockets.length, self.rightSockets.length) * 30;
+            return 50 + Math.max(
+                self.execInputs.length + self.inputs.length,
+                self.execOutputs.length + self.outputs.length)
+                * 30;
         }
     }))
     .actions(self => ({
@@ -48,7 +58,7 @@ export const Box = pouch.model('Box',
         setProps(props: BoxEditableProps) {
             Object.assign(self, props);
         },
-        addSocket(type: 'input' | 'output') {
+        addSocket(type: SocketTypeEnum) {
             const socket = Socket.create({ socketType: type });
             self.sockets.push(socket);
         }
