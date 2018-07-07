@@ -8,8 +8,8 @@ import {
     applyAction
 } from "mobx-state-tree"
 
-let subscription
-export default function syncStoreWithBackend(socket, store) {
+let subscription: any;
+export default function syncStoreWithBackend(socket: any, store: any) {
     // === SYNC PATCHES (recommended)
     // subscription = onPatch(store, (data) => {
     //     socketSend(data)
@@ -33,17 +33,17 @@ export default function syncStoreWithBackend(socket, store) {
         socketSend(data)
     })
 
-    onSocketMessage((data) => {
+    onSocketMessage((data: any) => {
         applySnapshot(store, data)
     })
 
     let isHandlingMessage = false
-    function socketSend(data) {
+    function socketSend(data: any) {
         if (!isHandlingMessage) socket.send(JSON.stringify(data))
     }
 
-    function onSocketMessage(handler) {
-        socket.onmessage = event => {
+    function onSocketMessage(handler: any) {
+        socket.onmessage = (event: any) => {
             isHandlingMessage = true
             handler(JSON.parse(event.data))
             isHandlingMessage = false

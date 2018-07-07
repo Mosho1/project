@@ -1,0 +1,114 @@
+import { toJS, runInAction, values } from "mobx"
+import { isStateTreeNode, getIdentifier, onPatch, types, getSnapshot, applySnapshot, getParent, hasParent, addMiddleware, onAction, onSnapshot, resolvePath, Snapshot, IModelType, IType, getType, IStateTreeNode } from "mobx-state-tree"
+import { randomUuid } from "../utils"
+import PouchDB from 'pouchdb';
+import { IModelProperties } from 'mobx-state-tree/dist/types/complex-types/model';
+import { throttle, groupBy, mapKeys, mapValues } from 'lodash';
+import { IdentifierType, toJSON } from 'mobx-state-tree/dist/internal';
+
+PouchDB.plugin(require('./upsert.js'));
+
+export class MSTPouch<T extends { type: string } = { type: string }> {
+    db: PouchDB.Database<T>;
+    updates: { [index: string]: IStateTreeNode } = {};
+    finishedLoading = false;
+    constructor({ name = 'store', saveDelay = 1000 } = {}) {
+        this.db = new PouchDB<T>(name);
+        this.queueUpdate = throttle(this.queueUpdate, saveDelay, { leading: false });
+//        window['db'] = this.db;
+    }
+
+    treeNodeToJSON = (value: any) => {
+        if (isStateTreeNode(value)) {
+            return (value as any).toJSON();
+        }
+        return value;
+    };
+
+    queueUpdate = () => {
+        const updatesCopy: any = mapValues(this.updates, this.treeNodeToJSON);
+        this.updates = {};
+        console.log('saving...', updatesCopy);
+        for (let k in updatesCopy) {
+            this.db.upsert(k, doc => Object.assign(doc, updatesCopy[k]));
+        }
+    };
+
+    update = (id: string, data: any) => {
+        if (this.finishedLoading) {
+            this.updates[id] = data;
+            this.queueUpdate();
+        }
+    };
+
+    model<T = {}>(name: string, properties?: IModelProperties<T>) {
+        type S = T & { _id: string, type: string };
+
+        const newProperties = Object.assign({
+            _id: types.optional<string, string>(types.identifier(), randomUuid) as any as string,
+            type: name,
+        }, properties as T) as S;
+
+        const model = types.model<S>(name, newProperties);
+
+        return model.actions(self => {
+            let dispose: () => void = () => null;
+            const afterCreate = () => {
+                this.update(self._id, self);
+                dispose = onSnapshot(self, _ => {
+                    this.update(self._id, self);
+                });
+            };
+            const beforeDestroy = () => {
+                this.update(self._id, { _deleted: true });
+                dispose();
+            };
+
+            return {
+                afterCreate,
+                beforeDestroy
+            };
+        });
+    }
+
+    store<T = {}>(name: string, properties?: IModelProperties<T>) {
+
+        const model = types.model(name, properties);
+
+        let typeMap: {[index: string]: string} = {};
+        for (const k of Object.keys(model.properties)) {
+            const propType: any = model.properties[k];
+            if (propType.subType) {
+                typeMap[propType.subType.name] = k;
+            }
+        }
+
+        return model
+            .actions(self => {
+                const setData = (data: any) => {
+                    Object.assign(self, data);
+                };
+
+                return {
+                    setData,
+                };
+            })
+            .actions(self => {
+                const afterCreate = () => {
+                    this.db.allDocs({ include_docs: true }).then(docs => {
+                        const byType = groupBy(docs.rows.map(r => r.doc), doc => doc!.type);
+                        const data: {[index: string]: any} = {};
+                        for (let k in byType) {
+                            data[typeMap[k]] = mapKeys(byType[k], v => v!._id);
+                        }
+                        self.setData(data);
+                        this.finishedLoading = true;
+                    });
+                };
+
+                return {
+                    afterCreate
+                };
+            });
+    }
+}

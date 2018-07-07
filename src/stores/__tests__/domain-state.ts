@@ -2,7 +2,7 @@ import { getSnapshot, applyAction, clone } from "mobx-state-tree"
 import { Box } from "../domain-state"
 
 test("it should be able to move boxes - 1", () => {
-    var box = Box.create({ x: 100, y: 100, id: "1", name: "test" })
+    var box = Box.create({ x: 100, y: 100, _id: "1", name: "test" })
 
     box.move(23, 10)
     expect(getSnapshot(box)).toMatchSnapshot()
@@ -12,7 +12,7 @@ test("it should be able to move boxes - 1", () => {
 })
 
 test("it should be able to move boxes - 2", () => {
-    const box = Box.create({ x: 100, y: 100, id: "1", name: "test" })
+    const box = Box.create({ x: 100, y: 100, _id: "1", name: "test" })
     applyAction(box, [{ name: "move", args: [5, 5] }, { name: "move", args: [3, 2] }])
-    expect(box.toJSON()).toMatchSnapshot()
+    expect(box.toJSON!()).toMatchSnapshot()
 })

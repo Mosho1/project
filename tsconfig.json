@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "target": "es6",
-    "module": "commonjs",
+    "module": "esnext",
     "moduleResolution": "node",
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
@@ -11,7 +11,7 @@
     "jsx": "react",
     "noEmitHelpers": true,
     "importHelpers": true,
-    "strictNullChecks": false,
+    "strict": true,
     "lib": [
       "dom",
       "es6"

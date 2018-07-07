@@ -1,103 +1,171 @@
-import { runInAction, values } from "mobx"
-import { resolvePath, onPatch, types, getSnapshot, applySnapshot, getParent, hasParent } from "mobx-state-tree"
+import { toJS, runInAction, values } from 'mobx'
+import { onPatch, types, getSnapshot, applySnapshot, getParent, hasParent, addMiddleware, onAction, onSnapshot, resolvePath } from 'mobx-state-tree'
+import PouchDB from 'pouchdb';
+import { MSTPouch } from './pouchdb-model';
 
-import { randomUuid } from "../utils"
+const pouch = new MSTPouch();
 
-export const Box = types
-    .model("Box", {
-        id: types.identifier(),
-        name: "hal",
-        x: 0,
-        y: 0
-    })
+export const Socket = pouch.model('Socket', {
+
+});
+
+interface BoxEditableProps {
+    x?: number;
+    y?: number;
+    width?: number;
+    height?: number;
+    scaleX?: number;
+    scaleY?: number;
+}
+
+export const Box = pouch.model('Box', {
+    name: 'hal',
+    x: 0,
+    y: 0,
+    width: 150,
+    height: 70,
+    leftSockets: types.array(Socket),
+    rightSockets: types.array(Socket)
+})
     .views(self => ({
-        get width() {
-            return self.name.length * 15
-        },
         get isSelected() {
             if (!hasParent(self)) return false
             return getParent(self, 2).selection === self
         }
     }))
     .actions(self => ({
-        move(dx, dy) {
-            self.x += dx
-            self.y += dy
+        move(dx: number, dy: number) {
+            self.x += dx;
+            self.y += dy;
         },
-        setName(newName) {
-            self.name = newName
-        }
+        setProps(props: BoxEditableProps) {
+            Object.assign(self, props);
+        },
     }))
 
-export const Arrow = types.model("Arrow", {
-    id: types.identifier(),
+export const Arrow = pouch.model('Arrow', {
     from: types.reference(Box),
     to: types.reference(Box)
-})
+});
 
-export const Store = types
-    .model("Store", {
-        boxes: types.map(Box),
-        arrows: types.array(Arrow),
-        selection: types.maybe(types.reference(Box))
-    })
+const calculateBezierPoints = ({ startX, startY, endX, endY }: {[index: string]: number}) => {
+    return [
+        startX,
+        startY,
+        startX + (endX - startX) / 2,
+        startY,
+        startX + (endX - startX) / 2,
+        endY,
+        endX,
+        endY,
+    ]
+};
+
+const DraggedArrow = types.model('DraggedArrow', {
+    startX: types.number,
+    startY: types.number,
+    endX: types.number,
+    endY: types.number,
+}).views(self => {
+    return {
+        get points() {
+            return calculateBezierPoints(self);
+        }
+    };
+}).actions(self => {
+    const start = (x: number, y: number) => {
+        self.startX = x;
+        self.startY = y;
+    };
+
+    const end = (x: number, y: number) => {
+        self.endX = x;
+        self.endY = y;
+    };
+
+    return {
+        start, end
+    };
+});
+
+export const Store = pouch.store('Store', {
+    boxes: types.map(Box),
+    arrows: types.map(Arrow),
+    selection: types.maybe(types.reference(Box)),
+    draggedArrow: types.maybe(DraggedArrow)
+})
     .actions(self => {
-        const addBox = (name, x, y) => {
-            const box = Box.create({ name, x, y, id: randomUuid() })
+        const addBox = (name: string, x: number, y: number) => {
+            const leftSockets = [Socket.create()];
+            const rightSockets = [Socket.create()];
+            const box = Box.create({ name, x, y, leftSockets, rightSockets })
             self.boxes.put(box)
             return box
         };
-        const addArrow = (from, to) => {
-            self.arrows.push({ id: randomUuid(), from, to })
+        const addArrow = (from: string, to: string) => {
+            self.arrows.put(Arrow.create({ from, to }));
         };
-        const setSelection = (selection) => {
-            self.selection = selection
+        const setSelection = (selection: null | typeof Box.Type) => {
+            self.selection = selection;
         };
-        const createBox = (name, x, y, source) => {
+        const deleteBox = (id: string) => {
+            const arrowsToDelete = [];
+            for (const arrow of self.arrows.values()) {
+                if (arrow.from._id === id || arrow.to._id === id) {
+                    arrowsToDelete.push(arrow._id);
+                }
+            }
+            for (const id of arrowsToDelete) {
+                self.arrows.delete(id);
+            }
+            self.boxes.delete(id);
+        };
+        const createBox = (name: string, x: number, y: number, source: null | typeof Box.Type) => {
             const box = addBox(name, x, y)
             setSelection(box)
-            if (source) addArrow(source.id, box.id)
+            if (source) addArrow(source._id, box._id)
+        };
+        const startDragArrow = (x: number, y: number) => {
+            self.draggedArrow = DraggedArrow.create({ startX: x, startY: y, endX: x + 10, endY: y });
+        };
+        const moveDragArrow = (x: number, y: number) => {
+            if (self.draggedArrow) {
+                self.draggedArrow.end(x, y);
+            }
+        };
+        const endDragArrow = () => {
+            self.draggedArrow = null;
         };
 
         return {
             addBox,
             addArrow,
             setSelection,
-            createBox
+            createBox,
+            deleteBox,
+            startDragArrow,
+            moveDragArrow,
+            endDragArrow
         };
     })
+
+
 
 /*
     The store that holds our domain: boxes and arrows
 */
 
 const defaults = {
-    boxes: {
-        "ce9131ee-f528-4952-a012-543780c5e66d": {
-            id: "ce9131ee-f528-4952-a012-543780c5e66d",
-            name: "Rotterda",
-            x: 100,
-            y: 100
-        },
-        "14194d76-aa31-45c5-a00c-104cc550430f": {
-            id: "14194d76-aa31-45c5-a00c-104cc550430f",
-            name: "Bratislava",
-            x: 650,
-            y: 300
-        }
-    },
-    arrows: [
-        {
-            id: "7b5d33c1-5e12-4278-b1c5-e4ae05c036bd",
-            from: "ce9131ee-f528-4952-a012-543780c5e66d",
-            to: "14194d76-aa31-45c5-a00c-104cc550430f"
-        }
-    ],
+    boxes: {},
+    arrows: {},
     selection: null
 };
 
-const getStore = (data) => Store.create(data);
+const getStore = (data: typeof Store.SnapshotType) => Store.create(data);
+
 export const store = getStore(defaults);
+
+//window['store'] = store;
 
 /**
     Save / Restore the state of the store while self module is hot reloaded
@@ -110,3 +178,5 @@ if (module.hot) {
         data.store = getSnapshot(store)
     })
 }
+
+export type BoxType = typeof Box.Type;

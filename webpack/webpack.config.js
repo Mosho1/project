@@ -12,7 +12,7 @@ module.exports = (env) => {
   const removeEmpty = array => array.filter(p => !!p);
   const mode = env.prod ? 'production' : 'development';
   return {
-    devtool: ifDev('source-map'),
+    devtool: ifDev('cheap-module-source-map'),
     mode,
     entry: {
       app: removeEmpty([

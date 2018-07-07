@@ -4,8 +4,6 @@ body {
   background-color: #2d3e4e
 }
 
-.app {}
-
 .box {
   padding: 20px 0;
   border: 2px solid white;
@@ -25,8 +23,6 @@ body {
   -ms-user-select: none;
   user-select: none;
 }
-
-.arrow {}
 
 .boxSelected {
   background-color: #f99b1d;

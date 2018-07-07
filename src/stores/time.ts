@@ -1,7 +1,7 @@
 import { store } from "./domain-state"
 import { applySnapshot, onSnapshot } from "mobx-state-tree"
 
-var states = []
+var states: any = []
 var currentFrame = -1
 
 onSnapshot(store, snapshot => {
