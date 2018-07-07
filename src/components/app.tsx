@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { observer } from "mobx-react";
 import DevTools from "mobx-react-devtools";
 
+import Sidebar from "./sidebar";
 import Canvas from './canvas';
 
 class App extends Component<{ getStore: Function }> {
@@ -17,6 +18,7 @@ class App extends Component<{ getStore: Function }> {
         return (<div>
             <DevTools />
             <Canvas />
+            <Sidebar />
         </div>
         );
     }

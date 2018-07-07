@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { inject } from 'mobx-react';
 import { store } from '../stores/domain-state';
 
 export class Component<T = any> extends React.Component<T, any> {

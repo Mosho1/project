@@ -1,10 +1,8 @@
-import { toJS, runInAction, values } from "mobx"
-import { isStateTreeNode, getIdentifier, onPatch, types, getSnapshot, applySnapshot, getParent, hasParent, addMiddleware, onAction, onSnapshot, resolvePath, Snapshot, IModelType, IType, getType, IStateTreeNode } from "mobx-state-tree"
-import { randomUuid } from "../utils"
+import { isStateTreeNode, types, onSnapshot, IStateTreeNode } from "mobx-state-tree"
+import { randomUuid } from "../utils/utils"
 import PouchDB from 'pouchdb';
 import { IModelProperties } from 'mobx-state-tree/dist/types/complex-types/model';
 import { throttle, groupBy, mapKeys, mapValues } from 'lodash';
-import { IdentifierType, toJSON } from 'mobx-state-tree/dist/internal';
 
 PouchDB.plugin(require('./upsert.js'));
 
@@ -15,7 +13,7 @@ export class MSTPouch<T extends { type: string } = { type: string }> {
     constructor({ name = 'store', saveDelay = 1000 } = {}) {
         this.db = new PouchDB<T>(name);
         this.queueUpdate = throttle(this.queueUpdate, saveDelay, { leading: false });
-//        window['db'] = this.db;
+        (window as any)['db'] = this.db;
     }
 
     treeNodeToJSON = (value: any) => {
@@ -112,3 +110,5 @@ export class MSTPouch<T extends { type: string } = { type: string }> {
             });
     }
 }
+
+export const pouch = new MSTPouch();

@@ -151,3 +151,8 @@ declare module 'routes' {
 
   export const Router: RouterConstructor;
 }
+
+interface KonvaEvent {
+  evt: MouseEvent,
+  cancelBubble: boolean;
+}

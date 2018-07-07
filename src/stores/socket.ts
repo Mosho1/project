@@ -2,10 +2,6 @@
 import {
     onSnapshot,
     applySnapshot,
-    onPatch,
-    applyPatch,
-    onAction,
-    applyAction
 } from "mobx-state-tree"
 
 let subscription: any;
@@ -55,7 +51,7 @@ export default function syncStoreWithBackend(socket: any, store: any) {
  * Clean up old subscription when switching communication system
  */
 if (module.hot) {
-    module.hot.dispose(data => {
-        subscription()
+    module.hot.dispose(() => {
+        subscription();
     })
 }

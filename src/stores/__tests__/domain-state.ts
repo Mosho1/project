@@ -1,5 +1,5 @@
-import { getSnapshot, applyAction, clone } from "mobx-state-tree"
-import { Box } from "../domain-state"
+import { getSnapshot, applyAction } from "mobx-state-tree"
+import { Box } from '../models/box';
 
 test("it should be able to move boxes - 1", () => {
     var box = Box.create({ x: 100, y: 100, _id: "1", name: "test" })

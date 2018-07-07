@@ -3,12 +3,8 @@ import { values } from "mobx";
 import { observer } from "mobx-react";
 
 import BoxView from "./box-view";
-import Sidebar from "./sidebar";
-import * as styles from './styles/index.css';
-import FunStuff from "./fun-stuff";
 import { Component } from './component';
-import { Layer, Stage, Rect, Line } from 'react-konva';
-
+import { Layer, Stage, Line } from 'react-konva';
 class Canvas extends Component<any> {
     render() {
         const { store } = this;
@@ -22,42 +18,36 @@ class Canvas extends Component<any> {
                 onMouseUp={this.onMouseUp}
             >
                 <Layer>
-                    {values(store.boxes).map(b => <BoxView key={b._id} box={b} />)}
                     {draggedArrow && <Line
                         points={draggedArrow.points}
-                        fill="black"
                         stroke="black"
                         bezier
                     />}
+                    {values(store.arrows).map(a =>
+                        // <Group key={a._id}>
+                        // {chunk<number>(a.points, 2).map(x => <Circle fill="black" x={x[0]} y={x[1]} radius={5}/>)}
+                        <Line
+                            key={a._id}
+                            points={a.points}
+                            stroke="green"
+                            bezier
+                        />
+                        // </Group> 
+                    )}
+                    {values(store.boxes).map(b => <BoxView key={b._id} box={b} />)}
                 </Layer>
             </Stage>
 
-            // <div className={styles.app}>
-            //     <div className={styles.canvas} onClick={this.onCanvasClick}>
-            //         <svg>
-            //             {values(store.arrows).map(arrow => <ArrowView arrow={arrow} key={arrow._id} />)}
-            //         </svg>
-            //         {values(store.boxes).map(box => (
-            //             <BoxView box={box} key={box._id} />
-            //         ))}
-            //     </div>
-            //     <Sidebar />
-            //     <FunStuff />
-            // </div>
         );
     }
 
-    //    onMouseDown = ({ evt }) => {
-    //        this.store.startDragArrow(evt.clientX, evt.clientY);
-    //    };
-    //
     onMouseUp = () => {
         this.store.endDragArrow();
     };
 
     onMouseMove = ({ evt }: any) => {
         if (this.store.draggedArrow) {
-            this.store.draggedArrow.end(evt.clientX, evt.clientY);
+            this.store.moveDragArrow(evt.clientX, evt.clientY);
         }
     };
 
@@ -66,7 +56,7 @@ class Canvas extends Component<any> {
         if (e.ctrlKey === false) {
             store.setSelection(null);
         } else {
-            store.createBox("Hi.", e.clientX - 50, e.clientY - 20, store.selection);
+            store.createBox("Hi.", e.clientX - 50, e.clientY - 20);
         }
     }
 }

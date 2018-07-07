@@ -1,7 +1,7 @@
 import ReactDOM from "react-dom"
 import React from "react"
 import { observable } from "mobx"
-import { observer, Provider } from "mobx-react"
+import { observer } from "mobx-react"
 
 import { store } from "./stores/domain-state"
 import App from "./components/app"
