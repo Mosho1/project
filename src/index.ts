@@ -5,7 +5,7 @@ import { observer } from "mobx-react"
 
 import { store } from "./stores/domain-state"
 import App from "./components/app"
-import syncStoreWithBackend from "./stores/socket"
+import syncStoreWithBackend from "./stores/utils/socket"
 
 const socket = new WebSocket("ws://localhost:4001")
 
@@ -37,9 +37,9 @@ if (module.hot) {
         prepareStore(require('./stores/domain-state').store);
         render();
     });
-    module.hot.accept("./stores/socket", function () {
+    module.hot.accept("./stores/utils/socket", function () {
         // new socket sync implementation
-        require("./stores/socket").default(socket, storeInstance.get())
+        require("./stores/utils/socket").default(socket, storeInstance.get())
     });
     module.hot.accept('./components/app', function () {
         render();
