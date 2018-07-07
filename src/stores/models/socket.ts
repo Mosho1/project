@@ -6,7 +6,7 @@ import { Box, BoxType } from './box';
 
 export const Socket = types.model('Socket', {
     id: types.optional<string, string>(types.identifier(), randomUuid) as any as string,
-    socketType: types.union(types.literal('input'), types.literal('output')),
+    socketType: types.enumeration('socketType', ['input', 'output']),
     name: types.optional(types.string, '')
 })
     .views(self => ({
