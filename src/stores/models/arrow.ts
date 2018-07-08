@@ -3,8 +3,6 @@ import { Socket } from './socket';
 import { calculateBezierPoints } from '../utils/utils';
 import { pouch } from '../utils/pouchdb-model';
 
-
-
 export const Arrow = pouch.model('Arrow', {
     input: types.reference(Socket),
     output: types.reference(Socket)
@@ -23,3 +21,5 @@ export const Arrow = pouch.model('Arrow', {
         }
     };
 });
+
+export type ArrowType = typeof Arrow.Type;

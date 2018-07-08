@@ -1,28 +1,33 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`it should be able to move boxes - 1 1`] = `
-Object {
-  "id": "1",
-  "name": "test",
-  "x": 123,
-  "y": 110,
-}
-`;
+exports[`addArrow: execInput,execInput 1`] = `false`;
 
-exports[`it should be able to move boxes - 1 2`] = `
-Object {
-  "id": "1",
-  "name": "test",
-  "x": 145,
-  "y": 97,
-}
-`;
+exports[`addArrow: execInput,execOutput 1`] = `true`;
 
-exports[`it should be able to move boxes - 2 1`] = `
-Object {
-  "id": "1",
-  "name": "test",
-  "x": 108,
-  "y": 107,
-}
-`;
+exports[`addArrow: execInput,input 1`] = `false`;
+
+exports[`addArrow: execInput,output 1`] = `false`;
+
+exports[`addArrow: execOutput,execInput 1`] = `true`;
+
+exports[`addArrow: execOutput,execOutput 1`] = `false`;
+
+exports[`addArrow: execOutput,input 1`] = `false`;
+
+exports[`addArrow: execOutput,output 1`] = `false`;
+
+exports[`addArrow: input,execInput 1`] = `false`;
+
+exports[`addArrow: input,execOutput 1`] = `false`;
+
+exports[`addArrow: input,input 1`] = `false`;
+
+exports[`addArrow: input,output 1`] = `true`;
+
+exports[`addArrow: output,execInput 1`] = `false`;
+
+exports[`addArrow: output,execOutput 1`] = `false`;
+
+exports[`addArrow: output,input 1`] = `true`;
+
+exports[`addArrow: output,output 1`] = `false`;

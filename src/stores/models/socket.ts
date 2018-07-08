@@ -1,17 +1,18 @@
 import { values } from 'mobx'
-import { types, getParentOfType } from 'mobx-state-tree'
+import { types, getParent } from 'mobx-state-tree'
 import { randomUuid } from '../utils/utils';
-import { Store } from '../domain-state';
-import { Box, BoxType } from './box';
+import { modelTypes } from './index';
 
 const socketType = types.enumeration('socketType', [
     'input',
     'output',
     'execInput',
-    'execOutput'
+    'execOutput',
 ]);
 
 export type SocketTypeEnum = typeof socketType.Type;
+
+export const socketTypes = (socketType as any).types.map((x: any) => x.value) as SocketTypeEnum[];
 
 export const areSocketsCompatible = (s1: SocketType, s2: SocketType) => {
     if (s1.isInput === s2.isInput) return false;
@@ -28,18 +29,9 @@ export const Socket = types.model('Socket', {
     name: types.optional(types.string, '')
 })
     .views(self => ({
-        get box(): BoxType {
-            return getParentOfType(self, Box);
+        get box(): modelTypes['Box'] {
+            return getParent(self, 2);
         },
-        get store(): typeof Store.Type {
-            return getParentOfType(self, Store);
-        },
-        get isExec() {
-            return self.socketType === 'execInput' || self.socketType === 'execOutput';
-        },
-        get isInput() {
-            return self.socketType === 'execInput' || self.socketType === 'input';
-        }
     }))
     .views(self => ({
         get index() {
@@ -56,24 +48,29 @@ export const Socket = types.model('Socket', {
             }
             return 0;
         },
+    }))
+    .views(self => ({
+        get isExec() {
+            return self.socketType === 'execInput' || self.socketType === 'execOutput';
+        },
+        get isInput() {
+            return self.socketType === 'execInput' || self.socketType === 'input';
+        },
         get arrows() {
-            return values(self.store.arrows).filter(a => a.input === self || a.output === self);
+            if (!self.box.store) return [];
+            return values(self.box.store.arrows).filter(a => a.input === self || a.output === self);
+        },
+        get x() {
+            if (self.socketType === 'input' || self.socketType === 'execInput') {
+                return self.box.x + 18;
+            } else {
+                return self.box.x + self.box.width - 18;
+            }
+        },
+        get y() {
+            return 50 + self.box.y + self.index * 30;
         }
     }))
-    .views(self => {
-        return {
-            get x() {
-                if (self.socketType === 'input' || self.socketType === 'execInput') {
-                    return self.box.x + 18;
-                } else {
-                    return self.box.x + self.box.width - 18;
-                }
-            },
-            get y() {
-                return 50 + self.box.y + self.index * 30;
-            }
-        };
-    })
     .actions(self => {
         return {
             setName(name: string | null) {

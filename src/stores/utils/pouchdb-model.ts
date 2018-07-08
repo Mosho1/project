@@ -1,8 +1,11 @@
 import { isStateTreeNode, types, onSnapshot, IStateTreeNode } from "mobx-state-tree"
 import { randomUuid } from "../utils/utils"
-import PouchDB from 'pouchdb';
+import PouchDBType from 'pouchdb';
 import { IModelProperties } from 'mobx-state-tree/dist/types/complex-types/model';
 import { throttle, groupBy, mapKeys, mapValues } from 'lodash';
+
+let PouchDB: typeof PouchDBType = require('pouchdb');
+PouchDB = (PouchDB as any).default || PouchDB;
 
 PouchDB.plugin(require('./upsert.js'));
 
@@ -73,7 +76,7 @@ export class MSTPouch<T extends { type: string } = { type: string }> {
 
         const model = types.model(name, properties);
 
-        let typeMap: {[index: string]: string} = {};
+        let typeMap: { [index: string]: string } = {};
         for (const k of Object.keys(model.properties)) {
             const propType: any = model.properties[k];
             if (propType.subType) {
@@ -95,7 +98,7 @@ export class MSTPouch<T extends { type: string } = { type: string }> {
                 const afterCreate = () => {
                     this.db.allDocs({ include_docs: true }).then(docs => {
                         const byType = groupBy(docs.rows.map(r => r.doc), doc => doc!.type);
-                        const data: {[index: string]: any} = {};
+                        const data: { [index: string]: any } = {};
                         for (let k in byType) {
                             data[typeMap[k]] = mapKeys(byType[k], v => v!._id);
                         }

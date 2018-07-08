@@ -1,23 +1,18 @@
 import { values } from 'mobx'
 import { types, getSnapshot, applySnapshot } from 'mobx-state-tree'
 import { pouch } from './utils/pouchdb-model';
-import { Box, BoxType } from './models/box';
-import { Arrow } from './models/arrow';
-import { DraggedArrow } from './models/dragged-arrow';
-import { Socket, SocketType } from './models/socket';
-
+import { models, modelTypes } from './models/index';
 
 export const Store = pouch.store('Store', {
-    boxes: types.map(Box),
-    arrows: types.map(Arrow),
-    // sockets: types.map(Socket),
-    selection: types.maybe(types.reference(Box)),
-    draggedArrow: types.maybe(DraggedArrow),
-    draggedFromSocket: types.maybe(types.reference(Socket)),
+    boxes: types.optional(types.map(models.Box), {}),
+    arrows: types.optional(types.map(models.Arrow), {}),
+    selection: types.maybe(types.reference(models.Box)),
+    draggedArrow: types.maybe(models.DraggedArrow),
+    draggedFromSocket: types.maybe(types.reference(models.Socket)),
 })
     .actions(self => {
         const addBox = (name: string, x: number, y: number) => {
-            const box = Box.create({ name, x, y, sockets: [] });
+            const box = models.Box.create({ name, x, y, sockets: [] });
             box.addSocket('input');
             box.addSocket('output');
             box.addSocket('execInput');
@@ -25,17 +20,16 @@ export const Store = pouch.store('Store', {
             self.boxes.put(box);
             return box;
         };
-        const addArrow = (input: string, output: string) => {
-            self.arrows.put(Arrow.create({ input, output }));
-        };
-        const setSelection = (selection: null | typeof Box.Type) => {
+        const setSelection = (selection: null | modelTypes['Box']) => {
             self.selection = selection;
+            return self;
         };
-        const deleteBox = (box: BoxType) => {
+        const deleteBox = (box: modelTypes['Box']) => {
             if (self.selection === box) {
                 setSelection(null);
             }
-            for (const socket of box.sockets.values()) {
+
+            for (const socket of box.sockets) {
                 deleteArrowsForSocket(socket);
             }
             self.boxes.delete(box._id);
@@ -44,43 +38,47 @@ export const Store = pouch.store('Store', {
             const box = addBox(name, x, y)
             setSelection(box)
         };
-        const startDragArrow = (socket: SocketType) => {
+        const startDragArrow = (socket: modelTypes['Socket']) => {
             const { x, y } = socket;
-            self.draggedArrow = DraggedArrow.create({ startX: x, startY: y, endX: x, endY: y });
+            self.draggedArrow = models.DraggedArrow.create({ startX: x, startY: y, endX: x, endY: y });
             self.draggedFromSocket = socket;
         };
         const moveDragArrow = (x: number, y: number) => {
             if (self.draggedArrow) {
-                if (self.draggedFromSocket!.socketType === 'input') {
+                if (self.draggedFromSocket!.isInput) {
                     self.draggedArrow.start(x, y);
                 } else {
                     self.draggedArrow.end(x, y);
                 }
             }
         };
-        const hasArrow = (from: SocketType, to?: SocketType) => {
-            const input = from.socketType === 'input' ? from : to;
-            const output = from.socketType === 'output' ? from : to;
+        const hasArrow = (from: modelTypes['Socket'], to?: modelTypes['Socket']) => {
+            const input = from.isInput ? from : to;
+            const output = from.isInput ? from : to;
             return Boolean(values(self.arrows).find(a => {
                 return (!input || a.input === input) &&
                     (!output || a.output === output);
             }));
         };
-        const endDragArrow = (socket?: SocketType) => {
+        const addArrow = (input: modelTypes['Socket'], output: modelTypes['Socket']) => {
+            let arrow: null | modelTypes['Arrow'] = null;
+            if (input.isCompatibleWith(output) &&
+                !hasArrow(input, output)) {
+                arrow = models.Arrow.create({ input, output });
+                self.arrows.put(arrow);
+            }
+            return arrow;
+        };
+        const endDragArrow = (socket?: modelTypes['Socket']) => {
             self.draggedArrow = null;
-            if (self.draggedFromSocket &&
-                socket &&
-                socket.isCompatibleWith(self.draggedFromSocket) &&
-                !hasArrow(self.draggedFromSocket, socket)) {
+            if (self.draggedFromSocket && socket) {
                 const input = socket.isInput ? socket : self.draggedFromSocket;
                 const output = !socket.isInput ? socket : self.draggedFromSocket;
-                if (input.arrows.length === 0) {
-                    self.arrows.put(Arrow.create({ input, output }));
-                }
+                addArrow(input, output);
             }
             self.draggedFromSocket = null;
         };
-        const deleteArrowsForSocket = (socket: SocketType) => {
+        const deleteArrowsForSocket = (socket: modelTypes['Socket']) => {
             const arrowsToDelete = [];
             for (const arrow of self.arrows.values()) {
                 if (arrow.input === socket || arrow.output === socket) {
@@ -94,11 +92,11 @@ export const Store = pouch.store('Store', {
 
         return {
             addBox,
-            addArrow,
             hasArrow,
             setSelection,
             createBox,
             deleteBox,
+            addArrow,
             startDragArrow,
             moveDragArrow,
             endDragArrow,
@@ -138,3 +136,5 @@ if (module.hot) {
         data.store = getSnapshot(store)
     })
 }
+
+export type StoreType = typeof Store.Type;

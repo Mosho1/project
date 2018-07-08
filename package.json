@@ -12,6 +12,7 @@
     "test": "jest"
   },
   "jest": {
+    "verbose": true,
     "moduleFileExtensions": [
       "ts",
       "tsx",

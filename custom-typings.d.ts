@@ -156,3 +156,5 @@ interface KonvaEvent {
   evt: MouseEvent,
   cancelBubble: boolean;
 }
+
+type NestedPartial<T> = {[K in keyof T]?: T[K] | NestedPartial<T[K]>};

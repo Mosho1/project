@@ -1,0 +1,187 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`height: 0,0,0,0 1`] = `50`;
+
+exports[`height: 0,0,0,1 1`] = `80`;
+
+exports[`height: 0,0,0,2 1`] = `110`;
+
+exports[`height: 0,0,1,0 1`] = `80`;
+
+exports[`height: 0,0,1,1 1`] = `80`;
+
+exports[`height: 0,0,1,2 1`] = `110`;
+
+exports[`height: 0,0,2,0 1`] = `110`;
+
+exports[`height: 0,0,2,1 1`] = `110`;
+
+exports[`height: 0,0,2,2 1`] = `110`;
+
+exports[`height: 0,1,0,0 1`] = `80`;
+
+exports[`height: 0,1,0,1 1`] = `110`;
+
+exports[`height: 0,1,0,2 1`] = `140`;
+
+exports[`height: 0,1,1,0 1`] = `80`;
+
+exports[`height: 0,1,1,1 1`] = `110`;
+
+exports[`height: 0,1,1,2 1`] = `140`;
+
+exports[`height: 0,1,2,0 1`] = `110`;
+
+exports[`height: 0,1,2,1 1`] = `110`;
+
+exports[`height: 0,1,2,2 1`] = `140`;
+
+exports[`height: 0,2,0,0 1`] = `110`;
+
+exports[`height: 0,2,0,1 1`] = `140`;
+
+exports[`height: 0,2,0,2 1`] = `170`;
+
+exports[`height: 0,2,1,0 1`] = `110`;
+
+exports[`height: 0,2,1,1 1`] = `140`;
+
+exports[`height: 0,2,1,2 1`] = `170`;
+
+exports[`height: 0,2,2,0 1`] = `110`;
+
+exports[`height: 0,2,2,1 1`] = `140`;
+
+exports[`height: 0,2,2,2 1`] = `170`;
+
+exports[`height: 1,0,0,0 1`] = `80`;
+
+exports[`height: 1,0,0,1 1`] = `80`;
+
+exports[`height: 1,0,0,2 1`] = `110`;
+
+exports[`height: 1,0,1,0 1`] = `110`;
+
+exports[`height: 1,0,1,1 1`] = `110`;
+
+exports[`height: 1,0,1,2 1`] = `110`;
+
+exports[`height: 1,0,2,0 1`] = `140`;
+
+exports[`height: 1,0,2,1 1`] = `140`;
+
+exports[`height: 1,0,2,2 1`] = `140`;
+
+exports[`height: 1,1,0,0 1`] = `80`;
+
+exports[`height: 1,1,0,1 1`] = `110`;
+
+exports[`height: 1,1,0,2 1`] = `140`;
+
+exports[`height: 1,1,1,0 1`] = `110`;
+
+exports[`height: 1,1,1,1 1`] = `110`;
+
+exports[`height: 1,1,1,2 1`] = `140`;
+
+exports[`height: 1,1,2,0 1`] = `140`;
+
+exports[`height: 1,1,2,1 1`] = `140`;
+
+exports[`height: 1,1,2,2 1`] = `140`;
+
+exports[`height: 1,2,0,0 1`] = `110`;
+
+exports[`height: 1,2,0,1 1`] = `140`;
+
+exports[`height: 1,2,0,2 1`] = `170`;
+
+exports[`height: 1,2,1,0 1`] = `110`;
+
+exports[`height: 1,2,1,1 1`] = `140`;
+
+exports[`height: 1,2,1,2 1`] = `170`;
+
+exports[`height: 1,2,2,0 1`] = `140`;
+
+exports[`height: 1,2,2,1 1`] = `140`;
+
+exports[`height: 1,2,2,2 1`] = `170`;
+
+exports[`height: 2,0,0,0 1`] = `110`;
+
+exports[`height: 2,0,0,1 1`] = `110`;
+
+exports[`height: 2,0,0,2 1`] = `110`;
+
+exports[`height: 2,0,1,0 1`] = `140`;
+
+exports[`height: 2,0,1,1 1`] = `140`;
+
+exports[`height: 2,0,1,2 1`] = `140`;
+
+exports[`height: 2,0,2,0 1`] = `170`;
+
+exports[`height: 2,0,2,1 1`] = `170`;
+
+exports[`height: 2,0,2,2 1`] = `170`;
+
+exports[`height: 2,1,0,0 1`] = `110`;
+
+exports[`height: 2,1,0,1 1`] = `110`;
+
+exports[`height: 2,1,0,2 1`] = `140`;
+
+exports[`height: 2,1,1,0 1`] = `140`;
+
+exports[`height: 2,1,1,1 1`] = `140`;
+
+exports[`height: 2,1,1,2 1`] = `140`;
+
+exports[`height: 2,1,2,0 1`] = `170`;
+
+exports[`height: 2,1,2,1 1`] = `170`;
+
+exports[`height: 2,1,2,2 1`] = `170`;
+
+exports[`height: 2,2,0,0 1`] = `110`;
+
+exports[`height: 2,2,0,1 1`] = `140`;
+
+exports[`height: 2,2,0,2 1`] = `170`;
+
+exports[`height: 2,2,1,0 1`] = `140`;
+
+exports[`height: 2,2,1,1 1`] = `140`;
+
+exports[`height: 2,2,1,2 1`] = `170`;
+
+exports[`height: 2,2,2,0 1`] = `170`;
+
+exports[`height: 2,2,2,1 1`] = `170`;
+
+exports[`height: 2,2,2,2 1`] = `170`;
+
+exports[`move 1`] = `
+Object {
+  "_id": "test",
+  "name": "hal",
+  "sockets": Array [],
+  "type": "Box",
+  "width": 150,
+  "x": 1,
+  "y": 2,
+}
+`;
+
+exports[`move 2`] = `
+Object {
+  "_id": "test",
+  "name": "hal",
+  "sockets": Array [],
+  "type": "Box",
+  "width": 150,
+  "x": 2,
+  "y": 4,
+}
+`;

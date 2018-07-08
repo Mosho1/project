@@ -1,0 +1,269 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`areSocketsCompatible: execInput,execInput,0,0 1`] = `false`;
+
+exports[`areSocketsCompatible: execInput,execInput,0,1 1`] = `false`;
+
+exports[`areSocketsCompatible: execInput,execInput,1,0 1`] = `false`;
+
+exports[`areSocketsCompatible: execInput,execInput,1,1 1`] = `false`;
+
+exports[`areSocketsCompatible: execInput,execOutput,0,0 1`] = `true`;
+
+exports[`areSocketsCompatible: execInput,execOutput,0,1 1`] = `false`;
+
+exports[`areSocketsCompatible: execInput,execOutput,1,0 1`] = `false`;
+
+exports[`areSocketsCompatible: execInput,execOutput,1,1 1`] = `false`;
+
+exports[`areSocketsCompatible: execInput,input,0,0 1`] = `false`;
+
+exports[`areSocketsCompatible: execInput,input,0,1 1`] = `false`;
+
+exports[`areSocketsCompatible: execInput,input,1,0 1`] = `false`;
+
+exports[`areSocketsCompatible: execInput,input,1,1 1`] = `false`;
+
+exports[`areSocketsCompatible: execInput,output,0,0 1`] = `false`;
+
+exports[`areSocketsCompatible: execInput,output,0,1 1`] = `false`;
+
+exports[`areSocketsCompatible: execInput,output,1,0 1`] = `false`;
+
+exports[`areSocketsCompatible: execInput,output,1,1 1`] = `false`;
+
+exports[`areSocketsCompatible: execOutput,execInput,0,0 1`] = `true`;
+
+exports[`areSocketsCompatible: execOutput,execInput,0,1 1`] = `false`;
+
+exports[`areSocketsCompatible: execOutput,execInput,1,0 1`] = `false`;
+
+exports[`areSocketsCompatible: execOutput,execInput,1,1 1`] = `false`;
+
+exports[`areSocketsCompatible: execOutput,execOutput,0,0 1`] = `false`;
+
+exports[`areSocketsCompatible: execOutput,execOutput,0,1 1`] = `false`;
+
+exports[`areSocketsCompatible: execOutput,execOutput,1,0 1`] = `false`;
+
+exports[`areSocketsCompatible: execOutput,execOutput,1,1 1`] = `false`;
+
+exports[`areSocketsCompatible: execOutput,input,0,0 1`] = `false`;
+
+exports[`areSocketsCompatible: execOutput,input,0,1 1`] = `false`;
+
+exports[`areSocketsCompatible: execOutput,input,1,0 1`] = `false`;
+
+exports[`areSocketsCompatible: execOutput,input,1,1 1`] = `false`;
+
+exports[`areSocketsCompatible: execOutput,output,0,0 1`] = `false`;
+
+exports[`areSocketsCompatible: execOutput,output,0,1 1`] = `false`;
+
+exports[`areSocketsCompatible: execOutput,output,1,0 1`] = `false`;
+
+exports[`areSocketsCompatible: execOutput,output,1,1 1`] = `false`;
+
+exports[`areSocketsCompatible: input,execInput,0,0 1`] = `false`;
+
+exports[`areSocketsCompatible: input,execInput,0,1 1`] = `false`;
+
+exports[`areSocketsCompatible: input,execInput,1,0 1`] = `false`;
+
+exports[`areSocketsCompatible: input,execInput,1,1 1`] = `false`;
+
+exports[`areSocketsCompatible: input,execOutput,0,0 1`] = `false`;
+
+exports[`areSocketsCompatible: input,execOutput,0,1 1`] = `false`;
+
+exports[`areSocketsCompatible: input,execOutput,1,0 1`] = `false`;
+
+exports[`areSocketsCompatible: input,execOutput,1,1 1`] = `false`;
+
+exports[`areSocketsCompatible: input,input,0,0 1`] = `false`;
+
+exports[`areSocketsCompatible: input,input,0,1 1`] = `false`;
+
+exports[`areSocketsCompatible: input,input,1,0 1`] = `false`;
+
+exports[`areSocketsCompatible: input,input,1,1 1`] = `false`;
+
+exports[`areSocketsCompatible: input,output,0,0 1`] = `true`;
+
+exports[`areSocketsCompatible: input,output,0,1 1`] = `true`;
+
+exports[`areSocketsCompatible: input,output,1,0 1`] = `false`;
+
+exports[`areSocketsCompatible: input,output,1,1 1`] = `false`;
+
+exports[`areSocketsCompatible: output,execInput,0,0 1`] = `false`;
+
+exports[`areSocketsCompatible: output,execInput,0,1 1`] = `false`;
+
+exports[`areSocketsCompatible: output,execInput,1,0 1`] = `false`;
+
+exports[`areSocketsCompatible: output,execInput,1,1 1`] = `false`;
+
+exports[`areSocketsCompatible: output,execOutput,0,0 1`] = `false`;
+
+exports[`areSocketsCompatible: output,execOutput,0,1 1`] = `false`;
+
+exports[`areSocketsCompatible: output,execOutput,1,0 1`] = `false`;
+
+exports[`areSocketsCompatible: output,execOutput,1,1 1`] = `false`;
+
+exports[`areSocketsCompatible: output,input,0,0 1`] = `true`;
+
+exports[`areSocketsCompatible: output,input,0,1 1`] = `false`;
+
+exports[`areSocketsCompatible: output,input,1,0 1`] = `true`;
+
+exports[`areSocketsCompatible: output,input,1,1 1`] = `false`;
+
+exports[`areSocketsCompatible: output,output,0,0 1`] = `false`;
+
+exports[`areSocketsCompatible: output,output,0,1 1`] = `false`;
+
+exports[`areSocketsCompatible: output,output,1,0 1`] = `false`;
+
+exports[`areSocketsCompatible: output,output,1,1 1`] = `false`;
+
+exports[`x/y execInput 1`] = `
+Object {
+  "x": 18,
+  "y": 50,
+}
+`;
+
+exports[`x/y execInput 2`] = `
+Object {
+  "x": -82,
+  "y": 150,
+}
+`;
+
+exports[`x/y execInput 3`] = `
+Object {
+  "x": -82,
+  "y": 210,
+}
+`;
+
+exports[`x/y execInput 4`] = `
+Object {
+  "x": 18,
+  "y": 240,
+}
+`;
+
+exports[`x/y execInput 5`] = `
+Object {
+  "x": -482,
+  "y": 200,
+}
+`;
+
+exports[`x/y execOutput 1`] = `
+Object {
+  "x": -18,
+  "y": 50,
+}
+`;
+
+exports[`x/y execOutput 2`] = `
+Object {
+  "x": -68,
+  "y": 150,
+}
+`;
+
+exports[`x/y execOutput 3`] = `
+Object {
+  "x": -68,
+  "y": 210,
+}
+`;
+
+exports[`x/y execOutput 4`] = `
+Object {
+  "x": 2,
+  "y": 240,
+}
+`;
+
+exports[`x/y execOutput 5`] = `
+Object {
+  "x": -418,
+  "y": 200,
+}
+`;
+
+exports[`x/y input 1`] = `
+Object {
+  "x": 18,
+  "y": 50,
+}
+`;
+
+exports[`x/y input 2`] = `
+Object {
+  "x": -82,
+  "y": 150,
+}
+`;
+
+exports[`x/y input 3`] = `
+Object {
+  "x": -82,
+  "y": 210,
+}
+`;
+
+exports[`x/y input 4`] = `
+Object {
+  "x": 18,
+  "y": 240,
+}
+`;
+
+exports[`x/y input 5`] = `
+Object {
+  "x": -482,
+  "y": 200,
+}
+`;
+
+exports[`x/y output 1`] = `
+Object {
+  "x": -18,
+  "y": 50,
+}
+`;
+
+exports[`x/y output 2`] = `
+Object {
+  "x": -68,
+  "y": 150,
+}
+`;
+
+exports[`x/y output 3`] = `
+Object {
+  "x": -68,
+  "y": 210,
+}
+`;
+
+exports[`x/y output 4`] = `
+Object {
+  "x": 2,
+  "y": 240,
+}
+`;
+
+exports[`x/y output 5`] = `
+Object {
+  "x": -418,
+  "y": 200,
+}
+`;

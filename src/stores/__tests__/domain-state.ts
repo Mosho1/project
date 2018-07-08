@@ -1,18 +1,47 @@
-import { getSnapshot, applyAction } from "mobx-state-tree"
-import { Box } from '../models/box';
+// import { getSnapshot, applyAction } from "mobx-state-tree"
+import { Store, StoreType } from '../domain-state';
+import { product } from '../test-utils';
+import { models } from '../models';
+import { socketTypes } from '../models/socket';
 
-test("it should be able to move boxes - 1", () => {
-    var box = Box.create({ x: 100, y: 100, _id: "1", name: "test" })
+let store: StoreType;
+beforeEach(() => {
+    store = Store.create();
+});
 
-    box.move(23, 10)
-    expect(getSnapshot(box)).toMatchSnapshot()
+test('addBox', () => {
+    const box = store.addBox('test', 0, 0);
+    expect(store.boxes.get(box._id)).toBe(box);
+});
 
-    box.move(22, -13)
-    expect(getSnapshot(box)).toMatchSnapshot()
-})
+test('setSelection', () => {
+    expect(store.setSelection(null).selection).toBeNull();
+    const box = models.Box.create();
+    expect(store.setSelection(box).selection).toBe(box);
+});
 
-test("it should be able to move boxes - 2", () => {
-    const box = Box.create({ x: 100, y: 100, _id: "1", name: "test" })
-    applyAction(box, [{ name: "move", args: [5, 5] }, { name: "move", args: [3, 2] }])
-    expect(box.toJSON!()).toMatchSnapshot()
-})
+test('deleteBox', () => {
+    const b1 = store.addBox('test', 0, 0);
+    const b2 = store.addBox('test2', 50, 50);
+    expect(store.boxes).toHaveProperty('size', 2);
+    store.addArrow(b1.outputs[0], b2.inputs[0]);
+    store.addArrow(b1.execInputs[0], b2.execOutputs[0]);
+    expect(store.arrows).toHaveProperty('size', 2);
+    store.deleteBox(b1);
+    expect(store.arrows).toHaveProperty('size', 0);
+    expect(store.boxes).toHaveProperty('size', 1);
+    store.deleteBox(b2);
+    expect(store.boxes).toHaveProperty('size', 0);
+});
+
+test('addArrow', () => {
+    const tests = product(socketTypes, socketTypes);
+
+    for (const test of tests) {
+        const [t1, t2] = test;
+        const box = models.Box.create();
+        const s1 = box.addSocket(t1);
+        const s2 = box.addSocket(t2);
+        expect(store.addArrow(s1, s2) !== null).toMatchSnapshot(test.join(','));
+    }
+});
