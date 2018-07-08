@@ -1,0 +1,14 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`points 1`] = `
+Array [
+  0,
+  0,
+  50,
+  0,
+  -50,
+  0,
+  0,
+  0,
+]
+`;

@@ -21,6 +21,11 @@ test('setSelection', () => {
     expect(store.setSelection(box).selection).toBe(box);
 });
 
+test('createBox', () => {
+    const b = store.createBox('test', 0, 0);
+    expect(store.selection).toBe(b);
+});
+
 test('deleteBox', () => {
     const b1 = store.addBox('test', 0, 0);
     const b2 = store.addBox('test2', 50, 50);
@@ -28,7 +33,9 @@ test('deleteBox', () => {
     store.addArrow(b1.outputs[0], b2.inputs[0]);
     store.addArrow(b1.execInputs[0], b2.execOutputs[0]);
     expect(store.arrows).toHaveProperty('size', 2);
+    store.setSelection(b1);
     store.deleteBox(b1);
+    expect(store.selection).toBeNull();
     expect(store.arrows).toHaveProperty('size', 0);
     expect(store.boxes).toHaveProperty('size', 1);
     store.deleteBox(b2);
@@ -61,7 +68,7 @@ test('hasArrow', () => {
 });
 
 test('startDragArrow', () => {
-    const box = models.Box.create({x: 10, y: 10});
+    const box = models.Box.create({ x: 10, y: 10 });
     const socket = box.addSocket('input');
     store.startDragArrow(socket);
     expect(store.draggedArrow).toMatchObject({
@@ -74,11 +81,11 @@ test('startDragArrow', () => {
 });
 
 test('moveDragArrow', () => {
-    const draggedArrow = {start: () => null, end: () => null};
-    const draggedFromSocket = {isInput: false};
+    const draggedArrow = { start: () => null, end: () => null };
+    const draggedFromSocket = { isInput: false };
     spyOn(draggedArrow, 'start');
     spyOn(draggedArrow, 'end');
-    mock(store, {draggedArrow, draggedFromSocket});
+    mock(store, { draggedArrow, draggedFromSocket });
     store.moveDragArrow(1, 2);
     draggedFromSocket.isInput = true;
     store.moveDragArrow(3, 4);
@@ -93,7 +100,7 @@ test('endDragArrow', () => {
     const b2 = store.addBox('test', 0, 0);
     const s2 = b2.addSocket('output');
 
-    mock(store, {draggedArrow: {}, draggedFromSocket: s1});
+    mock(store, { draggedArrow: {}, draggedFromSocket: s1 });
     store.endDragArrow(s2);
 
     expect(store.hasArrow(s1, s2)).toBe(true);

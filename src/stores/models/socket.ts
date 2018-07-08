@@ -1,5 +1,5 @@
 import { values } from 'mobx'
-import { types, getParent } from 'mobx-state-tree'
+import { types, getParent, hasParent } from 'mobx-state-tree'
 import { randomUuid } from '../utils/utils';
 import { modelTypes } from './index';
 
@@ -29,12 +29,14 @@ export const Socket = types.model('Socket', {
     name: types.optional(types.string, '')
 })
     .views(self => ({
-        get box(): modelTypes['Box'] {
+        get box(): null | modelTypes['Box'] {
+            if (!hasParent(self, 2)) return null;
             return getParent(self, 2);
         },
     }))
     .views(self => ({
         get index() {
+            if (!self.box) return 0;
             const { inputs, outputs, execInputs, execOutputs } = self.box;
             switch (self.socketType) {
                 case 'input':
@@ -46,6 +48,7 @@ export const Socket = types.model('Socket', {
                 case 'execOutput':
                     return execOutputs.findIndex(s => s === self);
             }
+            /* istanbul ignore next */
             return 0;
         },
     }))
@@ -57,10 +60,11 @@ export const Socket = types.model('Socket', {
             return self.socketType === 'execInput' || self.socketType === 'input';
         },
         get arrows() {
-            if (!self.box.store) return [];
+            if (!self.box || !self.box.store) return [];
             return values(self.box.store.arrows).filter(a => a.input === self || a.output === self);
         },
         get x() {
+            if (!self.box) return 0;
             if (self.socketType === 'input' || self.socketType === 'execInput') {
                 return self.box.x + 18;
             } else {
@@ -68,6 +72,7 @@ export const Socket = types.model('Socket', {
             }
         },
         get y() {
+            if (!self.box) return 0;
             return 50 + self.box.y + self.index * 30;
         }
     }))
@@ -83,4 +88,4 @@ export const Socket = types.model('Socket', {
     });
 
 type ISocketType = typeof Socket.Type;
-export interface ISocket extends ISocketType {};
+export interface ISocket extends ISocketType { };

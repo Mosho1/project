@@ -57,6 +57,7 @@ export const Box = pouch.model('Box',
             return self;
         },
         setProps(props: BoxEditableProps) {
+            /* istanbul ignore next */
             Object.assign(self, props);
         },
         addSocket(type: SocketTypeEnum) {

@@ -21,11 +21,13 @@ export const DraggedArrow = types.model('DraggedArrow', {
     const start = (x: number, y: number) => {
         self.startX = x;
         self.startY = y;
+        return self;
     };
 
     const end = (x: number, y: number) => {
         self.endX = x;
         self.endY = y;
+        return self;
     };
 
     return {

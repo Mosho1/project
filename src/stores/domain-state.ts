@@ -35,8 +35,9 @@ export const Store = pouch.store('Store', {
             self.boxes.delete(box._id);
         };
         const createBox = (name: string, x: number, y: number) => {
-            const box = addBox(name, x, y)
-            setSelection(box)
+            const box = addBox(name, x, y);
+            setSelection(box);
+            return box;
         };
         const startDragArrow = (socket: modelTypes['Socket']) => {
             const { x, y } = socket;
@@ -126,6 +127,7 @@ export const store = getStore(defaults);
 /**
     Save / Restore the state of the store while self module is hot reloaded
 */
+/* istanbul ignore next */
 if (module.hot) {
     if (module.hot.data && module.hot.data.store) {
         applySnapshot(store, module.hot.data.store)

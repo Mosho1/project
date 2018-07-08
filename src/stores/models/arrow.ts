@@ -22,4 +22,5 @@ export const Arrow = pouch.model('Arrow', {
     };
 });
 
-export type ArrowType = typeof Arrow.Type;
+type IArrowType = typeof Arrow.Type;
+export interface IArrow extends IArrowType {};

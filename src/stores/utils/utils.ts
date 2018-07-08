@@ -1,5 +1,6 @@
 import { v4 } from "node-uuid"
 
+/* istanbul ignore next */
 export const calculateBezierPoints = (startX: number, startY: number, endX: number, endY: number) => {
     const dist = endX - startX;
     const distAbs = Math.abs(dist);
@@ -16,6 +17,7 @@ export const calculateBezierPoints = (startX: number, startY: number, endX: numb
     ]
 };
 
+/* istanbul ignore next */
 export function randomUuid() {
     return v4()
 }

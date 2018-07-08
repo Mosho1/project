@@ -2,6 +2,10 @@ import { Socket, SocketTypeEnum, socketTypes, areSocketsCompatible } from '../so
 import { mock, product } from '../../test-utils';
 import { ObservableMap } from 'mobx';
 
+test('box', () => {
+    expect(Socket.create({ socketType: 'input' }).box).toBeNull();
+});
+
 test('isExec', () => {
     expect(Socket.create({ socketType: 'input' }).isExec).toBe(false);
     expect(Socket.create({ socketType: 'output' }).isExec).toBe(false);
@@ -27,24 +31,24 @@ describe('index', () => {
         };
     });
 
-    test('input', () => {
+
+    const lengths = [0, 1];
+    const tests = product(socketTypes, lengths, lengths, lengths, lengths);
+
+    test('no box', () => {
         const socket = Socket.create({ socketType: 'input' });
-        box.inputs = [socket];
-        expect(mock(socket, { box }).index).toBe(0);
+        expect(socket.index).toBe(0);
     });
 
-    test('input with execInput', () => {
-        const socket = Socket.create({ socketType: 'input' });
-        box.inputs = [socket];
-        box.execInputs = [null];
-        expect(mock(socket, { box }).index).toBe(1);
-    });
-
-    test('input with output', () => {
-        const socket = Socket.create({ socketType: 'input' });
-        box.inputs = [socket];
-        box.outputs = [null];
-        expect(mock(socket, { box }).index).toBe(0);
+    test('tests', () => {
+        for (const test of tests) {
+            const socket = Socket.create({ socketType: test[0] });
+            box.inputs = Array(test[1]);
+            box.outputs = Array(test[2]);
+            box.execInputs = Array(test[3]);
+            box.execOutputs = Array(test[4]);
+            expect(mock(socket, { box }).index).toMatchSnapshot(test.join(','));
+        }
     });
 });
 
@@ -106,8 +110,8 @@ test('areSocketsCompatible', () => {
     for (const t of tests) {
         const [s1, s2, l1, l2] = t;
         expect(areSocketsCompatible(
-            mock(Socket.create({ socketType: s1 }), {arrows: {length: l1}}),
-            mock(Socket.create({ socketType: s2 }), {arrows: {length: l2}}),
+            mock(Socket.create({ socketType: s1 }), { arrows: { length: l1 } }),
+            mock(Socket.create({ socketType: s2 }), { arrows: { length: l2 } }),
         )).toMatchSnapshot(t.join(','));
     }
 });
