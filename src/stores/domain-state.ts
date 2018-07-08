@@ -137,4 +137,5 @@ if (module.hot) {
     })
 }
 
-export type StoreType = typeof Store.Type;
+type IStoreType = typeof Store.Type;
+export interface IStore extends IStoreType { };

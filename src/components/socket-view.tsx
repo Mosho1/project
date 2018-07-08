@@ -2,10 +2,10 @@ import React from "react"
 import { observer } from "mobx-react"
 import { Component } from './component';
 import { Rect, Group, Circle, Text } from 'react-konva';
-import { SocketType } from '../stores/models/socket';
+import { ISocket } from '../stores/models/socket';
 
 @observer
-export class SocketView extends Component<{ socket: SocketType }> {
+export class SocketView extends Component<{ socket: ISocket }> {
 
     onMouseDown = (e: KonvaEvent) => {
         if (!e.evt.ctrlKey) {

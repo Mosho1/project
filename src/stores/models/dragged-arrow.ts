@@ -32,3 +32,6 @@ export const DraggedArrow = types.model('DraggedArrow', {
         start, end
     };
 });
+
+type IDraggedArrowType = typeof DraggedArrow.Type;
+export interface IDraggedArrow extends IDraggedArrowType {};

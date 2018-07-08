@@ -2,12 +2,12 @@ import React from "react"
 import { observer } from "mobx-react"
 import { Component } from './component';
 import { Rect, Group } from 'react-konva';
-import { SocketType } from '../stores/models/socket';
-import { BoxType } from '../stores/models/box';
+import { ISocket } from '../stores/models/socket';
+import { IBox } from '../stores/models/box';
 import { SocketView } from './socket-view';
 
 @observer
-export class BoxView extends Component<{ box: BoxType }> {
+export class BoxView extends Component<{ box: IBox }> {
     handleClick = (evt: { evt: MouseEvent, cancelBubble: boolean }) => {
         const e = evt.evt;
         if (e.ctrlKey) {
@@ -35,7 +35,7 @@ export class BoxView extends Component<{ box: BoxType }> {
         this.dragStartY = evt.clientY;
     };
 
-    socketView = (s: SocketType) =>
+    socketView = (s: ISocket) =>
         <SocketView
             socket={s}
             key={s.id}

@@ -2,14 +2,14 @@ import React, { ChangeEvent } from "react"
 import { observer } from "mobx-react"
 import * as styles from './styles/index.css';
 import Component from './component';
-import { SocketType } from '../stores/models/socket';
+import { ISocket } from '../stores/models/socket';
 
 class Sidebar extends Component {
-    onSocketNameChange = (socket: SocketType) => (e: ChangeEvent<HTMLInputElement>) => {
+    onSocketNameChange = (socket: ISocket) => (e: ChangeEvent<HTMLInputElement>) => {
         socket.setName(e.target.value);
     };
 
-    getSocketInput = (s: SocketType) => {
+    getSocketInput = (s: ISocket) => {
         return <input onChange={this.onSocketNameChange(s)} defaultValue={s.name} key={s.id} />;
     };
 

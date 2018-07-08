@@ -1,7 +1,7 @@
 import { types, getParent, hasParent } from 'mobx-state-tree'
 import { pouch } from '../utils/pouchdb-model';
 import { Socket, SocketTypeEnum } from './socket';
-import { StoreType } from '../domain-state';
+import { IStore } from '../domain-state';
 
 interface BoxEditableProps {
     x?: number;
@@ -21,7 +21,7 @@ export const Box = pouch.model('Box',
         sockets: types.optional(types.array(Socket), []),
     })
     .views(self => ({
-        get store(): StoreType | null {
+        get store(): IStore | null {
             if (!hasParent(self)) return null;
             return getParent(self, 2);
         },
@@ -66,4 +66,5 @@ export const Box = pouch.model('Box',
         }
     }))
 
-export type BoxType = typeof Box.Type;
+type IBoxType = typeof Box.Type;
+export interface IBox extends IBoxType { };

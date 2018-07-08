@@ -1,10 +1,10 @@
 // import { getSnapshot, applyAction } from "mobx-state-tree"
-import { Store, StoreType } from '../domain-state';
+import { Store, IStore } from '../domain-state';
 import { product } from '../test-utils';
 import { models } from '../models';
 import { socketTypes } from '../models/socket';
 
-let store: StoreType;
+let store: IStore;
 beforeEach(() => {
     store = Store.create();
 });

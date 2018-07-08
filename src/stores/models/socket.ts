@@ -14,7 +14,7 @@ export type SocketTypeEnum = typeof socketType.Type;
 
 export const socketTypes = (socketType as any).types.map((x: any) => x.value) as SocketTypeEnum[];
 
-export const areSocketsCompatible = (s1: SocketType, s2: SocketType) => {
+export const areSocketsCompatible = (s1: ISocket, s2: ISocket) => {
     if (s1.isInput === s2.isInput) return false;
     if (s1.isExec !== s2.isExec) return false;
     const [input, output] = s1.isInput ? [s1, s2] : [s2, s1];
@@ -82,5 +82,5 @@ export const Socket = types.model('Socket', {
         }
     });
 
-export type SocketType = typeof Socket.Type;
-export type SocketSnapshotType = typeof Socket.SnapshotType;
+type ISocketType = typeof Socket.Type;
+export interface ISocket extends ISocketType {};

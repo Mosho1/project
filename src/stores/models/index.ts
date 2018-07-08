@@ -1,7 +1,7 @@
-import { Box } from './box';
-import { Socket } from './socket';
-import { Arrow } from './arrow';
-import { DraggedArrow } from './dragged-arrow';
+import { Box, IBox } from './box';
+import { Socket, ISocket } from './socket';
+import { Arrow, ArrowType } from './arrow';
+import { DraggedArrow, IDraggedArrow } from './dragged-arrow';
 
 export const models = {
     Box,
@@ -11,8 +11,8 @@ export const models = {
 };
 
 export type modelTypes = {
-    Box: typeof Box.Type,
-    Socket: typeof Socket.Type,
-    Arrow: typeof Arrow.Type,
-    DraggedArrow: typeof DraggedArrow.Type,
+    Box: IBox,
+    Socket: ISocket,
+    Arrow: ArrowType,
+    DraggedArrow: IDraggedArrow,
 };
