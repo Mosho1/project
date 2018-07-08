@@ -1,8 +1,9 @@
 // import { getSnapshot, applyAction } from "mobx-state-tree"
 import { Store, IStore } from '../domain-state';
-import { product } from '../test-utils';
+import { product, mock } from '../test-utils';
 import { models } from '../models';
 import { socketTypes } from '../models/socket';
+import { DraggedArrow } from '../models/dragged-arrow';
 
 let store: IStore;
 beforeEach(() => {
@@ -44,4 +45,57 @@ test('addArrow', () => {
         const s2 = box.addSocket(t2);
         expect(store.addArrow(s1, s2) !== null).toMatchSnapshot(test.join(','));
     }
+});
+
+test('hasArrow', () => {
+    const tests = product(socketTypes, socketTypes);
+
+    for (const test of tests) {
+        const [t1, t2] = test;
+        const box = models.Box.create();
+        const s1 = box.addSocket(t1);
+        const s2 = box.addSocket(t2);
+        store.addArrow(s1, s2);
+        expect(store.hasArrow(s1, s2)).toMatchSnapshot(test.join(','));
+    }
+});
+
+test('startDragArrow', () => {
+    const box = models.Box.create({x: 10, y: 10});
+    const socket = box.addSocket('input');
+    store.startDragArrow(socket);
+    expect(store.draggedArrow).toMatchObject({
+        startX: socket.x,
+        startY: socket.y,
+        endX: socket.x,
+        endY: socket.y,
+    });
+    expect(store.draggedFromSocket).toBe(socket);
+});
+
+test('moveDragArrow', () => {
+    const draggedArrow = {start: () => null, end: () => null};
+    const draggedFromSocket = {isInput: false};
+    spyOn(draggedArrow, 'start');
+    spyOn(draggedArrow, 'end');
+    mock(store, {draggedArrow, draggedFromSocket});
+    store.moveDragArrow(1, 2);
+    draggedFromSocket.isInput = true;
+    store.moveDragArrow(3, 4);
+    expect(draggedArrow.end).toHaveBeenCalledWith(1, 2);
+    expect(draggedArrow.start).toHaveBeenCalledWith(3, 4);
+});
+
+test('endDragArrow', () => {
+    const b1 = store.addBox('test', 0, 0);
+    const s1 = b1.addSocket('input');
+
+    const b2 = store.addBox('test', 0, 0);
+    const s2 = b2.addSocket('output');
+
+    mock(store, {draggedArrow: {}, draggedFromSocket: s1});
+    store.endDragArrow(s2);
+
+    expect(store.hasArrow(s1, s2)).toBe(true);
+    expect(store.draggedArrow).toBeNull();
 });

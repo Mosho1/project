@@ -53,8 +53,7 @@ export const Store = pouch.store('Store', {
             }
         };
         const hasArrow = (from: modelTypes['Socket'], to?: modelTypes['Socket']) => {
-            const input = from.isInput ? from : to;
-            const output = from.isInput ? from : to;
+            const [input, output] = from.isInput ? [from, to] : [to, from];
             return Boolean(values(self.arrows).find(a => {
                 return (!input || a.input === input) &&
                     (!output || a.output === output);
@@ -72,8 +71,7 @@ export const Store = pouch.store('Store', {
         const endDragArrow = (socket?: modelTypes['Socket']) => {
             self.draggedArrow = null;
             if (self.draggedFromSocket && socket) {
-                const input = socket.isInput ? socket : self.draggedFromSocket;
-                const output = !socket.isInput ? socket : self.draggedFromSocket;
+                const [input, output] = socket.isInput ? [socket, self.draggedFromSocket] : [self.draggedFromSocket, socket];
                 addArrow(input, output);
             }
             self.draggedFromSocket = null;
@@ -82,7 +80,7 @@ export const Store = pouch.store('Store', {
             const arrowsToDelete = [];
             for (const arrow of self.arrows.values()) {
                 if (arrow.input === socket || arrow.output === socket) {
-                    arrowsToDelete.push(arrow._id)
+                    arrowsToDelete.push(arrow._id);
                 }
             }
             for (const id of arrowsToDelete) {

@@ -6,8 +6,8 @@ export const mock = <T>(instance: T, mock: NestedPartial<T>) => {
         Object.defineProperties(instance, mapValues(mock, value => ({
             value,
             enumerable: descriptor!.enumerable,
-            configurable: descriptor!.configurable,
-            writable: descriptor!.writable,
+            configurable: true,
+            writable: true,
         })));
     }
     return instance;
