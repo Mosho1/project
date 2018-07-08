@@ -1,6 +1,6 @@
 import { Box, IBox } from './box';
 import { Socket, ISocket } from './socket';
-import { Arrow, ArrowType } from './arrow';
+import { Arrow, IArrow } from './arrow';
 import { DraggedArrow, IDraggedArrow } from './dragged-arrow';
 
 export const models = {
@@ -13,6 +13,6 @@ export const models = {
 export type modelTypes = {
     Box: IBox,
     Socket: ISocket,
-    Arrow: ArrowType,
+    Arrow: IArrow,
     DraggedArrow: IDraggedArrow,
 };
