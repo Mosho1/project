@@ -30,6 +30,7 @@ export const log = {
         console.log(value);
     },
     inputs: [{ name: 'input', type: 'any' }],
+    execInputs: [''],
     returns: 'void'
 };
 

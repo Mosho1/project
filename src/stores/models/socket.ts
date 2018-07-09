@@ -1,6 +1,5 @@
-import { values } from 'mobx'
 import { types, getParent, hasParent } from 'mobx-state-tree'
-import { optionalIdentifierType } from '../utils/utils';
+import { optionalIdentifierType, values } from '../utils/utils';
 import { modelTypes } from './index';
 
 const socketType = types.enumeration('socketType', [
@@ -27,7 +26,9 @@ export const Socket = types.model('Socket', {
     id: optionalIdentifierType,
     socketType,
     name: types.optional(types.string, '')
-})
+}).volatile(_self => ({
+    value: null,
+}))
     .views(self => ({
         get box(): null | modelTypes['Box'] {
             if (!hasParent(self, 2)) return null;
@@ -83,6 +84,9 @@ export const Socket = types.model('Socket', {
             },
             isCompatibleWith(socket: typeof self) {
                 return areSocketsCompatible(self as any, socket as any);
+            },
+            setValue(value: any) {
+                self.value = value;
             }
         }
     });

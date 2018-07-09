@@ -1,9 +1,44 @@
-import { values } from 'mobx'
-import { types, getSnapshot, applySnapshot } from 'mobx-state-tree'
+import { types, getSnapshot, applySnapshot, IExtendedObservableMap } from 'mobx-state-tree'
 import { pouch } from './utils/pouchdb-model';
 import { models, modelTypes } from './models/index';
 import { ContextMenu } from './context-menu';
 import { ICodeBlock } from './models/code-block';
+import * as codeBlocks from './functions';
+import { values } from './utils/utils';
+
+const runBox = (box: modelTypes['Box']): any => {
+
+    const context = {
+        value: box.value,
+        emit(eventName: string) {
+            const execOutput = box.execOutputs.find(x => x.name === eventName);
+            if (!execOutput) {
+                throw new Error(`no execOutput found for event: ${eventName}`);
+            }
+            for (const a of execOutput.arrows) {
+                runBox(a.input.box!);
+            }
+        }
+    };
+
+    let args = [];
+    for (const input of box.inputs) {
+        const fromOutput = input.arrows[0].output;
+        args.push(runBox(fromOutput.box!));
+    }
+
+    return box.code.code.apply(context, args);
+
+};
+
+const run = (boxes: IExtendedObservableMap<modelTypes['Box']>) => {
+    const start = values(boxes).find(b => b.code.runOnStart);
+    if (!start) {
+        throw new Error('no start found');
+    }
+
+    runBox(start);
+};
 
 export const Store = pouch.store('Store', {
     boxes: types.map(models.Box),
@@ -16,7 +51,7 @@ export const Store = pouch.store('Store', {
 })
     .views(self => ({
         get sortedCodeBlocks(): ICodeBlock[] {
-            return values(self.codeBlocks).slice().sort((a, b) => a.name - b.name);
+            return values(self.codeBlocks).slice().sort((a, b) => a.name > b.name ? 1 : -1);
         }
     }))
     .actions(self => {
@@ -38,12 +73,6 @@ export const Store = pouch.store('Store', {
             self.boxes.put(box);
             return box;
         };
-        // const addValueBox = (name: string, x: number, y: number, type: IEditableTypes) => {
-        //     const code = CodeBlock.create({ editableValue: type, returns: type });
-        //     const box = models.Box.create({ name, x, y, code });
-        //     box.addSocket('output');
-        //     self.boxes.put(box);
-        // };
         const setSelection = (selection: null | modelTypes['Box']) => {
             self.selection = selection;
             return self;
@@ -112,10 +141,12 @@ export const Store = pouch.store('Store', {
                 self.arrows.delete(id);
             }
         };
+        const runCode = () => {
+            return run(self.boxes);
+        };
 
         return {
             addBox,
-            // addValueBox,
             hasArrow,
             setSelection,
             createBox,
@@ -124,7 +155,8 @@ export const Store = pouch.store('Store', {
             startDragArrow,
             moveDragArrow,
             endDragArrow,
-            deleteArrowsForSocket
+            deleteArrowsForSocket,
+            runCode
         };
     })
 
@@ -134,7 +166,7 @@ export const Store = pouch.store('Store', {
     The store that holds our domain: boxes and arrows
 */
 
-import * as codeBlocks from './functions';
+
 
 const defaults: typeof Store.SnapshotType = {
     boxes: {},

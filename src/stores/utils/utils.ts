@@ -24,3 +24,7 @@ export function randomUuid() {
 }
 
 export const optionalIdentifierType = types.optional<string, string>(types.identifier(), randomUuid) as any as string;
+
+export function values<T>(map: {values(): IterableIterator<T>}) {
+    return [...map.values()] as T[];
+}

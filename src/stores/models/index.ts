@@ -5,7 +5,7 @@ import { DraggedArrow, IDraggedArrow } from './dragged-arrow';
 import { CodeBlock, ICodeBlock } from './code-block';
 
 export const models = {
-    Box,
+    Box: Box,
     Socket,
     Arrow,
     DraggedArrow,

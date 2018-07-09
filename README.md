@@ -2,7 +2,10 @@
 
 ### Editor
 
-1. Draw lines from sockets
-1. Bezier curves instead of lines
-1. Multiple sockets
-1. Styling
+- [x] Draw lines from sockets
+- [x] Bezier curves instead of lines
+- [x] Multiple sockets
+- [x] Styling
+
+- [ ] import modules?
+- [ ] multiple values for boxes

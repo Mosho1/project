@@ -4,7 +4,7 @@ const parseFunction = (value: string) => {
     return eval(`(${value})`);
 };
 
-const codeType = types.custom({
+const codeType = types.custom<string, Function>({
     name: 'CodeBlock',
     fromSnapshot(value: string) {
         return parseFunction(value);
@@ -47,6 +47,7 @@ export const CodeBlock = types.model({
     id: optionalIdentifierType,
     name: types.string,
     code: codeType,
+    runOnStart: types.optional(types.boolean, false),
     // editableValue: types.maybe(editableTypes),
     inputs: types.optional(types.array(CodeBlockInput), []),
     returns: types.optional(primitiveTypes, 'void'),
