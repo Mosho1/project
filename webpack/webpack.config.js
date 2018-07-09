@@ -50,7 +50,7 @@ module.exports = (env) => {
           use:
             [
               env.dev || env.test ? 'style-loader' : MiniCssExtractPlugin.loader,
-              'css-loader?modules=true&minimize&-autoprefixer',
+              `css-loader?modules=true&minimize=${env.prod}&-autoprefixer`,
               'postcss-loader'
             ]
         },

@@ -1,4 +1,4 @@
-import React from "react"
+import * as React from "react"
 import { observer } from "mobx-react"
 import { Component } from './component';
 import { Rect, Group, Circle, Text } from 'react-konva';
@@ -27,7 +27,6 @@ export class SocketView extends Component<{ socket: ISocket }> {
 
     renderExecSocket() {
         const { x, y, arrows } = this.props.socket;
-
         return <Rect
             x={x - 6}
             y={y - 6}
@@ -42,6 +41,7 @@ export class SocketView extends Component<{ socket: ISocket }> {
     }
 
     renderSocket() {
+        
         const { x, y, arrows } = this.props.socket;
 
         return <Circle

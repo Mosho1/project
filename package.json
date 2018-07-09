@@ -42,6 +42,7 @@
   "homepage": "https://github.com/Mosho1/react-mobx-boilerplate",
   "dependencies": {
     "@types/pouchdb-upsert": "2.2.3",
+    "cherow": "1.6.8",
     "konva": "2.1.7",
     "lodash": "4.17.10",
     "mobx": "4.3.1",
@@ -80,6 +81,7 @@
     "opn": "5.3.0",
     "postcss": "6.0.23",
     "postcss-loader": "2.1.5",
+    "postcss-nested": "3.0.0",
     "style-loader": "0.21.0",
     "ts-jest": "23.0.0",
     "tslib": "1.9.3",

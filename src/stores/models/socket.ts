@@ -1,6 +1,6 @@
 import { values } from 'mobx'
 import { types, getParent, hasParent } from 'mobx-state-tree'
-import { randomUuid } from '../utils/utils';
+import { optionalIdentifierType } from '../utils/utils';
 import { modelTypes } from './index';
 
 const socketType = types.enumeration('socketType', [
@@ -24,7 +24,7 @@ export const areSocketsCompatible = (s1: ISocket, s2: ISocket) => {
 };
 
 export const Socket = types.model('Socket', {
-    id: types.optional<string, string>(types.identifier(), randomUuid) as any as string,
+    id: optionalIdentifierType,
     socketType,
     name: types.optional(types.string, '')
 })

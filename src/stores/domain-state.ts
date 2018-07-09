@@ -2,24 +2,48 @@ import { values } from 'mobx'
 import { types, getSnapshot, applySnapshot } from 'mobx-state-tree'
 import { pouch } from './utils/pouchdb-model';
 import { models, modelTypes } from './models/index';
+import { ContextMenu } from './context-menu';
+import { ICodeBlock } from './models/code-block';
 
 export const Store = pouch.store('Store', {
-    boxes: types.optional(types.map(models.Box), {}),
-    arrows: types.optional(types.map(models.Arrow), {}),
+    boxes: types.map(models.Box),
+    arrows: types.map(models.Arrow),
+    codeBlocks: types.map(models.CodeBlock),
     selection: types.maybe(types.reference(models.Box)),
     draggedArrow: types.maybe(models.DraggedArrow),
     draggedFromSocket: types.maybe(types.reference(models.Socket)),
+    contextMenu: ContextMenu
 })
+    .views(self => ({
+        get sortedCodeBlocks(): ICodeBlock[] {
+            return values(self.codeBlocks).slice().sort((a, b) => a.name - b.name);
+        }
+    }))
     .actions(self => {
-        const addBox = (name: string, x: number, y: number) => {
-            const box = models.Box.create({ name, x, y, sockets: [] });
-            box.addSocket('input');
-            box.addSocket('output');
-            box.addSocket('execInput');
-            box.addSocket('execOutput');
+        const addBox = (name: string, x: number, y: number, code: ICodeBlock) => {
+            const box = models.Box.create({ name, x, y, code });
+            const { inputs, returns, execInputs, execOutputs } = code;
+            for (const input of inputs) {
+                box.addSocket('input', input.name);
+            }
+            if (returns && returns !== 'void') {
+                box.addSocket('output');
+            }
+            for (const input of execInputs) {
+                box.addSocket('execInput', input);
+            }
+            for (const output of execOutputs) {
+                box.addSocket('execOutput', output);
+            }
             self.boxes.put(box);
             return box;
         };
+        // const addValueBox = (name: string, x: number, y: number, type: IEditableTypes) => {
+        //     const code = CodeBlock.create({ editableValue: type, returns: type });
+        //     const box = models.Box.create({ name, x, y, code });
+        //     box.addSocket('output');
+        //     self.boxes.put(box);
+        // };
         const setSelection = (selection: null | modelTypes['Box']) => {
             self.selection = selection;
             return self;
@@ -34,8 +58,8 @@ export const Store = pouch.store('Store', {
             }
             self.boxes.delete(box._id);
         };
-        const createBox = (name: string, x: number, y: number) => {
-            const box = addBox(name, x, y);
+        const createBox = (name: string, x: number, y: number, code: ICodeBlock) => {
+            const box = addBox(name, x, y, code);
             setSelection(box);
             return box;
         };
@@ -91,6 +115,7 @@ export const Store = pouch.store('Store', {
 
         return {
             addBox,
+            // addValueBox,
             hasArrow,
             setSelection,
             createBox,
@@ -109,18 +134,19 @@ export const Store = pouch.store('Store', {
     The store that holds our domain: boxes and arrows
 */
 
+import * as codeBlocks from './functions';
+
 const defaults: typeof Store.SnapshotType = {
     boxes: {},
     arrows: {},
-    // sockets: {},
+    contextMenu: {},
+    codeBlocks,
     selection: null,
     draggedArrow: null,
     draggedFromSocket: null
 };
 
-const getStore = (data: typeof Store.SnapshotType) => Store.create(data);
-
-export const store = getStore(defaults);
+export const store = Store.create(defaults);
 
 (window as any)['store'] = store;
 
@@ -130,11 +156,11 @@ export const store = getStore(defaults);
 /* istanbul ignore next */
 if (module.hot) {
     if (module.hot.data && module.hot.data.store) {
-        applySnapshot(store, module.hot.data.store)
+        applySnapshot(store, { ...module.hot.data.store, codeBlocks });
     }
     module.hot.dispose(data => {
-        data.store = getSnapshot(store)
-    })
+        data.store = getSnapshot(store);
+    });
 }
 
 type IStoreType = typeof Store.Type;

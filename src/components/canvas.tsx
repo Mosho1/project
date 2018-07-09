@@ -1,4 +1,4 @@
-import React from "react";
+import * as React from "react";
 import { values } from "mobx";
 import { observer } from "mobx-react";
 
@@ -55,9 +55,10 @@ class Canvas extends Component<any> {
         const { store } = this;
         if (e.ctrlKey === false) {
             store.setSelection(null);
-        } else {
-            store.createBox("Hi.", e.clientX - 50, e.clientY - 20);
         }
+        //  else {
+        //     store.createBox("Hi.", e.clientX - 50, e.clientY - 20);
+        // }
     }
 }
 

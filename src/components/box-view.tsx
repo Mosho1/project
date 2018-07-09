@@ -1,7 +1,7 @@
-import React from "react"
+import * as React from "react"
 import { observer } from "mobx-react"
 import { Component } from './component';
-import { Rect, Group } from 'react-konva';
+import { Rect, Group, Text } from 'react-konva';
 import { ISocket } from '../stores/models/socket';
 import { IBox } from '../stores/models/box';
 import { SocketView } from './socket-view';
@@ -58,13 +58,20 @@ export class BoxView extends Component<{ box: IBox }> {
                     cornerRadius={10}
                     opacity={0.4}
                     draggable
-                    // onTransform={this.handleTransform}
                     onDragMove={this.handleDragMove}
                     onDragStart={this.handleDragStart}
+                    dragBoundFunc={_ => box}
                     onClick={this.handleClick}
                 />
+                <Text
+                    x={box.x}
+                    y={box.y + 12}
+                    fill={'#fff'}
+                    text={`${box.name}${box.value !== null ? ` (${box.value})` : ''}`}
+                    align="center"
+                    width={box.width}
+                />
                 {box.sockets.map(this.socketView)}
-                {/* {box.isSelected && <Transformer onClick={e => e.cancelBubble = true} ref={this.attachTransformer} />} */}
             </Group>
         );
     }

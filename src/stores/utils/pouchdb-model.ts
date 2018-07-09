@@ -1,5 +1,5 @@
 import { isStateTreeNode, types, onSnapshot, IStateTreeNode } from "mobx-state-tree"
-import { randomUuid } from "../utils/utils"
+import { optionalIdentifierType } from "../utils/utils"
 import PouchDBType from 'pouchdb';
 import { IModelProperties } from 'mobx-state-tree/dist/types/complex-types/model';
 import { throttle, groupBy, mapKeys, mapValues } from 'lodash';
@@ -46,7 +46,7 @@ export class MSTPouch<T extends { type: string } = { type: string }> {
         type S = T & { _id: string, type: string };
 
         const newProperties = Object.assign({
-            _id: types.optional<string, string>(types.identifier(), randomUuid) as any as string,
+            _id: optionalIdentifierType,
             type: name,
         }, properties as T) as S;
 

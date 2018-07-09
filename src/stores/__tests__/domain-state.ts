@@ -3,7 +3,9 @@ import { Store, IStore } from '../domain-state';
 import { product, mock } from '../test-utils';
 import { models } from '../models';
 import { socketTypes } from '../models/socket';
-import { DraggedArrow } from '../models/dragged-arrow';
+import { getTestCodeBlock } from '../models/code-block';
+
+const cb = getTestCodeBlock();
 
 let store: IStore;
 beforeEach(() => {
@@ -11,7 +13,7 @@ beforeEach(() => {
 });
 
 test('addBox', () => {
-    const box = store.addBox('test', 0, 0);
+    const box = store.addBox('test', 0, 0, cb);
     expect(store.boxes.get(box._id)).toBe(box);
 });
 
@@ -22,13 +24,13 @@ test('setSelection', () => {
 });
 
 test('createBox', () => {
-    const b = store.createBox('test', 0, 0);
+    const b = store.createBox('test', 0, 0, cb);
     expect(store.selection).toBe(b);
 });
 
 test('deleteBox', () => {
-    const b1 = store.addBox('test', 0, 0);
-    const b2 = store.addBox('test2', 50, 50);
+    const b1 = store.addBox('test', 0, 0, cb);
+    const b2 = store.addBox('test2', 50, 50, cb);
     expect(store.boxes).toHaveProperty('size', 2);
     store.addArrow(b1.outputs[0], b2.inputs[0]);
     store.addArrow(b1.execInputs[0], b2.execOutputs[0]);
@@ -94,10 +96,10 @@ test('moveDragArrow', () => {
 });
 
 test('endDragArrow', () => {
-    const b1 = store.addBox('test', 0, 0);
+    const b1 = store.addBox('test', 0, 0, cb);
     const s1 = b1.addSocket('input');
 
-    const b2 = store.addBox('test', 0, 0);
+    const b2 = store.addBox('test', 0, 0, cb);
     const s2 = b2.addSocket('output');
 
     mock(store, { draggedArrow: {}, draggedFromSocket: s1 });

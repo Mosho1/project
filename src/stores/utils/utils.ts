@@ -1,4 +1,5 @@
 import { v4 } from "node-uuid"
+import { types } from 'mobx-state-tree';
 
 /* istanbul ignore next */
 export const calculateBezierPoints = (startX: number, startY: number, endX: number, endY: number) => {
@@ -21,3 +22,5 @@ export const calculateBezierPoints = (startX: number, startY: number, endX: numb
 export function randomUuid() {
     return v4()
 }
+
+export const optionalIdentifierType = types.optional<string, string>(types.identifier(), randomUuid) as any as string;

@@ -2,6 +2,7 @@ import { types, getParent, hasParent } from 'mobx-state-tree'
 import { pouch } from '../utils/pouchdb-model';
 import { Socket, SocketTypeEnum } from './socket';
 import { IStore } from '../domain-state';
+import { CodeBlock } from './code-block';
 
 interface BoxEditableProps {
     x?: number;
@@ -18,7 +19,9 @@ export const Box = pouch.model('Box',
         x: 0,
         y: 0,
         width: 150,
+        value: types.maybe(types.string),
         sockets: types.optional(types.array(Socket), []),
+        code: types.reference(CodeBlock)
     })
     .views(self => ({
         get store(): IStore | null {
@@ -60,12 +63,15 @@ export const Box = pouch.model('Box',
             /* istanbul ignore next */
             Object.assign(self, props);
         },
-        addSocket(type: SocketTypeEnum) {
-            const socket = Socket.create({ socketType: type });
+        addSocket(type: SocketTypeEnum, name = '') {
+            const socket = Socket.create({ name: name, socketType: type });
             self.sockets.push(socket);
             return socket;
+        },
+        setValue(value: string) {
+            self.value = value;
         }
-    }))
+    }));
 
 type IBoxType = typeof Box.Type;
 export interface IBox extends IBoxType { };
