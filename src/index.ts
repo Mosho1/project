@@ -3,10 +3,9 @@ import * as React from "react"
 import { observable } from "mobx"
 import { observer } from "mobx-react"
 
-import { IStore, getStore } from "./stores/domain-state"
+import { IStore, getStore, replaceStore } from "./stores/domain-state"
 import App from "./components/app"
 import syncStoreWithBackend from "./stores/utils/socket"
-import { getSnapshot, applySnapshot } from 'mobx-state-tree';
 
 const socket = new WebSocket("ws://localhost:4001")
 
@@ -19,7 +18,8 @@ const render = () => ReactDOM.render(
     React.createElement(observer(() =>
         React.createElement(App, { getStore: storeInstance.get.bind(storeInstance) })
     )),
-    document.getElementById("root"));
+    document.getElementById("root")
+);
 
 render();
 
@@ -27,9 +27,10 @@ function prepareStore(getStoreFn = getStore) {
     const newStore = getStoreFn();
     const oldStore = storeInstance.get();
     if (oldStore) {
-        applySnapshot(newStore, getSnapshot(oldStore));
+        replaceStore(newStore, oldStore);
     }
     storeInstance.set(newStore);
+    (window as any)['store'] = newStore;
     syncStoreWithBackend(socket, newStore);
 }
 
@@ -45,7 +46,7 @@ if (module.hot) {
     });
     module.hot.accept("./stores/utils/socket", function () {
         // new socket sync implementation
-        require("./stores/utils/socket").default(socket, storeInstance.get())
+        require("./stores/utils/socket").default(socket, storeInstance.get());
     });
     module.hot.accept('./components/app', function () {
         render();

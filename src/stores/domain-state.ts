@@ -1,4 +1,4 @@
-import { types, getEnv } from 'mobx-state-tree'
+import { types, getEnv, applySnapshot, getSnapshot } from 'mobx-state-tree'
 import { pouch } from './utils/pouchdb-model';
 import { models, modelTypes } from './models/index';
 import { ContextMenu } from './context-menu';
@@ -23,8 +23,9 @@ export const Store = pouch.store('Store', {
     }))
     .actions(self => {
         const addBox = (name: string, x: number, y: number, code: ICodeBlock) => {
-            const box = models.Box.create({ name, x, y, code });
-            const { inputs, returns, execInputs, execOutputs } = code;
+            const { inputs, returns, execInputs, execOutputs, values } = code;
+            const boxValues = values.map(v => ({ name: v.name, value: v.defaultValue || '' }));
+            const box = models.Box.create({ name, x, y, code, values: boxValues });
             for (const input of inputs) {
                 box.addSocket('input', input.name);
             }
@@ -52,6 +53,7 @@ export const Store = pouch.store('Store', {
             for (const socket of box.sockets) {
                 deleteArrowsForSocket(socket);
             }
+
             self.boxes.delete(box._id);
         };
         const createBox = (name: string, x: number, y: number, code: ICodeBlock) => {
@@ -133,9 +135,7 @@ export const Store = pouch.store('Store', {
     The store that holds our domain: boxes and arrows
 */
 
-
-
-const defaults: IStoreSnapshot = {
+export const defaults: IStoreSnapshot = {
     boxes: {},
     arrows: {},
     contextMenu: {},
@@ -149,6 +149,10 @@ const defaults: IStoreSnapshot = {
 export const getStore = (data?: IStoreSnapshot) => {
     return Store.create({ ...defaults, ...data }, { run });
 }
+
+export const replaceStore = (newStore: IStore, oldStore: IStore) => {
+    applySnapshot(newStore, { ...getSnapshot(oldStore), codeBlocks: { ...codeBlocks } });
+};
 
 type IStoreType = typeof Store.Type;
 export interface IStore extends IStoreType { };

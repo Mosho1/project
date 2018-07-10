@@ -41,7 +41,8 @@ const primitiveTypes = types.union(editableTypes, types.enumeration('primitiveTy
 
 const CodeBlockInput = types.model({
     name: types.string,
-    type: primitiveTypes
+    type: primitiveTypes,
+    defaultValue: types.maybe(types.string)
 });
 
 export const CodeBlock = types.model('CodeBlock', {
@@ -49,7 +50,7 @@ export const CodeBlock = types.model('CodeBlock', {
     name: types.string,
     code: codeType,
     runOnStart: types.optional(types.boolean, false),
-    // editableValue: types.maybe(editableTypes),
+    values: types.optional(types.array(CodeBlockInput), []),
     inputs: types.optional(types.array(CodeBlockInput), []),
     returns: types.optional(primitiveTypes, 'void'),
     execInputs: types.optional(types.array(types.string), []),

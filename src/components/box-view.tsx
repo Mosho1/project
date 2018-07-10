@@ -3,8 +3,24 @@ import { observer } from "mobx-react"
 import { Component } from './component';
 import { Rect, Group, Text } from 'react-konva';
 import { ISocket } from '../stores/models/socket';
-import { IBox } from '../stores/models/box';
+import { IBox, IBoxValue } from '../stores/models/box';
 import { SocketView } from './socket-view';
+
+@observer
+class BoxValueView extends Component<{ boxValue: IBoxValue }> {
+    render() {
+        const { name, value, x, y, width } = this.props.boxValue;
+        
+        return <Text
+            x={x}
+            y={y}
+            fill={'#fff'}
+            text={`${name}: ${value}`}
+            align="center"
+            width={width}
+        />;
+    }
+}
 
 @observer
 export class BoxView extends Component<{ box: IBox }> {
@@ -41,6 +57,12 @@ export class BoxView extends Component<{ box: IBox }> {
             key={s.id}
         />
 
+    boxValueView = (v: IBoxValue, i: number) =>
+        <BoxValueView
+            boxValue={v}
+            key={i}
+        />
+
     render() {
         const { box } = this.props;
         return (
@@ -67,10 +89,11 @@ export class BoxView extends Component<{ box: IBox }> {
                     x={box.x}
                     y={box.y + 12}
                     fill={'#fff'}
-                    text={`${box.name}${box.value !== null ? ` (${box.value})` : ''}`}
+                    text={box.name}
                     align="center"
                     width={box.width}
                 />
+                {box.values.map(this.boxValueView)}
                 {box.sockets.map(this.socketView)}
             </Group>
         );

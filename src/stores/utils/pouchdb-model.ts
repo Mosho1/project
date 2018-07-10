@@ -56,7 +56,6 @@ export class MSTPouch<T extends { type: string } = { type: string }> {
             _id: optionalIdentifierType,
             type: name,
         }, properties as T) as S;
-
         const model = types.model<S>(name, newProperties);
 
         if (this.db === null) return model;
@@ -85,11 +84,12 @@ export class MSTPouch<T extends { type: string } = { type: string }> {
 
         const model = types.model(name, properties);
 
-        if (this.db === null) return model;
+        if (this.db === null || this.finishedLoading) return model;
 
         let typeMap: { [index: string]: string } = {};
         for (const k of Object.keys(model.properties)) {
-            const propType: any = model.properties[k];
+            let propType: any = model.properties[k];
+            if (propType.defaultValue) propType = propType.type;
             if (propType.subType) {
                 typeMap[propType.subType.name] = k;
             }
@@ -98,7 +98,9 @@ export class MSTPouch<T extends { type: string } = { type: string }> {
         return model
             .actions(self => {
                 const setData = (data: any) => {
-                    Object.assign(self, data);
+                    for (const k in data) {
+                        (self as any)[k] = data[k];
+                    }
                 };
 
                 return {

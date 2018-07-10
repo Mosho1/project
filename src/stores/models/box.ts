@@ -3,6 +3,7 @@ import { pouch } from '../utils/pouchdb-model';
 import { Socket, SocketTypeEnum } from './socket';
 import { IStore } from '../domain-state';
 import { CodeBlock } from './code-block';
+import { modelTypes } from './index';
 
 interface BoxEditableProps {
     x?: number;
@@ -13,20 +14,58 @@ interface BoxEditableProps {
     scaleY?: number;
 }
 
+const BoxValue = types.model('BoxValue', {
+    name: types.string,
+    value: types.string,
+})
+    .volatile(_self => ({
+        width: 50,
+    }))
+    .views(self => ({
+        get box(): modelTypes['Box'] {
+            if (!hasParent(self, 2)) return null as any;
+            return getParent(self, 2);
+        },
+    }))
+    .views(self => ({
+        get index() {
+            return self.box.values.findIndex(v => v === self);
+        }
+    }))
+    .views(self => ({
+        get x() {
+            return self.box.x + self.index * self.width + 10;
+        },
+        get y() {
+            return self.box.y + 3 * self.box.height / 5;
+        },
+    }));
+
+type IBoxValueType = typeof BoxValue.Type;
+export interface IBoxValue extends IBoxValueType { };
+
 export const Box = pouch.model('Box',
     {
         name: 'hal',
         x: 0,
         y: 0,
-        width: 150,
-        value: types.maybe(types.string),
+        values: types.optional(types.array(BoxValue), []),
         sockets: types.optional(types.array(Socket), []),
         code: types.reference(CodeBlock)
     })
+    .volatile(_self => ({
+        width: 150,
+    }))
     .views(self => ({
         get store(): IStore | null {
             if (!hasParent(self)) return null;
             return getParent(self, 2);
+        },
+        get valuesMap() {
+            return self.values.reduce((acc, cur) => {
+                acc[cur.name] = cur;
+                return acc;
+            }, {} as { [index: string]: typeof BoxValue.Type });
         },
         get inputs() {
             return self.sockets.filter(({ socketType }) => socketType === 'input');
@@ -68,9 +107,9 @@ export const Box = pouch.model('Box',
             self.sockets.push(socket);
             return socket;
         },
-        setValue(value: string) {
+        setValue(key: string, value: string) {
             /* istanbul ignore next */
-            self.value = value;
+            self.valuesMap[key].value = value;
         }
     }));
 

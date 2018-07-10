@@ -5,7 +5,7 @@ import { values } from './utils/utils';
 export const runBox = (box: modelTypes['Box']): any => {
 
     const context = {
-        value: box.value,
+        values: box.valuesMap,
         emit(eventName: string) {
             const execOutput = box.execOutputs.find(x => x.name === eventName);
             if (!execOutput) {

@@ -20,18 +20,18 @@ class Sidebar extends Component {
         }
     };
 
-    onValueChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    onValueChange = (name: string) => (e: React.ChangeEvent<HTMLInputElement>) => {
         const { selection } = this.store;
-        selection!.setValue(e.target.value);
+        selection!.setValue(name, e.target.value);
     };
 
     render() {
         const { selection } = this.store
         return selection ? (
             <div className={`${styles.sidebar} ${styles.sidebarOpen}`}>
-                <div>
-                    value: <input defaultValue={selection.value || ''} onChange={this.onValueChange} />
-                </div>
+                {selection.values.map((v, i) => <div key={i}>
+                    {v.name}: <input defaultValue={v.value || ''} onChange={this.onValueChange(v.name)} />
+                </div>)}
                 inputs: <button onClick={this.onAddSocket('input')}>+</button>
                 {selection.inputs.map(this.getSocketInput)}
                 < hr />
