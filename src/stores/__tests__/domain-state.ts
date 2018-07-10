@@ -1,11 +1,14 @@
 // import { getSnapshot, applyAction } from "mobx-state-tree"
 import { Store, IStore } from '../domain-state';
 import { product, mock } from '../test-utils';
-import { models } from '../models';
 import { socketTypes } from '../models/socket';
-import { getTestCodeBlock } from '../models/code-block';
+import { createTestCodeBlock } from '../models/__tests__/code-block';
+import { createTestBox } from '../models/__tests__/box';
+import { MSTPouch } from '../utils/pouchdb-model';
 
-const cb = getTestCodeBlock();
+beforeAll(() => {
+    MSTPouch.enabled = false;
+});
 
 let store: IStore;
 beforeEach(() => {
@@ -13,22 +16,29 @@ beforeEach(() => {
 });
 
 test('addBox', () => {
+    const cb = createTestCodeBlock();
     const box = store.addBox('test', 0, 0, cb);
     expect(store.boxes.get(box._id)).toBe(box);
 });
 
 test('setSelection', () => {
     expect(store.setSelection(null).selection).toBeNull();
-    const box = models.Box.create();
+    const box = createTestBox();
     expect(store.setSelection(box).selection).toBe(box);
 });
 
 test('createBox', () => {
+    const cb = createTestCodeBlock();
     const b = store.createBox('test', 0, 0, cb);
     expect(store.selection).toBe(b);
 });
 
 test('deleteBox', () => {
+    const cb = createTestCodeBlock({
+        execOutputs: [''],
+        execInputs: [''],
+        returns: 'number'
+    });
     const b1 = store.addBox('test', 0, 0, cb);
     const b2 = store.addBox('test2', 50, 50, cb);
     expect(store.boxes).toHaveProperty('size', 2);
@@ -49,7 +59,7 @@ test('addArrow', () => {
 
     for (const test of tests) {
         const [t1, t2] = test;
-        const box = models.Box.create();
+        const box = createTestBox();
         const s1 = box.addSocket(t1);
         const s2 = box.addSocket(t2);
         expect(store.addArrow(s1, s2) !== null).toMatchSnapshot(test.join(','));
@@ -61,7 +71,7 @@ test('hasArrow', () => {
 
     for (const test of tests) {
         const [t1, t2] = test;
-        const box = models.Box.create();
+        const box = createTestBox();
         const s1 = box.addSocket(t1);
         const s2 = box.addSocket(t2);
         store.addArrow(s1, s2);
@@ -70,7 +80,7 @@ test('hasArrow', () => {
 });
 
 test('startDragArrow', () => {
-    const box = models.Box.create({ x: 10, y: 10 });
+    const box = createTestBox({ x: 10, y: 10 });
     const socket = box.addSocket('input');
     store.startDragArrow(socket);
     expect(store.draggedArrow).toMatchObject({
@@ -96,6 +106,7 @@ test('moveDragArrow', () => {
 });
 
 test('endDragArrow', () => {
+    const cb = createTestCodeBlock();
     const b1 = store.addBox('test', 0, 0, cb);
     const s1 = b1.addSocket('input');
 

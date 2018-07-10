@@ -1,4 +1,4 @@
-import { v4 } from "node-uuid"
+import * as v4 from "uuid/v4"
 import { types } from 'mobx-state-tree';
 
 /* istanbul ignore next */

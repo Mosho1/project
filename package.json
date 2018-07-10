@@ -48,7 +48,6 @@
     "mobx": "4.3.1",
     "mobx-react": "5.2.3",
     "mobx-state-tree": "2.2.0",
-    "node-uuid": "1.4.8",
     "pouchdb": "7.0.0",
     "pouchdb-promise": "6.4.3",
     "pouchdb-upsert": "2.2.0",
@@ -56,6 +55,7 @@
     "react-dom": "16.4.1",
     "react-draggable": "3.0.5",
     "react-konva": "1.7.9",
+    "uuid": "3.3.2",
     "ws": "5.2.1"
   },
   "devDependencies": {

@@ -43,7 +43,7 @@ const CodeBlockInput = types.model({
     type: primitiveTypes
 });
 
-export const CodeBlock = types.model({
+export const CodeBlock = types.model('CodeBlock', {
     id: optionalIdentifierType,
     name: types.string,
     code: codeType,
@@ -55,14 +55,8 @@ export const CodeBlock = types.model({
     execOutputs: types.optional(types.array(types.string), []),
 });
 
-export const getTestCodeBlock = () => {
-    return CodeBlock.create({
-        name: 'test',
-        code: (a: number, b: number) => a + b,
-        inputs: [{ name: 'a', type: 'number' }, { name: 'b', type: 'number' }],
-        returns: 'number'
-    });
-};
-
 type ICodeBlockType = typeof CodeBlock.Type;
+
+type ICodeBlockSnapshotType = typeof CodeBlock.SnapshotType;
 export interface ICodeBlock extends ICodeBlockType { };
+export interface ICodeBlockSnapshot extends ICodeBlockSnapshotType { };

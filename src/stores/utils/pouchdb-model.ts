@@ -10,10 +10,15 @@ PouchDB = (PouchDB as any).default || PouchDB;
 PouchDB.plugin(require('./upsert.js'));
 
 export class MSTPouch<T extends { type: string } = { type: string }> {
-    db: PouchDB.Database<T>;
+    db: PouchDB.Database<T> | null;
     updates: { [index: string]: IStateTreeNode } = {};
     finishedLoading = false;
+    static enabled = true;
     constructor({ name = 'store', saveDelay = 1000 } = {}) {
+        if (!MSTPouch.enabled) {
+            this.db = null;
+        }
+
         this.db = new PouchDB<T>(name);
         this.queueUpdate = throttle(this.queueUpdate, saveDelay, { leading: false });
         (window as any)['db'] = this.db;
@@ -27,6 +32,7 @@ export class MSTPouch<T extends { type: string } = { type: string }> {
     };
 
     queueUpdate = () => {
+        if (this.db === null) return;
         const updatesCopy: any = mapValues(this.updates, this.treeNodeToJSON);
         this.updates = {};
         console.log('saving...', updatesCopy);
@@ -52,6 +58,8 @@ export class MSTPouch<T extends { type: string } = { type: string }> {
 
         const model = types.model<S>(name, newProperties);
 
+        if (this.db === null) return model;
+
         return model.actions(self => {
             let dispose: () => void = () => null;
             const afterCreate = () => {
@@ -76,6 +84,8 @@ export class MSTPouch<T extends { type: string } = { type: string }> {
 
         const model = types.model(name, properties);
 
+        if (this.db === null) return model;
+
         let typeMap: { [index: string]: string } = {};
         for (const k of Object.keys(model.properties)) {
             const propType: any = model.properties[k];
@@ -96,7 +106,7 @@ export class MSTPouch<T extends { type: string } = { type: string }> {
             })
             .actions(self => {
                 const afterCreate = () => {
-                    this.db.allDocs({ include_docs: true }).then(docs => {
+                    this.db!.allDocs({ include_docs: true }).then(docs => {
                         const byType = groupBy(docs.rows.map(r => r.doc), doc => doc!.type);
                         const data: { [index: string]: any } = {};
                         for (let k in byType) {

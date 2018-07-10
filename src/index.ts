@@ -3,16 +3,17 @@ import * as React from "react"
 import { observable } from "mobx"
 import { observer } from "mobx-react"
 
-import { store } from "./stores/domain-state"
+import { IStore, getStore } from "./stores/domain-state"
 import App from "./components/app"
 import syncStoreWithBackend from "./stores/utils/socket"
+import { getSnapshot, applySnapshot } from 'mobx-state-tree';
 
 const socket = new WebSocket("ws://localhost:4001")
 
 // To support HMR of store, this ref holds the latest loaded store.
-const storeInstance = observable.box<typeof store | null>(null);
+const storeInstance = observable.box<IStore | null>(null);
 
-prepareStore(store);
+// prepareStore(store);
 
 const render = () => ReactDOM.render(
     React.createElement(observer(() =>
@@ -22,7 +23,12 @@ const render = () => ReactDOM.render(
 
 render();
 
-function prepareStore(newStore: typeof store) {
+function prepareStore(getStoreFn = getStore) {
+    const newStore = getStoreFn();
+    const oldStore = storeInstance.get();
+    if (oldStore) {
+        applySnapshot(newStore, getSnapshot(oldStore));
+    }
     storeInstance.set(newStore);
     syncStoreWithBackend(socket, newStore);
 }
@@ -34,7 +40,7 @@ if (module.hot) {
     // accept update of dependency
     module.hot.accept("./stores/domain-state", function () {
         // obtain new store
-        prepareStore(require('./stores/domain-state').store);
+        prepareStore(require('./stores/domain-state').getStore);
         render();
     });
     module.hot.accept("./stores/utils/socket", function () {
@@ -43,6 +49,5 @@ if (module.hot) {
     });
     module.hot.accept('./components/app', function () {
         render();
-        // Root.forceUpdate();
     });
 }

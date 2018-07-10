@@ -41,13 +41,13 @@ const run = (boxes: IExtendedObservableMap<modelTypes['Box']>) => {
 };
 
 export const Store = pouch.store('Store', {
-    boxes: types.map(models.Box),
-    arrows: types.map(models.Arrow),
-    codeBlocks: types.map(models.CodeBlock),
+    boxes: types.optional(types.map(models.Box), {}),
+    arrows: types.optional(types.map(models.Arrow), {}),
+    codeBlocks: types.optional(types.map(models.CodeBlock), {}),
     selection: types.maybe(types.reference(models.Box)),
     draggedArrow: types.maybe(models.DraggedArrow),
     draggedFromSocket: types.maybe(types.reference(models.Socket)),
-    contextMenu: ContextMenu
+    contextMenu: types.maybe(ContextMenu)
 })
     .views(self => ({
         get sortedCodeBlocks(): ICodeBlock[] {
@@ -172,28 +172,25 @@ const defaults: typeof Store.SnapshotType = {
     boxes: {},
     arrows: {},
     contextMenu: {},
-    codeBlocks,
+    codeBlocks: { ...codeBlocks },
     selection: null,
     draggedArrow: null,
     draggedFromSocket: null
 };
-
-export const store = Store.create(defaults);
-
-(window as any)['store'] = store;
+export const getStore = (data = defaults) => Store.create(data);
 
 /**
     Save / Restore the state of the store while self module is hot reloaded
 */
 /* istanbul ignore next */
-if (module.hot) {
-    if (module.hot.data && module.hot.data.store) {
-        applySnapshot(store, { ...module.hot.data.store, codeBlocks });
-    }
-    module.hot.dispose(data => {
-        data.store = getSnapshot(store);
-    });
-}
+// if (module.hot) {
+//     if (module.hot.data && module.hot.data.store) {
+//         applySnapshot(store, { ...module.hot.data.store, codeBlocks });
+//     }
+//     module.hot.dispose(data => {
+//         data.store = getSnapshot(store);
+//     });
+// }
 
 type IStoreType = typeof Store.Type;
 export interface IStore extends IStoreType { };

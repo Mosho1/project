@@ -165,9 +165,11 @@ exports[`height: 2,2,2,2 1`] = `170`;
 exports[`move 1`] = `
 Object {
   "_id": "test",
+  "code": "cbId",
   "name": "hal",
   "sockets": Array [],
   "type": "Box",
+  "value": null,
   "width": 150,
   "x": 1,
   "y": 2,
@@ -177,9 +179,11 @@ Object {
 exports[`move 2`] = `
 Object {
   "_id": "test",
+  "code": "cbId",
   "name": "hal",
   "sockets": Array [],
   "type": "Box",
+  "value": null,
   "width": 150,
   "x": 2,
   "y": 4,
