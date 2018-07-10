@@ -6,9 +6,11 @@ import { ICodeBlock } from './models/code-block';
 import * as codeBlocks from './functions';
 import { values } from './utils/utils';
 import { run } from './run';
+import { SocketTypeEnum } from './models/socket';
 
 export const Store = pouch.store('Store', {
     boxes: types.optional(types.map(models.Box), {}),
+    sockets: types.optional(types.map(models.Socket), {}),
     arrows: types.optional(types.map(models.Arrow), {}),
     codeBlocks: types.optional(types.map(models.CodeBlock), {}),
     selection: types.maybe(types.reference(models.Box)),
@@ -27,16 +29,16 @@ export const Store = pouch.store('Store', {
             const boxValues = values.map(v => ({ name: v.name, value: v.defaultValue || '' }));
             const box = models.Box.create({ name, x, y, code, values: boxValues });
             for (const input of inputs) {
-                box.addSocket('input', input.name);
+                addSocketToBox(box, 'input', input.name);
             }
             if (returns && returns !== 'void') {
-                box.addSocket('output');
+                addSocketToBox(box, 'output');
             }
             for (const input of execInputs) {
-                box.addSocket('execInput', input);
+                addSocketToBox(box, 'execInput', input);
             }
             for (const output of execOutputs) {
-                box.addSocket('execOutput', output);
+                addSocketToBox(box, 'execOutput', output);
             }
             self.boxes.put(box);
             return box;
@@ -113,6 +115,12 @@ export const Store = pouch.store('Store', {
         const runCode = () => {
             return getEnv(self).run(self.boxes);
         };
+        const addSocketToBox = (box: modelTypes['Box'], type: SocketTypeEnum, name = '') => {
+            const s = models.Socket.create({socketType: type, name})
+            self.sockets.put(s);
+            box.addSocket(s);
+            return s;
+        };
 
         return {
             addBox,
@@ -125,7 +133,8 @@ export const Store = pouch.store('Store', {
             moveDragArrow,
             endDragArrow,
             deleteArrowsForSocket,
-            runCode
+            runCode,
+            addSocketToBox
         };
     })
 

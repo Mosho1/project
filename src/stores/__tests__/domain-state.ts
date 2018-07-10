@@ -1,7 +1,7 @@
 // import { getSnapshot, applyAction } from "mobx-state-tree"
 import { Store, IStore } from '../domain-state';
 import { product, mock } from '../test-utils';
-import { socketTypes } from '../models/socket';
+import { socketTypes, Socket } from '../models/socket';
 import { createTestCodeBlock } from '../models/__tests__/code-block';
 import { createTestBox } from '../models/__tests__/box';
 import { ICodeBlock } from '../models/code-block';
@@ -77,7 +77,8 @@ test('hasArrow', () => {
 
 test('startDragArrow', () => {
     const box = createTestBox({ x: 10, y: 10 });
-    const socket = box.addSocket('input');
+    const socket = Socket.create({ socketType: 'input' })
+    box.addSocket(socket);
     store.startDragArrow(socket);
     expect(store.draggedArrow).toMatchObject({
         startX: socket.x,
@@ -104,10 +105,12 @@ test('moveDragArrow', () => {
 test('endDragArrow', () => {
     const cb = createTestCodeBlock();
     const b1 = store.addBox('test', 0, 0, cb);
-    const s1 = b1.addSocket('input');
+    const s1 = Socket.create({ socketType: 'input' })
+    b1.addSocket(s1);
 
     const b2 = store.addBox('test', 0, 0, cb);
-    const s2 = b2.addSocket('output');
+    const s2 = Socket.create({ socketType: 'output' })
+    b2.addSocket(s2);
 
     mock(store, { draggedArrow: {}, draggedFromSocket: s1 });
     store.endDragArrow(s2);
@@ -117,7 +120,7 @@ test('endDragArrow', () => {
 });
 
 test('runCode', () => {
-    const obj = {run: () => null};
+    const obj = { run: () => null };
     spyOn(obj, 'run');
     store = Store.create({}, obj);
     store.runCode();
@@ -125,13 +128,13 @@ test('runCode', () => {
 });
 
 test('sortedCodeBlocks', () => {
-    let codeBlocks: {[index: string]: ICodeBlock} = {};
-    for (const name of ['zzz','ac','asef','ba','esv','cef','cef','ce3','dd','d']) {
+    let codeBlocks: { [index: string]: ICodeBlock } = {};
+    for (const name of ['zzz', 'ac', 'asef', 'ba', 'esv', 'cef', 'cef', 'ce3', 'dd', 'd']) {
         codeBlocks[name] = createTestCodeBlock({
             id: name,
             name
         });
     }
-    store = Store.create({codeBlocks})
+    store = Store.create({ codeBlocks })
     expect(store.sortedCodeBlocks).toMatchSnapshot();
 });

@@ -1,6 +1,6 @@
 import { types, getParent, hasParent } from 'mobx-state-tree'
 import { pouch } from '../utils/pouchdb-model';
-import { Socket, SocketTypeEnum } from './socket';
+import { Socket } from './socket';
 import { IStore } from '../domain-state';
 import { CodeBlock } from './code-block';
 import { modelTypes } from './index';
@@ -50,7 +50,7 @@ export const Box = pouch.model('Box',
         x: 0,
         y: 0,
         values: types.optional(types.array(BoxValue), []),
-        sockets: types.optional(types.array(Socket), []),
+        sockets: types.optional(types.array(types.reference(Socket)), []),
         code: types.reference(CodeBlock)
     })
     .volatile(_self => ({
@@ -102,8 +102,7 @@ export const Box = pouch.model('Box',
             /* istanbul ignore next */
             Object.assign(self, props);
         },
-        addSocket(type: SocketTypeEnum, name = '') {
-            const socket = Socket.create({ name: name, socketType: type });
+        addSocket(socket: modelTypes['Socket']) {
             self.sockets.push(socket);
             return socket;
         },

@@ -54,7 +54,7 @@ export class BoxView extends Component<{ box: IBox }> {
     socketView = (s: ISocket) =>
         <SocketView
             socket={s}
-            key={s.id}
+            key={s._id}
         />
 
     boxValueView = (v: IBoxValue, i: number) =>

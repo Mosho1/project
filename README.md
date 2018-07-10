@@ -9,3 +9,5 @@
 
 - [ ] import modules?
 - [ ] multiple values for boxes
+- [ ] type validation
+- [ ] type conversion

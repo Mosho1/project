@@ -1,6 +1,8 @@
 import { types, getParent, hasParent } from 'mobx-state-tree'
-import { optionalIdentifierType, values } from '../utils/utils';
+import { values } from '../utils/utils';
 import { modelTypes } from './index';
+import { pouch } from '../utils/pouchdb-model';
+import { IStore } from '../domain-state';
 
 const socketType = types.enumeration('socketType', [
     'input',
@@ -22,17 +24,21 @@ export const areSocketsCompatible = (s1: ISocket, s2: ISocket) => {
     return true;
 };
 
-export const Socket = types.model('Socket', {
-    id: optionalIdentifierType,
+export const Socket = pouch.model('Socket', {
     socketType,
-    name: types.optional(types.string, '')
+    name: types.optional(types.string, ''),
 }).volatile(_self => ({
     value: null,
 }))
     .views(self => ({
-        get box(): null | modelTypes['Box'] {
+        get store(): null | IStore {
             if (!hasParent(self, 2)) return null;
             return getParent(self, 2);
+        },
+    }))
+    .views(self => ({
+        get box(): null | modelTypes['Box'] {
+            return values(self.store!.boxes).find(b => Boolean(b.sockets.find(s => s === self))) || null;
         },
     }))
     .views(self => ({
@@ -92,4 +98,6 @@ export const Socket = types.model('Socket', {
     });
 
 type ISocketType = typeof Socket.Type;
+type ISocketSnapshotType = typeof Socket.SnapshotType;
 export interface ISocket extends ISocketType { };
+export interface ISocketSnapshot extends ISocketSnapshotType { };

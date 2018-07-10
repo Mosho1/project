@@ -1,6 +1,14 @@
-import { Socket, SocketTypeEnum, socketTypes, areSocketsCompatible } from '../socket';
+import { Socket, SocketTypeEnum, socketTypes, areSocketsCompatible, ISocketSnapshot } from '../socket';
 import { mock, product } from '../../test-utils';
 import { ObservableMap } from 'mobx';
+
+export const createTestSocket = (args?: ISocketSnapshot) => {
+    return Socket.create({
+        name: 'test',
+        socketType: 'input',
+        ...args
+    });
+};
 
 test('box', () => {
     expect(Socket.create({ socketType: 'input' }).box).toBeNull();

@@ -1,6 +1,7 @@
 import { Box } from '../box';
 import { mock, product } from '../../test-utils';
 import { CodeBlock } from '../code-block';
+import { createTestSocket } from './socket';
 
 export const createTestBox = (args?: any) => {
     return Box.create({
@@ -63,9 +64,9 @@ test('move', () => {
 test('addSocket', () => {
     const box = createTestBox();
     expect(box.sockets).toHaveProperty('length', 0);
-    box.addSocket('execInput')
+    box.addSocket(createTestSocket({socketType: 'execInput'}));
     expect(box.sockets).toHaveProperty('length', 1);
-    box.addSocket('input')
+    box.addSocket(createTestSocket({socketType: 'input'}));
     expect(box.sockets).toHaveProperty('length', 2);
     expect(box.inputs).toHaveProperty('length', 1);
     expect(box.outputs).toHaveProperty('length', 0);

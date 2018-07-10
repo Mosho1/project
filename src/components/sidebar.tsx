@@ -10,13 +10,13 @@ class Sidebar extends Component {
     };
 
     getSocketInput = (s: ISocket) => {
-        return <input onChange={this.onSocketNameChange(s)} defaultValue={s.name} key={s.id} />;
+        return <input onChange={this.onSocketNameChange(s)} defaultValue={s.name} key={s._id} />;
     };
 
     onAddSocket = (type: 'input' | 'output') => () => {
         const { selection } = this.store;
         if (selection) {
-            selection.addSocket(type);
+            this.store.addSocketToBox(selection, type);
         }
     };
 
