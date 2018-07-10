@@ -68,6 +68,12 @@ interface SystemJS {
   import: (path?: string) => Promise<any>;
 }
 
+declare  namespace NodeJS {
+  interface Global {
+    __TEST__: boolean;
+  }
+}
+
 interface GlobalEnvironment {
   ENV: string;
   HMR: boolean;
@@ -157,4 +163,4 @@ interface KonvaEvent {
   cancelBubble: boolean;
 }
 
-type NestedPartial<T> = {[K in keyof T]?: T[K] | NestedPartial<T[K]>};
+type NestedPartial<T> = { [K in keyof T]?: T[K] | NestedPartial<T[K]> };

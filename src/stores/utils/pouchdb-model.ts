@@ -1,9 +1,9 @@
 import { isStateTreeNode, types, onSnapshot, IStateTreeNode } from "mobx-state-tree"
 import { optionalIdentifierType } from "../utils/utils"
-import PouchDBType from 'pouchdb';
 import { IModelProperties } from 'mobx-state-tree/dist/types/complex-types/model';
 import { throttle, groupBy, mapKeys, mapValues } from 'lodash';
 
+import PouchDBType from 'pouchdb';
 let PouchDB: typeof PouchDBType = require('pouchdb');
 PouchDB = (PouchDB as any).default || PouchDB;
 
@@ -13,7 +13,7 @@ export class MSTPouch<T extends { type: string } = { type: string }> {
     db: PouchDB.Database<T> | null;
     updates: { [index: string]: IStateTreeNode } = {};
     finishedLoading = false;
-    static enabled = true;
+    static enabled = !global.__TEST__;
     constructor({ name = 'store', saveDelay = 1000 } = {}) {
         if (!MSTPouch.enabled) {
             this.db = null;

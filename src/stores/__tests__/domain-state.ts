@@ -6,10 +6,6 @@ import { createTestCodeBlock } from '../models/__tests__/code-block';
 import { createTestBox } from '../models/__tests__/box';
 import { MSTPouch } from '../utils/pouchdb-model';
 
-beforeAll(() => {
-    MSTPouch.enabled = false;
-});
-
 let store: IStore;
 beforeEach(() => {
     store = Store.create();

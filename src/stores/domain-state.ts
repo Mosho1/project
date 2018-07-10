@@ -179,18 +179,5 @@ const defaults: typeof Store.SnapshotType = {
 };
 export const getStore = (data = defaults) => Store.create(data);
 
-/**
-    Save / Restore the state of the store while self module is hot reloaded
-*/
-/* istanbul ignore next */
-// if (module.hot) {
-//     if (module.hot.data && module.hot.data.store) {
-//         applySnapshot(store, { ...module.hot.data.store, codeBlocks });
-//     }
-//     module.hot.dispose(data => {
-//         data.store = getSnapshot(store);
-//     });
-// }
-
 type IStoreType = typeof Store.Type;
 export interface IStore extends IStoreType { };
