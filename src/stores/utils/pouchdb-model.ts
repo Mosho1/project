@@ -17,6 +17,7 @@ export class MSTPouch<T extends { type: string } = { type: string }> {
     constructor({ name = 'store', saveDelay = 1000 } = {}) {
         if (!MSTPouch.enabled) {
             this.db = null;
+            return;
         }
 
         this.db = new PouchDB<T>(name);

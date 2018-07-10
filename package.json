@@ -21,6 +21,7 @@
       "^.+\\.(ts|tsx)$": "ts-jest"
     },
     "globals": {
+      "__TEST__": true,
       "ts-jest": {
         "tsConfigFile": "tsconfig.jest.json"
       }
