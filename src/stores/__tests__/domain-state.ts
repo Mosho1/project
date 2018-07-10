@@ -4,8 +4,7 @@ import { product, mock } from '../test-utils';
 import { socketTypes } from '../models/socket';
 import { createTestCodeBlock } from '../models/__tests__/code-block';
 import { createTestBox } from '../models/__tests__/box';
-import { MSTPouch } from '../utils/pouchdb-model';
-import { ICodeBlockSnapshot, ICodeBlock } from '../models/code-block';
+import { ICodeBlock } from '../models/code-block';
 
 let store: IStore;
 beforeEach(() => {

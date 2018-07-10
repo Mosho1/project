@@ -13,7 +13,7 @@ const socket = new WebSocket("ws://localhost:4001")
 // To support HMR of store, this ref holds the latest loaded store.
 const storeInstance = observable.box<IStore | null>(null);
 
-// prepareStore(store);
+prepareStore();
 
 const render = () => ReactDOM.render(
     React.createElement(observer(() =>

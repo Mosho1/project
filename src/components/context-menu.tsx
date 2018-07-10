@@ -22,19 +22,19 @@ export class ContextMenu extends Component {
 
     _handleContextMenu = (event: MouseEvent) => {
         event.preventDefault();
-        if (!this.root) this.store.contextMenu.toggle(true);
-        this.store.contextMenu.handleContextMenu(this.root!, event);
+        if (!this.root) this.store.contextMenu!.toggle(true);
+        this.store.contextMenu!.handleContextMenu(this.root!, event);
     };
 
     _handleClick = (event: MouseEvent) => {
         if (!event.target) return;
         const wasOutside = !((event.target as any).contains === this.root!);
 
-        if (wasOutside) this.store.contextMenu.toggle(false);
+        if (wasOutside) this.store.contextMenu!.toggle(false);
     };
 
     _handleScroll = () => {
-        this.store.contextMenu.toggle(false);
+        this.store.contextMenu!.toggle(false);
     };
 
     handleClick = (b: ICodeBlock) => (e: React.MouseEvent) => {
@@ -42,7 +42,7 @@ export class ContextMenu extends Component {
     };
 
     render() {
-        const { isOpen, position } = this.store.contextMenu;
+        const { isOpen, position } = this.store.contextMenu!;
         return (isOpen || null) &&
             <div style={{ left: position.left, top: position.top }} ref={ref => { this.root = ref }} className={styles.contextMenu}>
                 {(this.store.sortedCodeBlocks.map(b =>

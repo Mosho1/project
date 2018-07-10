@@ -146,7 +146,7 @@ const defaults: IStoreSnapshot = {
 };
 
 /* istanbul ignore next */
-export const getStore = (data: IStoreSnapshot) => {
+export const getStore = (data?: IStoreSnapshot) => {
     return Store.create({ ...defaults, ...data }, { run });
 }
 
