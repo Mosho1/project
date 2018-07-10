@@ -1,44 +1,11 @@
-import { types, getSnapshot, applySnapshot, IExtendedObservableMap } from 'mobx-state-tree'
+import { types, getEnv } from 'mobx-state-tree'
 import { pouch } from './utils/pouchdb-model';
 import { models, modelTypes } from './models/index';
 import { ContextMenu } from './context-menu';
 import { ICodeBlock } from './models/code-block';
 import * as codeBlocks from './functions';
 import { values } from './utils/utils';
-
-const runBox = (box: modelTypes['Box']): any => {
-
-    const context = {
-        value: box.value,
-        emit(eventName: string) {
-            const execOutput = box.execOutputs.find(x => x.name === eventName);
-            if (!execOutput) {
-                throw new Error(`no execOutput found for event: ${eventName}`);
-            }
-            for (const a of execOutput.arrows) {
-                runBox(a.input.box!);
-            }
-        }
-    };
-
-    let args = [];
-    for (const input of box.inputs) {
-        const fromOutput = input.arrows[0].output;
-        args.push(runBox(fromOutput.box!));
-    }
-
-    return box.code.code.apply(context, args);
-
-};
-
-const run = (boxes: IExtendedObservableMap<modelTypes['Box']>) => {
-    const start = values(boxes).find(b => b.code.runOnStart);
-    if (!start) {
-        throw new Error('no start found');
-    }
-
-    runBox(start);
-};
+import { run } from './run';
 
 export const Store = pouch.store('Store', {
     boxes: types.optional(types.map(models.Box), {}),
@@ -142,7 +109,7 @@ export const Store = pouch.store('Store', {
             }
         };
         const runCode = () => {
-            return run(self.boxes);
+            return getEnv(self).run(self.boxes);
         };
 
         return {
@@ -168,7 +135,7 @@ export const Store = pouch.store('Store', {
 
 
 
-const defaults: typeof Store.SnapshotType = {
+const defaults: IStoreSnapshot = {
     boxes: {},
     arrows: {},
     contextMenu: {},
@@ -177,7 +144,13 @@ const defaults: typeof Store.SnapshotType = {
     draggedArrow: null,
     draggedFromSocket: null
 };
-export const getStore = (data = defaults) => Store.create(data);
+
+/* istanbul ignore next */
+export const getStore = (data: IStoreSnapshot) => {
+    return Store.create({ ...defaults, ...data }, { run });
+}
 
 type IStoreType = typeof Store.Type;
 export interface IStore extends IStoreType { };
+type IStoreSnapshotType = typeof Store.SnapshotType;
+export interface IStoreSnapshot extends IStoreSnapshotType { };

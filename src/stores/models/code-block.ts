@@ -1,7 +1,9 @@
 import { types } from 'mobx-state-tree';
 import { optionalIdentifierType } from '../utils/utils';
 const parseFunction = (value: string) => {
-    return eval(`(${value})`);
+    const fn = eval(`(${value})`);
+    if (typeof fn !== 'function') throw new Error(`${value} is not a valid function`);
+    return fn;
 };
 
 const codeType = types.custom<string, Function>({
@@ -17,8 +19,7 @@ const codeType = types.custom<string, Function>({
             parseFunction(value);
             return '';
         } catch (e) {
-            console.log(e);
-            return `value "${value}" is Not a valid function`;
+            return `value "${value}" is Not a valid function ${e}`;
         }
     },
     isTargetType(value: any) {

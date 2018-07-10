@@ -10,12 +10,33 @@ export const createTestCodeBlock = (args?: ICodeBlockSnapshot) => {
     });
 };
 
-test('', () => {
-    const cb = CodeBlock.create({
+test('can create', () => {
+    expect(() => CodeBlock.create({
         name: 'test',
         code: ((a: number, b: number) => a + b).toString()
-    });
-    cb;
+    })).not.toThrow();
+
+    expect(() => CodeBlock.create({
+        name: 'test',
+        code: ((a: number, b: number) => a + b)
+    })).not.toThrow();
+});
+
+test('throws on invalid code', () => {
+    expect(() => CodeBlock.create({
+        name: 'test',
+        code: null
+    })).toThrow();
+
+    expect(() => CodeBlock.create({
+        name: 'test',
+        code: ''
+    })).toThrow();
+
+    expect(() => CodeBlock.create({
+        name: 'test',
+        code: 'not a function'
+    })).toThrow();
 });
 
 

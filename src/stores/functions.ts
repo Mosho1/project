@@ -1,3 +1,5 @@
+/* istanbul ignore file */
+
 type Emitter = { value: any, emit: (name: string) => void };
 
 export const start = {

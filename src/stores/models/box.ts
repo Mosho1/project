@@ -69,6 +69,7 @@ export const Box = pouch.model('Box',
             return socket;
         },
         setValue(value: string) {
+            /* istanbul ignore next */
             self.value = value;
         }
     }));

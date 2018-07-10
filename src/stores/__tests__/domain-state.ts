@@ -5,6 +5,7 @@ import { socketTypes } from '../models/socket';
 import { createTestCodeBlock } from '../models/__tests__/code-block';
 import { createTestBox } from '../models/__tests__/box';
 import { MSTPouch } from '../utils/pouchdb-model';
+import { ICodeBlockSnapshot, ICodeBlock } from '../models/code-block';
 
 let store: IStore;
 beforeEach(() => {
@@ -114,4 +115,24 @@ test('endDragArrow', () => {
 
     expect(store.hasArrow(s1, s2)).toBe(true);
     expect(store.draggedArrow).toBeNull();
+});
+
+test('runCode', () => {
+    const obj = {run: () => null};
+    spyOn(obj, 'run');
+    store = Store.create({}, obj);
+    store.runCode();
+    expect(obj.run).toHaveBeenCalledWith(store.boxes);
+});
+
+test('sortedCodeBlocks', () => {
+    let codeBlocks: {[index: string]: ICodeBlock} = {};
+    for (const name of ['zzz','ac','asef','ba','esv','cef','cef','ce3','dd','d']) {
+        codeBlocks[name] = createTestCodeBlock({
+            id: name,
+            name
+        });
+    }
+    store = Store.create({codeBlocks})
+    expect(store.sortedCodeBlocks).toMatchSnapshot();
 });
