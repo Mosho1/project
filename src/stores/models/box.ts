@@ -67,6 +67,12 @@ export const Box = pouch.model('Box',
                 return acc;
             }, {} as { [index: string]: typeof BoxValue.Type });
         },
+        get valuesValueMap() {
+            return self.values.reduce((acc, cur) => {
+                acc[cur.name] = cur.value;
+                return acc;
+            }, {} as { [index: string]: string });
+        },
         get inputs() {
             return self.sockets.filter(({ socketType }) => socketType === 'input');
         },
