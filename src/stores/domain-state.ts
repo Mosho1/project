@@ -129,6 +129,15 @@ export const Store = pouch.store('Store', {
             box.addSocket(s);
             return s;
         };
+        const moveBoxOrSelection = (box: modelTypes['Box'], dx: number, dy: number) => {
+            if (self.selection.length > 0) {
+                for (const box of self.selection) {
+                    box.move(dx, dy);
+                }
+            } else {
+                box.move(dx, dy);
+            }
+        };
 
         return {
             addBox,
@@ -144,7 +153,8 @@ export const Store = pouch.store('Store', {
             endDragArrow,
             deleteArrowsForSocket,
             runCode,
-            addSocketToBox
+            addSocketToBox,
+            moveBoxOrSelection
         };
     })
 

@@ -43,7 +43,11 @@ export class BoxView extends Component<{ box: IBox }> {
     };
 
     handleDragMove = ({ evt }: { evt: DragEvent }) => {
-        this.props.box.move(evt.clientX - this.dragStartX, evt.clientY - this.dragStartY);
+        this.store.moveBoxOrSelection(
+            this.props.box,
+            evt.clientX - this.dragStartX,
+            evt.clientY - this.dragStartY
+        );
         this.dragStartX = evt.clientX;
         this.dragStartY = evt.clientY;
     };
