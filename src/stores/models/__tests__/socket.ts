@@ -117,12 +117,12 @@ test('setName', () => {
 });
 
 test('areSocketsCompatible', () => {
-    const tests = product(socketTypes, socketTypes, [0, 1], [0, 1]);
+    const tests = product(socketTypes, socketTypes, [0, 1], [0, 1], ['string', 'number', 'any'], ['string', 'number', 'any']);
     for (const t of tests) {
-        const [s1, s2, l1, l2] = t;
+        const [s1, s2, l1, l2, t1, t2] = t;
         expect(areSocketsCompatible(
-            mock(createTestSocket({ socketType: s1 }), { arrows: { length: l1 } }),
-            mock(createTestSocket({ socketType: s2 }), { arrows: { length: l2 } }),
+            mock(createTestSocket({ socketType: s1 }), { arrows: { length: l1 }, code: {type: t1} }),
+            mock(createTestSocket({ socketType: s2 }), { arrows: { length: l2 }, code: {type: t2} }),
         )).toMatchSnapshot(t.join(','));
     }
 });

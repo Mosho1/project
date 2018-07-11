@@ -1,132 +1,1156 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`areSocketsCompatible: execInput,execInput,0,0 1`] = `false`;
+exports[`areSocketsCompatible: execInput,execInput,0,0,any,any 1`] = `false`;
 
-exports[`areSocketsCompatible: execInput,execInput,0,1 1`] = `false`;
+exports[`areSocketsCompatible: execInput,execInput,0,0,any,number 1`] = `false`;
 
-exports[`areSocketsCompatible: execInput,execInput,1,0 1`] = `false`;
+exports[`areSocketsCompatible: execInput,execInput,0,0,any,string 1`] = `false`;
 
-exports[`areSocketsCompatible: execInput,execInput,1,1 1`] = `false`;
+exports[`areSocketsCompatible: execInput,execInput,0,0,number,any 1`] = `false`;
 
-exports[`areSocketsCompatible: execInput,execOutput,0,0 1`] = `true`;
+exports[`areSocketsCompatible: execInput,execInput,0,0,number,number 1`] = `false`;
 
-exports[`areSocketsCompatible: execInput,execOutput,0,1 1`] = `false`;
+exports[`areSocketsCompatible: execInput,execInput,0,0,number,string 1`] = `false`;
 
-exports[`areSocketsCompatible: execInput,execOutput,1,0 1`] = `false`;
+exports[`areSocketsCompatible: execInput,execInput,0,0,string,any 1`] = `false`;
 
-exports[`areSocketsCompatible: execInput,execOutput,1,1 1`] = `false`;
+exports[`areSocketsCompatible: execInput,execInput,0,0,string,number 1`] = `false`;
 
-exports[`areSocketsCompatible: execInput,input,0,0 1`] = `false`;
+exports[`areSocketsCompatible: execInput,execInput,0,0,string,string 1`] = `false`;
 
-exports[`areSocketsCompatible: execInput,input,0,1 1`] = `false`;
+exports[`areSocketsCompatible: execInput,execInput,0,1,any,any 1`] = `false`;
 
-exports[`areSocketsCompatible: execInput,input,1,0 1`] = `false`;
+exports[`areSocketsCompatible: execInput,execInput,0,1,any,number 1`] = `false`;
 
-exports[`areSocketsCompatible: execInput,input,1,1 1`] = `false`;
+exports[`areSocketsCompatible: execInput,execInput,0,1,any,string 1`] = `false`;
 
-exports[`areSocketsCompatible: execInput,output,0,0 1`] = `false`;
+exports[`areSocketsCompatible: execInput,execInput,0,1,number,any 1`] = `false`;
 
-exports[`areSocketsCompatible: execInput,output,0,1 1`] = `false`;
+exports[`areSocketsCompatible: execInput,execInput,0,1,number,number 1`] = `false`;
 
-exports[`areSocketsCompatible: execInput,output,1,0 1`] = `false`;
+exports[`areSocketsCompatible: execInput,execInput,0,1,number,string 1`] = `false`;
 
-exports[`areSocketsCompatible: execInput,output,1,1 1`] = `false`;
+exports[`areSocketsCompatible: execInput,execInput,0,1,string,any 1`] = `false`;
 
-exports[`areSocketsCompatible: execOutput,execInput,0,0 1`] = `true`;
+exports[`areSocketsCompatible: execInput,execInput,0,1,string,number 1`] = `false`;
 
-exports[`areSocketsCompatible: execOutput,execInput,0,1 1`] = `false`;
+exports[`areSocketsCompatible: execInput,execInput,0,1,string,string 1`] = `false`;
 
-exports[`areSocketsCompatible: execOutput,execInput,1,0 1`] = `false`;
+exports[`areSocketsCompatible: execInput,execInput,1,0,any,any 1`] = `false`;
 
-exports[`areSocketsCompatible: execOutput,execInput,1,1 1`] = `false`;
+exports[`areSocketsCompatible: execInput,execInput,1,0,any,number 1`] = `false`;
 
-exports[`areSocketsCompatible: execOutput,execOutput,0,0 1`] = `false`;
+exports[`areSocketsCompatible: execInput,execInput,1,0,any,string 1`] = `false`;
 
-exports[`areSocketsCompatible: execOutput,execOutput,0,1 1`] = `false`;
+exports[`areSocketsCompatible: execInput,execInput,1,0,number,any 1`] = `false`;
 
-exports[`areSocketsCompatible: execOutput,execOutput,1,0 1`] = `false`;
+exports[`areSocketsCompatible: execInput,execInput,1,0,number,number 1`] = `false`;
 
-exports[`areSocketsCompatible: execOutput,execOutput,1,1 1`] = `false`;
+exports[`areSocketsCompatible: execInput,execInput,1,0,number,string 1`] = `false`;
 
-exports[`areSocketsCompatible: execOutput,input,0,0 1`] = `false`;
+exports[`areSocketsCompatible: execInput,execInput,1,0,string,any 1`] = `false`;
 
-exports[`areSocketsCompatible: execOutput,input,0,1 1`] = `false`;
+exports[`areSocketsCompatible: execInput,execInput,1,0,string,number 1`] = `false`;
 
-exports[`areSocketsCompatible: execOutput,input,1,0 1`] = `false`;
+exports[`areSocketsCompatible: execInput,execInput,1,0,string,string 1`] = `false`;
 
-exports[`areSocketsCompatible: execOutput,input,1,1 1`] = `false`;
+exports[`areSocketsCompatible: execInput,execInput,1,1,any,any 1`] = `false`;
 
-exports[`areSocketsCompatible: execOutput,output,0,0 1`] = `false`;
+exports[`areSocketsCompatible: execInput,execInput,1,1,any,number 1`] = `false`;
 
-exports[`areSocketsCompatible: execOutput,output,0,1 1`] = `false`;
+exports[`areSocketsCompatible: execInput,execInput,1,1,any,string 1`] = `false`;
 
-exports[`areSocketsCompatible: execOutput,output,1,0 1`] = `false`;
+exports[`areSocketsCompatible: execInput,execInput,1,1,number,any 1`] = `false`;
 
-exports[`areSocketsCompatible: execOutput,output,1,1 1`] = `false`;
+exports[`areSocketsCompatible: execInput,execInput,1,1,number,number 1`] = `false`;
 
-exports[`areSocketsCompatible: input,execInput,0,0 1`] = `false`;
+exports[`areSocketsCompatible: execInput,execInput,1,1,number,string 1`] = `false`;
 
-exports[`areSocketsCompatible: input,execInput,0,1 1`] = `false`;
+exports[`areSocketsCompatible: execInput,execInput,1,1,string,any 1`] = `false`;
 
-exports[`areSocketsCompatible: input,execInput,1,0 1`] = `false`;
+exports[`areSocketsCompatible: execInput,execInput,1,1,string,number 1`] = `false`;
 
-exports[`areSocketsCompatible: input,execInput,1,1 1`] = `false`;
+exports[`areSocketsCompatible: execInput,execInput,1,1,string,string 1`] = `false`;
 
-exports[`areSocketsCompatible: input,execOutput,0,0 1`] = `false`;
+exports[`areSocketsCompatible: execInput,execOutput,0,0,any,any 1`] = `true`;
 
-exports[`areSocketsCompatible: input,execOutput,0,1 1`] = `false`;
+exports[`areSocketsCompatible: execInput,execOutput,0,0,any,number 1`] = `true`;
 
-exports[`areSocketsCompatible: input,execOutput,1,0 1`] = `false`;
+exports[`areSocketsCompatible: execInput,execOutput,0,0,any,string 1`] = `true`;
 
-exports[`areSocketsCompatible: input,execOutput,1,1 1`] = `false`;
+exports[`areSocketsCompatible: execInput,execOutput,0,0,number,any 1`] = `true`;
 
-exports[`areSocketsCompatible: input,input,0,0 1`] = `false`;
+exports[`areSocketsCompatible: execInput,execOutput,0,0,number,number 1`] = `true`;
 
-exports[`areSocketsCompatible: input,input,0,1 1`] = `false`;
+exports[`areSocketsCompatible: execInput,execOutput,0,0,number,string 1`] = `false`;
 
-exports[`areSocketsCompatible: input,input,1,0 1`] = `false`;
+exports[`areSocketsCompatible: execInput,execOutput,0,0,string,any 1`] = `true`;
 
-exports[`areSocketsCompatible: input,input,1,1 1`] = `false`;
+exports[`areSocketsCompatible: execInput,execOutput,0,0,string,number 1`] = `false`;
 
-exports[`areSocketsCompatible: input,output,0,0 1`] = `true`;
+exports[`areSocketsCompatible: execInput,execOutput,0,0,string,string 1`] = `true`;
 
-exports[`areSocketsCompatible: input,output,0,1 1`] = `true`;
+exports[`areSocketsCompatible: execInput,execOutput,0,1,any,any 1`] = `false`;
 
-exports[`areSocketsCompatible: input,output,1,0 1`] = `false`;
+exports[`areSocketsCompatible: execInput,execOutput,0,1,any,number 1`] = `false`;
 
-exports[`areSocketsCompatible: input,output,1,1 1`] = `false`;
+exports[`areSocketsCompatible: execInput,execOutput,0,1,any,string 1`] = `false`;
 
-exports[`areSocketsCompatible: output,execInput,0,0 1`] = `false`;
+exports[`areSocketsCompatible: execInput,execOutput,0,1,number,any 1`] = `false`;
 
-exports[`areSocketsCompatible: output,execInput,0,1 1`] = `false`;
+exports[`areSocketsCompatible: execInput,execOutput,0,1,number,number 1`] = `false`;
 
-exports[`areSocketsCompatible: output,execInput,1,0 1`] = `false`;
+exports[`areSocketsCompatible: execInput,execOutput,0,1,number,string 1`] = `false`;
 
-exports[`areSocketsCompatible: output,execInput,1,1 1`] = `false`;
+exports[`areSocketsCompatible: execInput,execOutput,0,1,string,any 1`] = `false`;
 
-exports[`areSocketsCompatible: output,execOutput,0,0 1`] = `false`;
+exports[`areSocketsCompatible: execInput,execOutput,0,1,string,number 1`] = `false`;
 
-exports[`areSocketsCompatible: output,execOutput,0,1 1`] = `false`;
+exports[`areSocketsCompatible: execInput,execOutput,0,1,string,string 1`] = `false`;
 
-exports[`areSocketsCompatible: output,execOutput,1,0 1`] = `false`;
+exports[`areSocketsCompatible: execInput,execOutput,1,0,any,any 1`] = `false`;
 
-exports[`areSocketsCompatible: output,execOutput,1,1 1`] = `false`;
+exports[`areSocketsCompatible: execInput,execOutput,1,0,any,number 1`] = `false`;
 
-exports[`areSocketsCompatible: output,input,0,0 1`] = `true`;
+exports[`areSocketsCompatible: execInput,execOutput,1,0,any,string 1`] = `false`;
 
-exports[`areSocketsCompatible: output,input,0,1 1`] = `false`;
+exports[`areSocketsCompatible: execInput,execOutput,1,0,number,any 1`] = `false`;
 
-exports[`areSocketsCompatible: output,input,1,0 1`] = `true`;
+exports[`areSocketsCompatible: execInput,execOutput,1,0,number,number 1`] = `false`;
 
-exports[`areSocketsCompatible: output,input,1,1 1`] = `false`;
+exports[`areSocketsCompatible: execInput,execOutput,1,0,number,string 1`] = `false`;
 
-exports[`areSocketsCompatible: output,output,0,0 1`] = `false`;
+exports[`areSocketsCompatible: execInput,execOutput,1,0,string,any 1`] = `false`;
 
-exports[`areSocketsCompatible: output,output,0,1 1`] = `false`;
+exports[`areSocketsCompatible: execInput,execOutput,1,0,string,number 1`] = `false`;
 
-exports[`areSocketsCompatible: output,output,1,0 1`] = `false`;
+exports[`areSocketsCompatible: execInput,execOutput,1,0,string,string 1`] = `false`;
 
-exports[`areSocketsCompatible: output,output,1,1 1`] = `false`;
+exports[`areSocketsCompatible: execInput,execOutput,1,1,any,any 1`] = `false`;
+
+exports[`areSocketsCompatible: execInput,execOutput,1,1,any,number 1`] = `false`;
+
+exports[`areSocketsCompatible: execInput,execOutput,1,1,any,string 1`] = `false`;
+
+exports[`areSocketsCompatible: execInput,execOutput,1,1,number,any 1`] = `false`;
+
+exports[`areSocketsCompatible: execInput,execOutput,1,1,number,number 1`] = `false`;
+
+exports[`areSocketsCompatible: execInput,execOutput,1,1,number,string 1`] = `false`;
+
+exports[`areSocketsCompatible: execInput,execOutput,1,1,string,any 1`] = `false`;
+
+exports[`areSocketsCompatible: execInput,execOutput,1,1,string,number 1`] = `false`;
+
+exports[`areSocketsCompatible: execInput,execOutput,1,1,string,string 1`] = `false`;
+
+exports[`areSocketsCompatible: execInput,input,0,0,any,any 1`] = `false`;
+
+exports[`areSocketsCompatible: execInput,input,0,0,any,number 1`] = `false`;
+
+exports[`areSocketsCompatible: execInput,input,0,0,any,string 1`] = `false`;
+
+exports[`areSocketsCompatible: execInput,input,0,0,number,any 1`] = `false`;
+
+exports[`areSocketsCompatible: execInput,input,0,0,number,number 1`] = `false`;
+
+exports[`areSocketsCompatible: execInput,input,0,0,number,string 1`] = `false`;
+
+exports[`areSocketsCompatible: execInput,input,0,0,string,any 1`] = `false`;
+
+exports[`areSocketsCompatible: execInput,input,0,0,string,number 1`] = `false`;
+
+exports[`areSocketsCompatible: execInput,input,0,0,string,string 1`] = `false`;
+
+exports[`areSocketsCompatible: execInput,input,0,1,any,any 1`] = `false`;
+
+exports[`areSocketsCompatible: execInput,input,0,1,any,number 1`] = `false`;
+
+exports[`areSocketsCompatible: execInput,input,0,1,any,string 1`] = `false`;
+
+exports[`areSocketsCompatible: execInput,input,0,1,number,any 1`] = `false`;
+
+exports[`areSocketsCompatible: execInput,input,0,1,number,number 1`] = `false`;
+
+exports[`areSocketsCompatible: execInput,input,0,1,number,string 1`] = `false`;
+
+exports[`areSocketsCompatible: execInput,input,0,1,string,any 1`] = `false`;
+
+exports[`areSocketsCompatible: execInput,input,0,1,string,number 1`] = `false`;
+
+exports[`areSocketsCompatible: execInput,input,0,1,string,string 1`] = `false`;
+
+exports[`areSocketsCompatible: execInput,input,1,0,any,any 1`] = `false`;
+
+exports[`areSocketsCompatible: execInput,input,1,0,any,number 1`] = `false`;
+
+exports[`areSocketsCompatible: execInput,input,1,0,any,string 1`] = `false`;
+
+exports[`areSocketsCompatible: execInput,input,1,0,number,any 1`] = `false`;
+
+exports[`areSocketsCompatible: execInput,input,1,0,number,number 1`] = `false`;
+
+exports[`areSocketsCompatible: execInput,input,1,0,number,string 1`] = `false`;
+
+exports[`areSocketsCompatible: execInput,input,1,0,string,any 1`] = `false`;
+
+exports[`areSocketsCompatible: execInput,input,1,0,string,number 1`] = `false`;
+
+exports[`areSocketsCompatible: execInput,input,1,0,string,string 1`] = `false`;
+
+exports[`areSocketsCompatible: execInput,input,1,1,any,any 1`] = `false`;
+
+exports[`areSocketsCompatible: execInput,input,1,1,any,number 1`] = `false`;
+
+exports[`areSocketsCompatible: execInput,input,1,1,any,string 1`] = `false`;
+
+exports[`areSocketsCompatible: execInput,input,1,1,number,any 1`] = `false`;
+
+exports[`areSocketsCompatible: execInput,input,1,1,number,number 1`] = `false`;
+
+exports[`areSocketsCompatible: execInput,input,1,1,number,string 1`] = `false`;
+
+exports[`areSocketsCompatible: execInput,input,1,1,string,any 1`] = `false`;
+
+exports[`areSocketsCompatible: execInput,input,1,1,string,number 1`] = `false`;
+
+exports[`areSocketsCompatible: execInput,input,1,1,string,string 1`] = `false`;
+
+exports[`areSocketsCompatible: execInput,output,0,0,any,any 1`] = `false`;
+
+exports[`areSocketsCompatible: execInput,output,0,0,any,number 1`] = `false`;
+
+exports[`areSocketsCompatible: execInput,output,0,0,any,string 1`] = `false`;
+
+exports[`areSocketsCompatible: execInput,output,0,0,number,any 1`] = `false`;
+
+exports[`areSocketsCompatible: execInput,output,0,0,number,number 1`] = `false`;
+
+exports[`areSocketsCompatible: execInput,output,0,0,number,string 1`] = `false`;
+
+exports[`areSocketsCompatible: execInput,output,0,0,string,any 1`] = `false`;
+
+exports[`areSocketsCompatible: execInput,output,0,0,string,number 1`] = `false`;
+
+exports[`areSocketsCompatible: execInput,output,0,0,string,string 1`] = `false`;
+
+exports[`areSocketsCompatible: execInput,output,0,1,any,any 1`] = `false`;
+
+exports[`areSocketsCompatible: execInput,output,0,1,any,number 1`] = `false`;
+
+exports[`areSocketsCompatible: execInput,output,0,1,any,string 1`] = `false`;
+
+exports[`areSocketsCompatible: execInput,output,0,1,number,any 1`] = `false`;
+
+exports[`areSocketsCompatible: execInput,output,0,1,number,number 1`] = `false`;
+
+exports[`areSocketsCompatible: execInput,output,0,1,number,string 1`] = `false`;
+
+exports[`areSocketsCompatible: execInput,output,0,1,string,any 1`] = `false`;
+
+exports[`areSocketsCompatible: execInput,output,0,1,string,number 1`] = `false`;
+
+exports[`areSocketsCompatible: execInput,output,0,1,string,string 1`] = `false`;
+
+exports[`areSocketsCompatible: execInput,output,1,0,any,any 1`] = `false`;
+
+exports[`areSocketsCompatible: execInput,output,1,0,any,number 1`] = `false`;
+
+exports[`areSocketsCompatible: execInput,output,1,0,any,string 1`] = `false`;
+
+exports[`areSocketsCompatible: execInput,output,1,0,number,any 1`] = `false`;
+
+exports[`areSocketsCompatible: execInput,output,1,0,number,number 1`] = `false`;
+
+exports[`areSocketsCompatible: execInput,output,1,0,number,string 1`] = `false`;
+
+exports[`areSocketsCompatible: execInput,output,1,0,string,any 1`] = `false`;
+
+exports[`areSocketsCompatible: execInput,output,1,0,string,number 1`] = `false`;
+
+exports[`areSocketsCompatible: execInput,output,1,0,string,string 1`] = `false`;
+
+exports[`areSocketsCompatible: execInput,output,1,1,any,any 1`] = `false`;
+
+exports[`areSocketsCompatible: execInput,output,1,1,any,number 1`] = `false`;
+
+exports[`areSocketsCompatible: execInput,output,1,1,any,string 1`] = `false`;
+
+exports[`areSocketsCompatible: execInput,output,1,1,number,any 1`] = `false`;
+
+exports[`areSocketsCompatible: execInput,output,1,1,number,number 1`] = `false`;
+
+exports[`areSocketsCompatible: execInput,output,1,1,number,string 1`] = `false`;
+
+exports[`areSocketsCompatible: execInput,output,1,1,string,any 1`] = `false`;
+
+exports[`areSocketsCompatible: execInput,output,1,1,string,number 1`] = `false`;
+
+exports[`areSocketsCompatible: execInput,output,1,1,string,string 1`] = `false`;
+
+exports[`areSocketsCompatible: execOutput,execInput,0,0,any,any 1`] = `true`;
+
+exports[`areSocketsCompatible: execOutput,execInput,0,0,any,number 1`] = `true`;
+
+exports[`areSocketsCompatible: execOutput,execInput,0,0,any,string 1`] = `true`;
+
+exports[`areSocketsCompatible: execOutput,execInput,0,0,number,any 1`] = `true`;
+
+exports[`areSocketsCompatible: execOutput,execInput,0,0,number,number 1`] = `true`;
+
+exports[`areSocketsCompatible: execOutput,execInput,0,0,number,string 1`] = `false`;
+
+exports[`areSocketsCompatible: execOutput,execInput,0,0,string,any 1`] = `true`;
+
+exports[`areSocketsCompatible: execOutput,execInput,0,0,string,number 1`] = `false`;
+
+exports[`areSocketsCompatible: execOutput,execInput,0,0,string,string 1`] = `true`;
+
+exports[`areSocketsCompatible: execOutput,execInput,0,1,any,any 1`] = `false`;
+
+exports[`areSocketsCompatible: execOutput,execInput,0,1,any,number 1`] = `false`;
+
+exports[`areSocketsCompatible: execOutput,execInput,0,1,any,string 1`] = `false`;
+
+exports[`areSocketsCompatible: execOutput,execInput,0,1,number,any 1`] = `false`;
+
+exports[`areSocketsCompatible: execOutput,execInput,0,1,number,number 1`] = `false`;
+
+exports[`areSocketsCompatible: execOutput,execInput,0,1,number,string 1`] = `false`;
+
+exports[`areSocketsCompatible: execOutput,execInput,0,1,string,any 1`] = `false`;
+
+exports[`areSocketsCompatible: execOutput,execInput,0,1,string,number 1`] = `false`;
+
+exports[`areSocketsCompatible: execOutput,execInput,0,1,string,string 1`] = `false`;
+
+exports[`areSocketsCompatible: execOutput,execInput,1,0,any,any 1`] = `false`;
+
+exports[`areSocketsCompatible: execOutput,execInput,1,0,any,number 1`] = `false`;
+
+exports[`areSocketsCompatible: execOutput,execInput,1,0,any,string 1`] = `false`;
+
+exports[`areSocketsCompatible: execOutput,execInput,1,0,number,any 1`] = `false`;
+
+exports[`areSocketsCompatible: execOutput,execInput,1,0,number,number 1`] = `false`;
+
+exports[`areSocketsCompatible: execOutput,execInput,1,0,number,string 1`] = `false`;
+
+exports[`areSocketsCompatible: execOutput,execInput,1,0,string,any 1`] = `false`;
+
+exports[`areSocketsCompatible: execOutput,execInput,1,0,string,number 1`] = `false`;
+
+exports[`areSocketsCompatible: execOutput,execInput,1,0,string,string 1`] = `false`;
+
+exports[`areSocketsCompatible: execOutput,execInput,1,1,any,any 1`] = `false`;
+
+exports[`areSocketsCompatible: execOutput,execInput,1,1,any,number 1`] = `false`;
+
+exports[`areSocketsCompatible: execOutput,execInput,1,1,any,string 1`] = `false`;
+
+exports[`areSocketsCompatible: execOutput,execInput,1,1,number,any 1`] = `false`;
+
+exports[`areSocketsCompatible: execOutput,execInput,1,1,number,number 1`] = `false`;
+
+exports[`areSocketsCompatible: execOutput,execInput,1,1,number,string 1`] = `false`;
+
+exports[`areSocketsCompatible: execOutput,execInput,1,1,string,any 1`] = `false`;
+
+exports[`areSocketsCompatible: execOutput,execInput,1,1,string,number 1`] = `false`;
+
+exports[`areSocketsCompatible: execOutput,execInput,1,1,string,string 1`] = `false`;
+
+exports[`areSocketsCompatible: execOutput,execOutput,0,0,any,any 1`] = `false`;
+
+exports[`areSocketsCompatible: execOutput,execOutput,0,0,any,number 1`] = `false`;
+
+exports[`areSocketsCompatible: execOutput,execOutput,0,0,any,string 1`] = `false`;
+
+exports[`areSocketsCompatible: execOutput,execOutput,0,0,number,any 1`] = `false`;
+
+exports[`areSocketsCompatible: execOutput,execOutput,0,0,number,number 1`] = `false`;
+
+exports[`areSocketsCompatible: execOutput,execOutput,0,0,number,string 1`] = `false`;
+
+exports[`areSocketsCompatible: execOutput,execOutput,0,0,string,any 1`] = `false`;
+
+exports[`areSocketsCompatible: execOutput,execOutput,0,0,string,number 1`] = `false`;
+
+exports[`areSocketsCompatible: execOutput,execOutput,0,0,string,string 1`] = `false`;
+
+exports[`areSocketsCompatible: execOutput,execOutput,0,1,any,any 1`] = `false`;
+
+exports[`areSocketsCompatible: execOutput,execOutput,0,1,any,number 1`] = `false`;
+
+exports[`areSocketsCompatible: execOutput,execOutput,0,1,any,string 1`] = `false`;
+
+exports[`areSocketsCompatible: execOutput,execOutput,0,1,number,any 1`] = `false`;
+
+exports[`areSocketsCompatible: execOutput,execOutput,0,1,number,number 1`] = `false`;
+
+exports[`areSocketsCompatible: execOutput,execOutput,0,1,number,string 1`] = `false`;
+
+exports[`areSocketsCompatible: execOutput,execOutput,0,1,string,any 1`] = `false`;
+
+exports[`areSocketsCompatible: execOutput,execOutput,0,1,string,number 1`] = `false`;
+
+exports[`areSocketsCompatible: execOutput,execOutput,0,1,string,string 1`] = `false`;
+
+exports[`areSocketsCompatible: execOutput,execOutput,1,0,any,any 1`] = `false`;
+
+exports[`areSocketsCompatible: execOutput,execOutput,1,0,any,number 1`] = `false`;
+
+exports[`areSocketsCompatible: execOutput,execOutput,1,0,any,string 1`] = `false`;
+
+exports[`areSocketsCompatible: execOutput,execOutput,1,0,number,any 1`] = `false`;
+
+exports[`areSocketsCompatible: execOutput,execOutput,1,0,number,number 1`] = `false`;
+
+exports[`areSocketsCompatible: execOutput,execOutput,1,0,number,string 1`] = `false`;
+
+exports[`areSocketsCompatible: execOutput,execOutput,1,0,string,any 1`] = `false`;
+
+exports[`areSocketsCompatible: execOutput,execOutput,1,0,string,number 1`] = `false`;
+
+exports[`areSocketsCompatible: execOutput,execOutput,1,0,string,string 1`] = `false`;
+
+exports[`areSocketsCompatible: execOutput,execOutput,1,1,any,any 1`] = `false`;
+
+exports[`areSocketsCompatible: execOutput,execOutput,1,1,any,number 1`] = `false`;
+
+exports[`areSocketsCompatible: execOutput,execOutput,1,1,any,string 1`] = `false`;
+
+exports[`areSocketsCompatible: execOutput,execOutput,1,1,number,any 1`] = `false`;
+
+exports[`areSocketsCompatible: execOutput,execOutput,1,1,number,number 1`] = `false`;
+
+exports[`areSocketsCompatible: execOutput,execOutput,1,1,number,string 1`] = `false`;
+
+exports[`areSocketsCompatible: execOutput,execOutput,1,1,string,any 1`] = `false`;
+
+exports[`areSocketsCompatible: execOutput,execOutput,1,1,string,number 1`] = `false`;
+
+exports[`areSocketsCompatible: execOutput,execOutput,1,1,string,string 1`] = `false`;
+
+exports[`areSocketsCompatible: execOutput,input,0,0,any,any 1`] = `false`;
+
+exports[`areSocketsCompatible: execOutput,input,0,0,any,number 1`] = `false`;
+
+exports[`areSocketsCompatible: execOutput,input,0,0,any,string 1`] = `false`;
+
+exports[`areSocketsCompatible: execOutput,input,0,0,number,any 1`] = `false`;
+
+exports[`areSocketsCompatible: execOutput,input,0,0,number,number 1`] = `false`;
+
+exports[`areSocketsCompatible: execOutput,input,0,0,number,string 1`] = `false`;
+
+exports[`areSocketsCompatible: execOutput,input,0,0,string,any 1`] = `false`;
+
+exports[`areSocketsCompatible: execOutput,input,0,0,string,number 1`] = `false`;
+
+exports[`areSocketsCompatible: execOutput,input,0,0,string,string 1`] = `false`;
+
+exports[`areSocketsCompatible: execOutput,input,0,1,any,any 1`] = `false`;
+
+exports[`areSocketsCompatible: execOutput,input,0,1,any,number 1`] = `false`;
+
+exports[`areSocketsCompatible: execOutput,input,0,1,any,string 1`] = `false`;
+
+exports[`areSocketsCompatible: execOutput,input,0,1,number,any 1`] = `false`;
+
+exports[`areSocketsCompatible: execOutput,input,0,1,number,number 1`] = `false`;
+
+exports[`areSocketsCompatible: execOutput,input,0,1,number,string 1`] = `false`;
+
+exports[`areSocketsCompatible: execOutput,input,0,1,string,any 1`] = `false`;
+
+exports[`areSocketsCompatible: execOutput,input,0,1,string,number 1`] = `false`;
+
+exports[`areSocketsCompatible: execOutput,input,0,1,string,string 1`] = `false`;
+
+exports[`areSocketsCompatible: execOutput,input,1,0,any,any 1`] = `false`;
+
+exports[`areSocketsCompatible: execOutput,input,1,0,any,number 1`] = `false`;
+
+exports[`areSocketsCompatible: execOutput,input,1,0,any,string 1`] = `false`;
+
+exports[`areSocketsCompatible: execOutput,input,1,0,number,any 1`] = `false`;
+
+exports[`areSocketsCompatible: execOutput,input,1,0,number,number 1`] = `false`;
+
+exports[`areSocketsCompatible: execOutput,input,1,0,number,string 1`] = `false`;
+
+exports[`areSocketsCompatible: execOutput,input,1,0,string,any 1`] = `false`;
+
+exports[`areSocketsCompatible: execOutput,input,1,0,string,number 1`] = `false`;
+
+exports[`areSocketsCompatible: execOutput,input,1,0,string,string 1`] = `false`;
+
+exports[`areSocketsCompatible: execOutput,input,1,1,any,any 1`] = `false`;
+
+exports[`areSocketsCompatible: execOutput,input,1,1,any,number 1`] = `false`;
+
+exports[`areSocketsCompatible: execOutput,input,1,1,any,string 1`] = `false`;
+
+exports[`areSocketsCompatible: execOutput,input,1,1,number,any 1`] = `false`;
+
+exports[`areSocketsCompatible: execOutput,input,1,1,number,number 1`] = `false`;
+
+exports[`areSocketsCompatible: execOutput,input,1,1,number,string 1`] = `false`;
+
+exports[`areSocketsCompatible: execOutput,input,1,1,string,any 1`] = `false`;
+
+exports[`areSocketsCompatible: execOutput,input,1,1,string,number 1`] = `false`;
+
+exports[`areSocketsCompatible: execOutput,input,1,1,string,string 1`] = `false`;
+
+exports[`areSocketsCompatible: execOutput,output,0,0,any,any 1`] = `false`;
+
+exports[`areSocketsCompatible: execOutput,output,0,0,any,number 1`] = `false`;
+
+exports[`areSocketsCompatible: execOutput,output,0,0,any,string 1`] = `false`;
+
+exports[`areSocketsCompatible: execOutput,output,0,0,number,any 1`] = `false`;
+
+exports[`areSocketsCompatible: execOutput,output,0,0,number,number 1`] = `false`;
+
+exports[`areSocketsCompatible: execOutput,output,0,0,number,string 1`] = `false`;
+
+exports[`areSocketsCompatible: execOutput,output,0,0,string,any 1`] = `false`;
+
+exports[`areSocketsCompatible: execOutput,output,0,0,string,number 1`] = `false`;
+
+exports[`areSocketsCompatible: execOutput,output,0,0,string,string 1`] = `false`;
+
+exports[`areSocketsCompatible: execOutput,output,0,1,any,any 1`] = `false`;
+
+exports[`areSocketsCompatible: execOutput,output,0,1,any,number 1`] = `false`;
+
+exports[`areSocketsCompatible: execOutput,output,0,1,any,string 1`] = `false`;
+
+exports[`areSocketsCompatible: execOutput,output,0,1,number,any 1`] = `false`;
+
+exports[`areSocketsCompatible: execOutput,output,0,1,number,number 1`] = `false`;
+
+exports[`areSocketsCompatible: execOutput,output,0,1,number,string 1`] = `false`;
+
+exports[`areSocketsCompatible: execOutput,output,0,1,string,any 1`] = `false`;
+
+exports[`areSocketsCompatible: execOutput,output,0,1,string,number 1`] = `false`;
+
+exports[`areSocketsCompatible: execOutput,output,0,1,string,string 1`] = `false`;
+
+exports[`areSocketsCompatible: execOutput,output,1,0,any,any 1`] = `false`;
+
+exports[`areSocketsCompatible: execOutput,output,1,0,any,number 1`] = `false`;
+
+exports[`areSocketsCompatible: execOutput,output,1,0,any,string 1`] = `false`;
+
+exports[`areSocketsCompatible: execOutput,output,1,0,number,any 1`] = `false`;
+
+exports[`areSocketsCompatible: execOutput,output,1,0,number,number 1`] = `false`;
+
+exports[`areSocketsCompatible: execOutput,output,1,0,number,string 1`] = `false`;
+
+exports[`areSocketsCompatible: execOutput,output,1,0,string,any 1`] = `false`;
+
+exports[`areSocketsCompatible: execOutput,output,1,0,string,number 1`] = `false`;
+
+exports[`areSocketsCompatible: execOutput,output,1,0,string,string 1`] = `false`;
+
+exports[`areSocketsCompatible: execOutput,output,1,1,any,any 1`] = `false`;
+
+exports[`areSocketsCompatible: execOutput,output,1,1,any,number 1`] = `false`;
+
+exports[`areSocketsCompatible: execOutput,output,1,1,any,string 1`] = `false`;
+
+exports[`areSocketsCompatible: execOutput,output,1,1,number,any 1`] = `false`;
+
+exports[`areSocketsCompatible: execOutput,output,1,1,number,number 1`] = `false`;
+
+exports[`areSocketsCompatible: execOutput,output,1,1,number,string 1`] = `false`;
+
+exports[`areSocketsCompatible: execOutput,output,1,1,string,any 1`] = `false`;
+
+exports[`areSocketsCompatible: execOutput,output,1,1,string,number 1`] = `false`;
+
+exports[`areSocketsCompatible: execOutput,output,1,1,string,string 1`] = `false`;
+
+exports[`areSocketsCompatible: input,execInput,0,0,any,any 1`] = `false`;
+
+exports[`areSocketsCompatible: input,execInput,0,0,any,number 1`] = `false`;
+
+exports[`areSocketsCompatible: input,execInput,0,0,any,string 1`] = `false`;
+
+exports[`areSocketsCompatible: input,execInput,0,0,number,any 1`] = `false`;
+
+exports[`areSocketsCompatible: input,execInput,0,0,number,number 1`] = `false`;
+
+exports[`areSocketsCompatible: input,execInput,0,0,number,string 1`] = `false`;
+
+exports[`areSocketsCompatible: input,execInput,0,0,string,any 1`] = `false`;
+
+exports[`areSocketsCompatible: input,execInput,0,0,string,number 1`] = `false`;
+
+exports[`areSocketsCompatible: input,execInput,0,0,string,string 1`] = `false`;
+
+exports[`areSocketsCompatible: input,execInput,0,1,any,any 1`] = `false`;
+
+exports[`areSocketsCompatible: input,execInput,0,1,any,number 1`] = `false`;
+
+exports[`areSocketsCompatible: input,execInput,0,1,any,string 1`] = `false`;
+
+exports[`areSocketsCompatible: input,execInput,0,1,number,any 1`] = `false`;
+
+exports[`areSocketsCompatible: input,execInput,0,1,number,number 1`] = `false`;
+
+exports[`areSocketsCompatible: input,execInput,0,1,number,string 1`] = `false`;
+
+exports[`areSocketsCompatible: input,execInput,0,1,string,any 1`] = `false`;
+
+exports[`areSocketsCompatible: input,execInput,0,1,string,number 1`] = `false`;
+
+exports[`areSocketsCompatible: input,execInput,0,1,string,string 1`] = `false`;
+
+exports[`areSocketsCompatible: input,execInput,1,0,any,any 1`] = `false`;
+
+exports[`areSocketsCompatible: input,execInput,1,0,any,number 1`] = `false`;
+
+exports[`areSocketsCompatible: input,execInput,1,0,any,string 1`] = `false`;
+
+exports[`areSocketsCompatible: input,execInput,1,0,number,any 1`] = `false`;
+
+exports[`areSocketsCompatible: input,execInput,1,0,number,number 1`] = `false`;
+
+exports[`areSocketsCompatible: input,execInput,1,0,number,string 1`] = `false`;
+
+exports[`areSocketsCompatible: input,execInput,1,0,string,any 1`] = `false`;
+
+exports[`areSocketsCompatible: input,execInput,1,0,string,number 1`] = `false`;
+
+exports[`areSocketsCompatible: input,execInput,1,0,string,string 1`] = `false`;
+
+exports[`areSocketsCompatible: input,execInput,1,1,any,any 1`] = `false`;
+
+exports[`areSocketsCompatible: input,execInput,1,1,any,number 1`] = `false`;
+
+exports[`areSocketsCompatible: input,execInput,1,1,any,string 1`] = `false`;
+
+exports[`areSocketsCompatible: input,execInput,1,1,number,any 1`] = `false`;
+
+exports[`areSocketsCompatible: input,execInput,1,1,number,number 1`] = `false`;
+
+exports[`areSocketsCompatible: input,execInput,1,1,number,string 1`] = `false`;
+
+exports[`areSocketsCompatible: input,execInput,1,1,string,any 1`] = `false`;
+
+exports[`areSocketsCompatible: input,execInput,1,1,string,number 1`] = `false`;
+
+exports[`areSocketsCompatible: input,execInput,1,1,string,string 1`] = `false`;
+
+exports[`areSocketsCompatible: input,execOutput,0,0,any,any 1`] = `false`;
+
+exports[`areSocketsCompatible: input,execOutput,0,0,any,number 1`] = `false`;
+
+exports[`areSocketsCompatible: input,execOutput,0,0,any,string 1`] = `false`;
+
+exports[`areSocketsCompatible: input,execOutput,0,0,number,any 1`] = `false`;
+
+exports[`areSocketsCompatible: input,execOutput,0,0,number,number 1`] = `false`;
+
+exports[`areSocketsCompatible: input,execOutput,0,0,number,string 1`] = `false`;
+
+exports[`areSocketsCompatible: input,execOutput,0,0,string,any 1`] = `false`;
+
+exports[`areSocketsCompatible: input,execOutput,0,0,string,number 1`] = `false`;
+
+exports[`areSocketsCompatible: input,execOutput,0,0,string,string 1`] = `false`;
+
+exports[`areSocketsCompatible: input,execOutput,0,1,any,any 1`] = `false`;
+
+exports[`areSocketsCompatible: input,execOutput,0,1,any,number 1`] = `false`;
+
+exports[`areSocketsCompatible: input,execOutput,0,1,any,string 1`] = `false`;
+
+exports[`areSocketsCompatible: input,execOutput,0,1,number,any 1`] = `false`;
+
+exports[`areSocketsCompatible: input,execOutput,0,1,number,number 1`] = `false`;
+
+exports[`areSocketsCompatible: input,execOutput,0,1,number,string 1`] = `false`;
+
+exports[`areSocketsCompatible: input,execOutput,0,1,string,any 1`] = `false`;
+
+exports[`areSocketsCompatible: input,execOutput,0,1,string,number 1`] = `false`;
+
+exports[`areSocketsCompatible: input,execOutput,0,1,string,string 1`] = `false`;
+
+exports[`areSocketsCompatible: input,execOutput,1,0,any,any 1`] = `false`;
+
+exports[`areSocketsCompatible: input,execOutput,1,0,any,number 1`] = `false`;
+
+exports[`areSocketsCompatible: input,execOutput,1,0,any,string 1`] = `false`;
+
+exports[`areSocketsCompatible: input,execOutput,1,0,number,any 1`] = `false`;
+
+exports[`areSocketsCompatible: input,execOutput,1,0,number,number 1`] = `false`;
+
+exports[`areSocketsCompatible: input,execOutput,1,0,number,string 1`] = `false`;
+
+exports[`areSocketsCompatible: input,execOutput,1,0,string,any 1`] = `false`;
+
+exports[`areSocketsCompatible: input,execOutput,1,0,string,number 1`] = `false`;
+
+exports[`areSocketsCompatible: input,execOutput,1,0,string,string 1`] = `false`;
+
+exports[`areSocketsCompatible: input,execOutput,1,1,any,any 1`] = `false`;
+
+exports[`areSocketsCompatible: input,execOutput,1,1,any,number 1`] = `false`;
+
+exports[`areSocketsCompatible: input,execOutput,1,1,any,string 1`] = `false`;
+
+exports[`areSocketsCompatible: input,execOutput,1,1,number,any 1`] = `false`;
+
+exports[`areSocketsCompatible: input,execOutput,1,1,number,number 1`] = `false`;
+
+exports[`areSocketsCompatible: input,execOutput,1,1,number,string 1`] = `false`;
+
+exports[`areSocketsCompatible: input,execOutput,1,1,string,any 1`] = `false`;
+
+exports[`areSocketsCompatible: input,execOutput,1,1,string,number 1`] = `false`;
+
+exports[`areSocketsCompatible: input,execOutput,1,1,string,string 1`] = `false`;
+
+exports[`areSocketsCompatible: input,input,0,0,any,any 1`] = `false`;
+
+exports[`areSocketsCompatible: input,input,0,0,any,number 1`] = `false`;
+
+exports[`areSocketsCompatible: input,input,0,0,any,string 1`] = `false`;
+
+exports[`areSocketsCompatible: input,input,0,0,number,any 1`] = `false`;
+
+exports[`areSocketsCompatible: input,input,0,0,number,number 1`] = `false`;
+
+exports[`areSocketsCompatible: input,input,0,0,number,string 1`] = `false`;
+
+exports[`areSocketsCompatible: input,input,0,0,string,any 1`] = `false`;
+
+exports[`areSocketsCompatible: input,input,0,0,string,number 1`] = `false`;
+
+exports[`areSocketsCompatible: input,input,0,0,string,string 1`] = `false`;
+
+exports[`areSocketsCompatible: input,input,0,1,any,any 1`] = `false`;
+
+exports[`areSocketsCompatible: input,input,0,1,any,number 1`] = `false`;
+
+exports[`areSocketsCompatible: input,input,0,1,any,string 1`] = `false`;
+
+exports[`areSocketsCompatible: input,input,0,1,number,any 1`] = `false`;
+
+exports[`areSocketsCompatible: input,input,0,1,number,number 1`] = `false`;
+
+exports[`areSocketsCompatible: input,input,0,1,number,string 1`] = `false`;
+
+exports[`areSocketsCompatible: input,input,0,1,string,any 1`] = `false`;
+
+exports[`areSocketsCompatible: input,input,0,1,string,number 1`] = `false`;
+
+exports[`areSocketsCompatible: input,input,0,1,string,string 1`] = `false`;
+
+exports[`areSocketsCompatible: input,input,1,0,any,any 1`] = `false`;
+
+exports[`areSocketsCompatible: input,input,1,0,any,number 1`] = `false`;
+
+exports[`areSocketsCompatible: input,input,1,0,any,string 1`] = `false`;
+
+exports[`areSocketsCompatible: input,input,1,0,number,any 1`] = `false`;
+
+exports[`areSocketsCompatible: input,input,1,0,number,number 1`] = `false`;
+
+exports[`areSocketsCompatible: input,input,1,0,number,string 1`] = `false`;
+
+exports[`areSocketsCompatible: input,input,1,0,string,any 1`] = `false`;
+
+exports[`areSocketsCompatible: input,input,1,0,string,number 1`] = `false`;
+
+exports[`areSocketsCompatible: input,input,1,0,string,string 1`] = `false`;
+
+exports[`areSocketsCompatible: input,input,1,1,any,any 1`] = `false`;
+
+exports[`areSocketsCompatible: input,input,1,1,any,number 1`] = `false`;
+
+exports[`areSocketsCompatible: input,input,1,1,any,string 1`] = `false`;
+
+exports[`areSocketsCompatible: input,input,1,1,number,any 1`] = `false`;
+
+exports[`areSocketsCompatible: input,input,1,1,number,number 1`] = `false`;
+
+exports[`areSocketsCompatible: input,input,1,1,number,string 1`] = `false`;
+
+exports[`areSocketsCompatible: input,input,1,1,string,any 1`] = `false`;
+
+exports[`areSocketsCompatible: input,input,1,1,string,number 1`] = `false`;
+
+exports[`areSocketsCompatible: input,input,1,1,string,string 1`] = `false`;
+
+exports[`areSocketsCompatible: input,output,0,0,any,any 1`] = `true`;
+
+exports[`areSocketsCompatible: input,output,0,0,any,number 1`] = `true`;
+
+exports[`areSocketsCompatible: input,output,0,0,any,string 1`] = `true`;
+
+exports[`areSocketsCompatible: input,output,0,0,number,any 1`] = `true`;
+
+exports[`areSocketsCompatible: input,output,0,0,number,number 1`] = `true`;
+
+exports[`areSocketsCompatible: input,output,0,0,number,string 1`] = `false`;
+
+exports[`areSocketsCompatible: input,output,0,0,string,any 1`] = `true`;
+
+exports[`areSocketsCompatible: input,output,0,0,string,number 1`] = `false`;
+
+exports[`areSocketsCompatible: input,output,0,0,string,string 1`] = `true`;
+
+exports[`areSocketsCompatible: input,output,0,1,any,any 1`] = `true`;
+
+exports[`areSocketsCompatible: input,output,0,1,any,number 1`] = `true`;
+
+exports[`areSocketsCompatible: input,output,0,1,any,string 1`] = `true`;
+
+exports[`areSocketsCompatible: input,output,0,1,number,any 1`] = `true`;
+
+exports[`areSocketsCompatible: input,output,0,1,number,number 1`] = `true`;
+
+exports[`areSocketsCompatible: input,output,0,1,number,string 1`] = `false`;
+
+exports[`areSocketsCompatible: input,output,0,1,string,any 1`] = `true`;
+
+exports[`areSocketsCompatible: input,output,0,1,string,number 1`] = `false`;
+
+exports[`areSocketsCompatible: input,output,0,1,string,string 1`] = `true`;
+
+exports[`areSocketsCompatible: input,output,1,0,any,any 1`] = `false`;
+
+exports[`areSocketsCompatible: input,output,1,0,any,number 1`] = `false`;
+
+exports[`areSocketsCompatible: input,output,1,0,any,string 1`] = `false`;
+
+exports[`areSocketsCompatible: input,output,1,0,number,any 1`] = `false`;
+
+exports[`areSocketsCompatible: input,output,1,0,number,number 1`] = `false`;
+
+exports[`areSocketsCompatible: input,output,1,0,number,string 1`] = `false`;
+
+exports[`areSocketsCompatible: input,output,1,0,string,any 1`] = `false`;
+
+exports[`areSocketsCompatible: input,output,1,0,string,number 1`] = `false`;
+
+exports[`areSocketsCompatible: input,output,1,0,string,string 1`] = `false`;
+
+exports[`areSocketsCompatible: input,output,1,1,any,any 1`] = `false`;
+
+exports[`areSocketsCompatible: input,output,1,1,any,number 1`] = `false`;
+
+exports[`areSocketsCompatible: input,output,1,1,any,string 1`] = `false`;
+
+exports[`areSocketsCompatible: input,output,1,1,number,any 1`] = `false`;
+
+exports[`areSocketsCompatible: input,output,1,1,number,number 1`] = `false`;
+
+exports[`areSocketsCompatible: input,output,1,1,number,string 1`] = `false`;
+
+exports[`areSocketsCompatible: input,output,1,1,string,any 1`] = `false`;
+
+exports[`areSocketsCompatible: input,output,1,1,string,number 1`] = `false`;
+
+exports[`areSocketsCompatible: input,output,1,1,string,string 1`] = `false`;
+
+exports[`areSocketsCompatible: output,execInput,0,0,any,any 1`] = `false`;
+
+exports[`areSocketsCompatible: output,execInput,0,0,any,number 1`] = `false`;
+
+exports[`areSocketsCompatible: output,execInput,0,0,any,string 1`] = `false`;
+
+exports[`areSocketsCompatible: output,execInput,0,0,number,any 1`] = `false`;
+
+exports[`areSocketsCompatible: output,execInput,0,0,number,number 1`] = `false`;
+
+exports[`areSocketsCompatible: output,execInput,0,0,number,string 1`] = `false`;
+
+exports[`areSocketsCompatible: output,execInput,0,0,string,any 1`] = `false`;
+
+exports[`areSocketsCompatible: output,execInput,0,0,string,number 1`] = `false`;
+
+exports[`areSocketsCompatible: output,execInput,0,0,string,string 1`] = `false`;
+
+exports[`areSocketsCompatible: output,execInput,0,1,any,any 1`] = `false`;
+
+exports[`areSocketsCompatible: output,execInput,0,1,any,number 1`] = `false`;
+
+exports[`areSocketsCompatible: output,execInput,0,1,any,string 1`] = `false`;
+
+exports[`areSocketsCompatible: output,execInput,0,1,number,any 1`] = `false`;
+
+exports[`areSocketsCompatible: output,execInput,0,1,number,number 1`] = `false`;
+
+exports[`areSocketsCompatible: output,execInput,0,1,number,string 1`] = `false`;
+
+exports[`areSocketsCompatible: output,execInput,0,1,string,any 1`] = `false`;
+
+exports[`areSocketsCompatible: output,execInput,0,1,string,number 1`] = `false`;
+
+exports[`areSocketsCompatible: output,execInput,0,1,string,string 1`] = `false`;
+
+exports[`areSocketsCompatible: output,execInput,1,0,any,any 1`] = `false`;
+
+exports[`areSocketsCompatible: output,execInput,1,0,any,number 1`] = `false`;
+
+exports[`areSocketsCompatible: output,execInput,1,0,any,string 1`] = `false`;
+
+exports[`areSocketsCompatible: output,execInput,1,0,number,any 1`] = `false`;
+
+exports[`areSocketsCompatible: output,execInput,1,0,number,number 1`] = `false`;
+
+exports[`areSocketsCompatible: output,execInput,1,0,number,string 1`] = `false`;
+
+exports[`areSocketsCompatible: output,execInput,1,0,string,any 1`] = `false`;
+
+exports[`areSocketsCompatible: output,execInput,1,0,string,number 1`] = `false`;
+
+exports[`areSocketsCompatible: output,execInput,1,0,string,string 1`] = `false`;
+
+exports[`areSocketsCompatible: output,execInput,1,1,any,any 1`] = `false`;
+
+exports[`areSocketsCompatible: output,execInput,1,1,any,number 1`] = `false`;
+
+exports[`areSocketsCompatible: output,execInput,1,1,any,string 1`] = `false`;
+
+exports[`areSocketsCompatible: output,execInput,1,1,number,any 1`] = `false`;
+
+exports[`areSocketsCompatible: output,execInput,1,1,number,number 1`] = `false`;
+
+exports[`areSocketsCompatible: output,execInput,1,1,number,string 1`] = `false`;
+
+exports[`areSocketsCompatible: output,execInput,1,1,string,any 1`] = `false`;
+
+exports[`areSocketsCompatible: output,execInput,1,1,string,number 1`] = `false`;
+
+exports[`areSocketsCompatible: output,execInput,1,1,string,string 1`] = `false`;
+
+exports[`areSocketsCompatible: output,execOutput,0,0,any,any 1`] = `false`;
+
+exports[`areSocketsCompatible: output,execOutput,0,0,any,number 1`] = `false`;
+
+exports[`areSocketsCompatible: output,execOutput,0,0,any,string 1`] = `false`;
+
+exports[`areSocketsCompatible: output,execOutput,0,0,number,any 1`] = `false`;
+
+exports[`areSocketsCompatible: output,execOutput,0,0,number,number 1`] = `false`;
+
+exports[`areSocketsCompatible: output,execOutput,0,0,number,string 1`] = `false`;
+
+exports[`areSocketsCompatible: output,execOutput,0,0,string,any 1`] = `false`;
+
+exports[`areSocketsCompatible: output,execOutput,0,0,string,number 1`] = `false`;
+
+exports[`areSocketsCompatible: output,execOutput,0,0,string,string 1`] = `false`;
+
+exports[`areSocketsCompatible: output,execOutput,0,1,any,any 1`] = `false`;
+
+exports[`areSocketsCompatible: output,execOutput,0,1,any,number 1`] = `false`;
+
+exports[`areSocketsCompatible: output,execOutput,0,1,any,string 1`] = `false`;
+
+exports[`areSocketsCompatible: output,execOutput,0,1,number,any 1`] = `false`;
+
+exports[`areSocketsCompatible: output,execOutput,0,1,number,number 1`] = `false`;
+
+exports[`areSocketsCompatible: output,execOutput,0,1,number,string 1`] = `false`;
+
+exports[`areSocketsCompatible: output,execOutput,0,1,string,any 1`] = `false`;
+
+exports[`areSocketsCompatible: output,execOutput,0,1,string,number 1`] = `false`;
+
+exports[`areSocketsCompatible: output,execOutput,0,1,string,string 1`] = `false`;
+
+exports[`areSocketsCompatible: output,execOutput,1,0,any,any 1`] = `false`;
+
+exports[`areSocketsCompatible: output,execOutput,1,0,any,number 1`] = `false`;
+
+exports[`areSocketsCompatible: output,execOutput,1,0,any,string 1`] = `false`;
+
+exports[`areSocketsCompatible: output,execOutput,1,0,number,any 1`] = `false`;
+
+exports[`areSocketsCompatible: output,execOutput,1,0,number,number 1`] = `false`;
+
+exports[`areSocketsCompatible: output,execOutput,1,0,number,string 1`] = `false`;
+
+exports[`areSocketsCompatible: output,execOutput,1,0,string,any 1`] = `false`;
+
+exports[`areSocketsCompatible: output,execOutput,1,0,string,number 1`] = `false`;
+
+exports[`areSocketsCompatible: output,execOutput,1,0,string,string 1`] = `false`;
+
+exports[`areSocketsCompatible: output,execOutput,1,1,any,any 1`] = `false`;
+
+exports[`areSocketsCompatible: output,execOutput,1,1,any,number 1`] = `false`;
+
+exports[`areSocketsCompatible: output,execOutput,1,1,any,string 1`] = `false`;
+
+exports[`areSocketsCompatible: output,execOutput,1,1,number,any 1`] = `false`;
+
+exports[`areSocketsCompatible: output,execOutput,1,1,number,number 1`] = `false`;
+
+exports[`areSocketsCompatible: output,execOutput,1,1,number,string 1`] = `false`;
+
+exports[`areSocketsCompatible: output,execOutput,1,1,string,any 1`] = `false`;
+
+exports[`areSocketsCompatible: output,execOutput,1,1,string,number 1`] = `false`;
+
+exports[`areSocketsCompatible: output,execOutput,1,1,string,string 1`] = `false`;
+
+exports[`areSocketsCompatible: output,input,0,0,any,any 1`] = `true`;
+
+exports[`areSocketsCompatible: output,input,0,0,any,number 1`] = `true`;
+
+exports[`areSocketsCompatible: output,input,0,0,any,string 1`] = `true`;
+
+exports[`areSocketsCompatible: output,input,0,0,number,any 1`] = `true`;
+
+exports[`areSocketsCompatible: output,input,0,0,number,number 1`] = `true`;
+
+exports[`areSocketsCompatible: output,input,0,0,number,string 1`] = `false`;
+
+exports[`areSocketsCompatible: output,input,0,0,string,any 1`] = `true`;
+
+exports[`areSocketsCompatible: output,input,0,0,string,number 1`] = `false`;
+
+exports[`areSocketsCompatible: output,input,0,0,string,string 1`] = `true`;
+
+exports[`areSocketsCompatible: output,input,0,1,any,any 1`] = `false`;
+
+exports[`areSocketsCompatible: output,input,0,1,any,number 1`] = `false`;
+
+exports[`areSocketsCompatible: output,input,0,1,any,string 1`] = `false`;
+
+exports[`areSocketsCompatible: output,input,0,1,number,any 1`] = `false`;
+
+exports[`areSocketsCompatible: output,input,0,1,number,number 1`] = `false`;
+
+exports[`areSocketsCompatible: output,input,0,1,number,string 1`] = `false`;
+
+exports[`areSocketsCompatible: output,input,0,1,string,any 1`] = `false`;
+
+exports[`areSocketsCompatible: output,input,0,1,string,number 1`] = `false`;
+
+exports[`areSocketsCompatible: output,input,0,1,string,string 1`] = `false`;
+
+exports[`areSocketsCompatible: output,input,1,0,any,any 1`] = `true`;
+
+exports[`areSocketsCompatible: output,input,1,0,any,number 1`] = `true`;
+
+exports[`areSocketsCompatible: output,input,1,0,any,string 1`] = `true`;
+
+exports[`areSocketsCompatible: output,input,1,0,number,any 1`] = `true`;
+
+exports[`areSocketsCompatible: output,input,1,0,number,number 1`] = `true`;
+
+exports[`areSocketsCompatible: output,input,1,0,number,string 1`] = `false`;
+
+exports[`areSocketsCompatible: output,input,1,0,string,any 1`] = `true`;
+
+exports[`areSocketsCompatible: output,input,1,0,string,number 1`] = `false`;
+
+exports[`areSocketsCompatible: output,input,1,0,string,string 1`] = `true`;
+
+exports[`areSocketsCompatible: output,input,1,1,any,any 1`] = `false`;
+
+exports[`areSocketsCompatible: output,input,1,1,any,number 1`] = `false`;
+
+exports[`areSocketsCompatible: output,input,1,1,any,string 1`] = `false`;
+
+exports[`areSocketsCompatible: output,input,1,1,number,any 1`] = `false`;
+
+exports[`areSocketsCompatible: output,input,1,1,number,number 1`] = `false`;
+
+exports[`areSocketsCompatible: output,input,1,1,number,string 1`] = `false`;
+
+exports[`areSocketsCompatible: output,input,1,1,string,any 1`] = `false`;
+
+exports[`areSocketsCompatible: output,input,1,1,string,number 1`] = `false`;
+
+exports[`areSocketsCompatible: output,input,1,1,string,string 1`] = `false`;
+
+exports[`areSocketsCompatible: output,output,0,0,any,any 1`] = `false`;
+
+exports[`areSocketsCompatible: output,output,0,0,any,number 1`] = `false`;
+
+exports[`areSocketsCompatible: output,output,0,0,any,string 1`] = `false`;
+
+exports[`areSocketsCompatible: output,output,0,0,number,any 1`] = `false`;
+
+exports[`areSocketsCompatible: output,output,0,0,number,number 1`] = `false`;
+
+exports[`areSocketsCompatible: output,output,0,0,number,string 1`] = `false`;
+
+exports[`areSocketsCompatible: output,output,0,0,string,any 1`] = `false`;
+
+exports[`areSocketsCompatible: output,output,0,0,string,number 1`] = `false`;
+
+exports[`areSocketsCompatible: output,output,0,0,string,string 1`] = `false`;
+
+exports[`areSocketsCompatible: output,output,0,1,any,any 1`] = `false`;
+
+exports[`areSocketsCompatible: output,output,0,1,any,number 1`] = `false`;
+
+exports[`areSocketsCompatible: output,output,0,1,any,string 1`] = `false`;
+
+exports[`areSocketsCompatible: output,output,0,1,number,any 1`] = `false`;
+
+exports[`areSocketsCompatible: output,output,0,1,number,number 1`] = `false`;
+
+exports[`areSocketsCompatible: output,output,0,1,number,string 1`] = `false`;
+
+exports[`areSocketsCompatible: output,output,0,1,string,any 1`] = `false`;
+
+exports[`areSocketsCompatible: output,output,0,1,string,number 1`] = `false`;
+
+exports[`areSocketsCompatible: output,output,0,1,string,string 1`] = `false`;
+
+exports[`areSocketsCompatible: output,output,1,0,any,any 1`] = `false`;
+
+exports[`areSocketsCompatible: output,output,1,0,any,number 1`] = `false`;
+
+exports[`areSocketsCompatible: output,output,1,0,any,string 1`] = `false`;
+
+exports[`areSocketsCompatible: output,output,1,0,number,any 1`] = `false`;
+
+exports[`areSocketsCompatible: output,output,1,0,number,number 1`] = `false`;
+
+exports[`areSocketsCompatible: output,output,1,0,number,string 1`] = `false`;
+
+exports[`areSocketsCompatible: output,output,1,0,string,any 1`] = `false`;
+
+exports[`areSocketsCompatible: output,output,1,0,string,number 1`] = `false`;
+
+exports[`areSocketsCompatible: output,output,1,0,string,string 1`] = `false`;
+
+exports[`areSocketsCompatible: output,output,1,1,any,any 1`] = `false`;
+
+exports[`areSocketsCompatible: output,output,1,1,any,number 1`] = `false`;
+
+exports[`areSocketsCompatible: output,output,1,1,any,string 1`] = `false`;
+
+exports[`areSocketsCompatible: output,output,1,1,number,any 1`] = `false`;
+
+exports[`areSocketsCompatible: output,output,1,1,number,number 1`] = `false`;
+
+exports[`areSocketsCompatible: output,output,1,1,number,string 1`] = `false`;
+
+exports[`areSocketsCompatible: output,output,1,1,string,any 1`] = `false`;
+
+exports[`areSocketsCompatible: output,output,1,1,string,number 1`] = `false`;
+
+exports[`areSocketsCompatible: output,output,1,1,string,string 1`] = `false`;
 
 exports[`height: 0,0,0,0 1`] = `50`;
 

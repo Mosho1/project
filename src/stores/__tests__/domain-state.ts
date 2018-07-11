@@ -20,14 +20,11 @@ test('addBox', () => {
 test('setSelection', () => {
     expect(store.setSelection([]).selection).toHaveProperty('length', 0);
     const box = createTestBox();
-    expect(store.setSelection([box]).selection[0]).toBe(box);
+    const box2 = createTestBox();
+    const sel = store.setSelection([box, box2]).selection;
+    expect(sel[0]).toBe(box);
+    expect(sel[1]).toBe(box2);
 });
-
-// test('createBox', () => {
-//     const cb = createTestCodeBlock();
-//     const b = store.createBox('test', 0, 0, cb);
-//     expect(store.selection).toBe(b);
-// });
 
 test('deleteBox', () => {
     const cb = createTestCodeBlock({
