@@ -4,6 +4,7 @@ import { product, mock } from '../test-utils';
 import { socketTypes, Socket } from '../models/socket';
 import { createTestCodeBlock } from '../models/__tests__/code-block';
 import { createTestBox } from '../models/__tests__/box';
+import { createTestSocket } from '../models/__tests__/socket';
 
 let store: IStore;
 beforeEach(() => {
@@ -22,17 +23,16 @@ test('setSelection', () => {
     // expect(store.setSelection(box).selection).toBe(box);
 });
 
-test('createBox', () => {
-    const cb = createTestCodeBlock();
-    const b = store.createBox('test', 0, 0, cb);
-    expect(store.selection).toBe(b);
-});
+// test('createBox', () => {
+//     const cb = createTestCodeBlock();
+//     const b = store.createBox('test', 0, 0, cb);
+//     expect(store.selection).toBe(b);
+// });
 
 test('deleteBox', () => {
     const cb = createTestCodeBlock({
-        execOutputs: [''],
-        execInputs: [''],
-        returns: 'number'
+        execOutputs: [{ id: '1' }],
+        execInputs: [{ id: '2' }],
     });
     const b1 = store.addBox('test', 0, 0, cb);
     const b2 = store.addBox('test2', 50, 50, cb);
@@ -40,9 +40,9 @@ test('deleteBox', () => {
     store.addArrow(b1.outputs[0], b2.inputs[0]);
     store.addArrow(b1.execInputs[0], b2.execOutputs[0]);
     expect(store.arrows).toHaveProperty('size', 2);
-    // store.setSelection(b1);
+    store.setSelection([b1]);
     store.deleteBox(b1);
-    expect(store.selection).toBeNull();
+    expect(store.selection).toHaveProperty('length', 0);
     expect(store.arrows).toHaveProperty('size', 0);
     expect(store.boxes).toHaveProperty('size', 1);
     store.deleteBox(b2);
@@ -55,8 +55,8 @@ test('addArrow', () => {
     for (const test of tests) {
         const [t1, t2] = test;
         const box = createTestBox();
-        const s1 = box.addSocket(t1);
-        const s2 = box.addSocket(t2);
+        const s1 = box.addSocket(createTestSocket({ socketType: t1 }));
+        const s2 = box.addSocket(createTestSocket({ socketType: t2 }));
         expect(store.addArrow(s1, s2) !== null).toMatchSnapshot(test.join(','));
     }
 });
@@ -67,8 +67,8 @@ test('hasArrow', () => {
     for (const test of tests) {
         const [t1, t2] = test;
         const box = createTestBox();
-        const s1 = box.addSocket(t1);
-        const s2 = box.addSocket(t2);
+        const s1 = box.addSocket(createTestSocket({ socketType: t1 }));
+        const s2 = box.addSocket(createTestSocket({ socketType: t2 }));
         store.addArrow(s1, s2);
         expect(store.hasArrow(s1, s2)).toMatchSnapshot(test.join(','));
     }
@@ -76,7 +76,7 @@ test('hasArrow', () => {
 
 test('startDragArrow', () => {
     const box = createTestBox({ x: 10, y: 10 });
-    const socket = Socket.create({ socketType: 'input' })
+    const socket = createTestSocket({ socketType: 'input' })
     box.addSocket(socket);
     store.startDragArrow(socket);
     expect(store.draggedArrow).toMatchObject({
@@ -104,11 +104,11 @@ test('moveDragArrow', () => {
 test('endDragArrow', () => {
     const cb = createTestCodeBlock();
     const b1 = store.addBox('test', 0, 0, cb);
-    const s1 = Socket.create({ socketType: 'input' })
+    const s1 = createTestSocket({ socketType: 'input' })
     b1.addSocket(s1);
 
     const b2 = store.addBox('test', 0, 0, cb);
-    const s2 = Socket.create({ socketType: 'output' })
+    const s2 = createTestSocket({ socketType: 'output' })
     b2.addSocket(s2);
 
     mock(store, { draggedArrow: {}, draggedFromSocket: s1 });

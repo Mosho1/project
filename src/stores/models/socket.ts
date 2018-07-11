@@ -43,7 +43,8 @@ export const Socket = pouch.model('Socket', {
     }))
     .views(self => ({
         get box(): null | modelTypes['Box'] {
-            return values(self.store!.boxes).find(b => Boolean(b.sockets.find(s => s === self))) || null;
+            if (!self.store) return null;
+            return values(self.store.boxes).find(b => Boolean(b.sockets.find(s => s === self))) || null;
         },
     }))
     .views(self => ({

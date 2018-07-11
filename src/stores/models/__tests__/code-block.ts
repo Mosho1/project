@@ -4,8 +4,12 @@ export const createTestCodeBlock = (args?: ICodeBlockSnapshot) => {
     return CodeBlock.create({
         name: 'test',
         code: (a: number, b: number) => a + b,
-        inputs: [{ name: 'a', type: 'number' }, { name: 'b', type: 'number' }],
-        returns: 'number',
+        inputs: [{
+            id: 'test/a', name: 'a', type: 'number'
+        }, {
+            id: 'test/b', name: 'b', type: 'number'
+        }],
+        returns: { id: 'test/returns', type: 'number' },
         ...args
     });
 };

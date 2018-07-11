@@ -1,5 +1,6 @@
 import { types } from 'mobx-state-tree';
 import { optionalIdentifierType } from '../utils/utils';
+
 const parseFunction = (value: string) => {
     const fn = eval(`(${value})`);
     if (typeof fn !== 'function') throw new Error(`${value} is not a valid function`);

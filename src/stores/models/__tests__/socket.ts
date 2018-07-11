@@ -1,31 +1,34 @@
 import { Socket, SocketTypeEnum, socketTypes, areSocketsCompatible, ISocketSnapshot } from '../socket';
 import { mock, product } from '../../test-utils';
 import { ObservableMap } from 'mobx';
+import { CodeBlockIO } from '../code-block';
 
 export const createTestSocket = (args?: ISocketSnapshot) => {
+    const code = CodeBlockIO.create();
     return Socket.create({
         name: 'test',
         socketType: 'input',
+        code,
         ...args
     });
 };
 
 test('box', () => {
-    expect(Socket.create({ socketType: 'input' }).box).toBeNull();
+    expect(createTestSocket({ socketType: 'input' }).box).toBeNull();
 });
 
 test('isExec', () => {
-    expect(Socket.create({ socketType: 'input' }).isExec).toBe(false);
-    expect(Socket.create({ socketType: 'output' }).isExec).toBe(false);
-    expect(Socket.create({ socketType: 'execInput' }).isExec).toBe(true);
-    expect(Socket.create({ socketType: 'execOutput' }).isExec).toBe(true);
+    expect(createTestSocket({ socketType: 'input' }).isExec).toBe(false);
+    expect(createTestSocket({ socketType: 'output' }).isExec).toBe(false);
+    expect(createTestSocket({ socketType: 'execInput' }).isExec).toBe(true);
+    expect(createTestSocket({ socketType: 'execOutput' }).isExec).toBe(true);
 });
 
 test('isInput', () => {
-    expect(Socket.create({ socketType: 'input' }).isInput).toBe(true);
-    expect(Socket.create({ socketType: 'output' }).isInput).toBe(false);
-    expect(Socket.create({ socketType: 'execInput' }).isInput).toBe(true);
-    expect(Socket.create({ socketType: 'execOutput' }).isInput).toBe(false);
+    expect(createTestSocket({ socketType: 'input' }).isInput).toBe(true);
+    expect(createTestSocket({ socketType: 'output' }).isInput).toBe(false);
+    expect(createTestSocket({ socketType: 'execInput' }).isInput).toBe(true);
+    expect(createTestSocket({ socketType: 'execOutput' }).isInput).toBe(false);
 });
 
 describe('index', () => {
@@ -44,13 +47,13 @@ describe('index', () => {
     const tests = product(socketTypes, lengths, lengths, lengths, lengths);
 
     test('no box', () => {
-        const socket = Socket.create({ socketType: 'input' });
+        const socket = createTestSocket({ socketType: 'input' });
         expect(socket.index).toBe(0);
     });
 
     test('tests', () => {
         for (const test of tests) {
-            const socket = Socket.create({ socketType: test[0] });
+            const socket = createTestSocket({ socketType: test[0] });
             box.inputs = Array(test[1]);
             box.outputs = Array(test[2]);
             box.execInputs = Array(test[3]);
@@ -69,14 +72,14 @@ describe('arrows', () => {
     });
 
     test('by input', () => {
-        const socket = mock(Socket.create({ socketType: 'input' }), { box });
+        const socket = mock(createTestSocket({ socketType: 'input' }), { box });
         expect(socket.arrows).toHaveLength(0);
         box.store.arrows.set('id', { input: socket });
         expect(socket.arrows).toHaveLength(1);
     });
 
     test('by output', () => {
-        const socket = mock(Socket.create({ socketType: 'output' }), { box });
+        const socket = mock(createTestSocket({ socketType: 'output' }), { box });
         expect(socket.arrows).toHaveLength(0);
         box.store.arrows.set('id', { input: socket });
         expect(socket.arrows).toHaveLength(1);
@@ -94,7 +97,7 @@ describe('x/y', () => {
 
     const getTest = (socketType: SocketTypeEnum) => () => {
         for (const data of testData) {
-            const socket = Socket.create({ socketType });
+            const socket = createTestSocket({ socketType });
             const { x, y } = mock(socket, data);
             expect({ x, y }).toMatchSnapshot();
         }
@@ -106,7 +109,7 @@ describe('x/y', () => {
 });
 
 test('setName', () => {
-    const socket = Socket.create({ socketType: 'input' });
+    const socket = createTestSocket({ socketType: 'input' });
     socket.setName(null);
     expect(socket.name).toBe('');
     socket.setName('name');
@@ -118,8 +121,8 @@ test('areSocketsCompatible', () => {
     for (const t of tests) {
         const [s1, s2, l1, l2] = t;
         expect(areSocketsCompatible(
-            mock(Socket.create({ socketType: s1 }), { arrows: { length: l1 } }),
-            mock(Socket.create({ socketType: s2 }), { arrows: { length: l2 } }),
+            mock(createTestSocket({ socketType: s1 }), { arrows: { length: l1 } }),
+            mock(createTestSocket({ socketType: s2 }), { arrows: { length: l2 } }),
         )).toMatchSnapshot(t.join(','));
     }
 });
