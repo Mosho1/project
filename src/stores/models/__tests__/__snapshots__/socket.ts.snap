@@ -1152,6 +1152,14 @@ exports[`areSocketsCompatible: output,output,1,1,string,number 1`] = `false`;
 
 exports[`areSocketsCompatible: output,output,1,1,string,string 1`] = `false`;
 
+exports[`color 1`] = `"red"`;
+
+exports[`color 2`] = `"green"`;
+
+exports[`color 3`] = `"#fff"`;
+
+exports[`color 4`] = `"#fff"`;
+
 exports[`index tests: execInput,0,0,0,0 1`] = `-1`;
 
 exports[`index tests: execInput,0,0,0,1 1`] = `-1`;

@@ -1,7 +1,7 @@
 import { Socket, SocketTypeEnum, socketTypes, areSocketsCompatible, ISocketSnapshot } from '../socket';
 import { mock, product } from '../../test-utils';
 import { ObservableMap } from 'mobx';
-import { CodeBlockIO } from '../code-block';
+import { CodeBlockIO, typeNames } from '../code-block';
 
 export const createTestSocket = (args?: ISocketSnapshot) => {
     const code = CodeBlockIO.create();
@@ -121,8 +121,31 @@ test('areSocketsCompatible', () => {
     for (const t of tests) {
         const [s1, s2, l1, l2, t1, t2] = t;
         expect(areSocketsCompatible(
-            mock(createTestSocket({ socketType: s1 }), { arrows: { length: l1 }, code: {type: t1} }),
-            mock(createTestSocket({ socketType: s2 }), { arrows: { length: l2 }, code: {type: t2} }),
+            mock(createTestSocket({ socketType: s1 }), { arrows: { length: l1 }, code: { type: t1 } }),
+            mock(createTestSocket({ socketType: s2 }), { arrows: { length: l2 }, code: { type: t2 } }),
         )).toMatchSnapshot(t.join(','));
     }
+});
+
+test('color', () => {
+    for (const type of typeNames) {
+        expect(mock(createTestSocket(), { code: { type } } as any).color).toMatchSnapshot();
+    }
+});
+
+describe('fillColor', () => {
+    test('no arrows', () => {
+        for (const type of typeNames) {
+            const s = mock(createTestSocket(), { code: { type } } as any);
+            expect(s.fillColor).toEqual(s.color);
+        }
+    });
+
+    test('with arrow', () => {
+        for (const type of typeNames) {
+            const arrows = [{color: 'arrowColor'}];
+            const s = mock(createTestSocket(), {arrows: arrows as any, code: { type } } as any);
+            expect(s.fillColor).toEqual(type === 'any' ? arrows[0].color : s.color);
+        }
+    });
 });

@@ -35,10 +35,14 @@ export const editableTypes = types.enumeration('editableTypes', [
 
 export type IEditableTypes = typeof editableTypes.Type;
 
-const primitiveTypes = types.union(editableTypes, types.enumeration('primitiveTypes', [
+const nonEditableTypes = types.enumeration('nonEditableTypes', [
     'any',
     'void'
-]));
+]);
+
+export const typeNames = ['string', 'number', 'any', 'void'];
+
+const primitiveTypes = types.union(editableTypes, nonEditableTypes);
 
 export const CodeBlockIO = types.model('CodeBlockIO', {
     id: optionalIdentifierType,
