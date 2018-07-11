@@ -39,9 +39,10 @@ const primitiveTypes = types.union(editableTypes, types.enumeration('primitiveTy
     'void'
 ]));
 
-const CodeBlockInput = types.model({
-    name: types.string,
-    type: primitiveTypes,
+export const CodeBlockIO = types.model('CodeBlockIO', {
+    id: optionalIdentifierType,
+    name: types.optional(types.string, ''),
+    type: types.optional(primitiveTypes, 'any'),
     defaultValue: types.maybe(types.string)
 });
 
@@ -50,11 +51,11 @@ export const CodeBlock = types.model('CodeBlock', {
     name: types.string,
     code: codeType,
     runOnStart: types.optional(types.boolean, false),
-    values: types.optional(types.array(CodeBlockInput), []),
-    inputs: types.optional(types.array(CodeBlockInput), []),
-    returns: types.optional(primitiveTypes, 'void'),
-    execInputs: types.optional(types.array(types.string), []),
-    execOutputs: types.optional(types.array(types.string), []),
+    values: types.optional(types.array(CodeBlockIO), []),
+    inputs: types.optional(types.array(CodeBlockIO), []),
+    returns: types.maybe(types.refinement(CodeBlockIO, io => io.type !== 'any') as typeof CodeBlockIO),
+    execInputs: types.optional(types.array(CodeBlockIO), []),
+    execOutputs: types.optional(types.array(CodeBlockIO), []),
 });
 
 type ICodeBlockType = typeof CodeBlock.Type;
@@ -62,3 +63,9 @@ type ICodeBlockType = typeof CodeBlock.Type;
 type ICodeBlockSnapshotType = typeof CodeBlock.SnapshotType;
 export interface ICodeBlock extends ICodeBlockType { };
 export interface ICodeBlockSnapshot extends ICodeBlockSnapshotType { };
+
+type ICodeBlockIOType = typeof CodeBlockIO.Type;
+
+type ICodeBlockIOSnapshotType = typeof CodeBlockIO.SnapshotType;
+export interface ICodeBlockIO extends ICodeBlockIOType { };
+export interface ICodeBlockIOSnapshot extends ICodeBlockIOSnapshotType { };

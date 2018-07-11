@@ -89,7 +89,7 @@ export const Box = pouch.model('Box',
     }))
     .views(self => ({
         get isSelected() {
-            return Boolean(self.store && self.store.selection === self);
+            return Boolean(self.store && self.store.selection.find(b => b === self));
         },
         get height() {
             return 50 + Math.max(

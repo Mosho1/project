@@ -8,6 +8,9 @@ export const Arrow = pouch.model('Arrow', {
     output: types.reference(Socket)
 }).views(self => {
     return {
+        get color() {
+            return self.output.color;
+        },
         get points() {
             return calculateBezierPoints(
                 self.output.x,

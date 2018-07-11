@@ -25,6 +25,13 @@ export function randomUuid() {
 
 export const optionalIdentifierType = types.optional<string, string>(types.identifier(), randomUuid) as any as string;
 
-export function values<T>(map: {values(): IterableIterator<T>}) {
+export function values<T>(map: { values(): IterableIterator<T> }) {
     return [...map.values()] as T[];
 }
+
+export const filterBy = <T>(arr: T[], filter: string, map: (x: T) => string) => {
+    return arr.filter(x => {
+        const v = map(x);
+        return v.toLowerCase().includes(filter.toLowerCase());
+    });
+};

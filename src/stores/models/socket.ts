@@ -3,6 +3,7 @@ import { values } from '../utils/utils';
 import { modelTypes } from './index';
 import { pouch } from '../utils/pouchdb-model';
 import { IStore } from '../domain-state';
+import { CodeBlockIO } from './code-block';
 
 const socketType = types.enumeration('socketType', [
     'input',
@@ -18,6 +19,9 @@ export const socketTypes = (socketType as any).types.map((x: any) => x.value) as
 export const areSocketsCompatible = (s1: ISocket, s2: ISocket) => {
     if (s1.isInput === s2.isInput) return false;
     if (s1.isExec !== s2.isExec) return false;
+    if (s1.code.type !== 'any' &&
+        s2.code.type !== 'any' &&
+        s1.code.type !== s2.code.type) return false;
     const [input, output] = s1.isInput ? [s1, s2] : [s2, s1];
     if (input.isExec && (input.arrows.length > 0 || output.arrows.length > 0)) return false;
     if (input.arrows.length > 0) return false;
@@ -27,6 +31,7 @@ export const areSocketsCompatible = (s1: ISocket, s2: ISocket) => {
 export const Socket = pouch.model('Socket', {
     socketType,
     name: types.optional(types.string, ''),
+    code: types.reference(CodeBlockIO)
 }).volatile(_self => ({
     value: null,
 }))
@@ -81,6 +86,31 @@ export const Socket = pouch.model('Socket', {
         get y() {
             if (!self.box) return 0;
             return 50 + self.box.y + self.index * 30;
+        },
+
+    }))
+    .views(self => ({
+        get color() {
+            switch (self.code.type) {
+                case 'number':
+                    return 'green';
+                case 'string':
+                    return 'red';
+                default:
+                    return '#fff';
+            }
+        },
+    }))
+    .views(self => ({
+        get fillColor() {
+            switch (self.code.type) {
+                case 'any':
+                    if (self.arrows.length > 0) {
+                        return self.arrows[0].color;
+                    }
+                default:
+                    return self.color;
+            }
         }
     }))
     .actions(self => {

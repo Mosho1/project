@@ -10,7 +10,7 @@ import { SocketView } from './socket-view';
 class BoxValueView extends Component<{ boxValue: IBoxValue }> {
     render() {
         const { name, value, x, y, width } = this.props.boxValue;
-        
+
         return <Text
             x={x}
             y={y}
@@ -25,14 +25,11 @@ class BoxValueView extends Component<{ boxValue: IBoxValue }> {
 @observer
 export class BoxView extends Component<{ box: IBox }> {
     handleClick = (evt: { evt: MouseEvent, cancelBubble: boolean }) => {
-        const e = evt.evt;
-        if (e.ctrlKey) {
-            if (this.store.selection === this.props.box) {
-                this.store.setSelection(null);
-            }
-            this.store.deleteBox(this.props.box);
+        const { box } = this.props;
+        if (evt.evt.ctrlKey) {
+            this.store.addToSelection([box])
         } else {
-            this.store.setSelection(this.props.box);
+            this.store.setSelection([box]);
         }
         evt.cancelBubble = true;
     };

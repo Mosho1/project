@@ -9,7 +9,7 @@ PouchDB = (PouchDB as any).default || PouchDB;
 
 PouchDB.plugin(require('./upsert.js'));
 
-export class MSTPouch<T extends { type: string } = { type: string }> {
+export class MSTPouch<T extends { mstPouchType: string } = { mstPouchType: string }> {
     db: PouchDB.Database<T> | null;
     updates: { [index: string]: IStateTreeNode } = {};
     finishedLoading = false;
@@ -50,11 +50,11 @@ export class MSTPouch<T extends { type: string } = { type: string }> {
     };
 
     model<T = {}>(name: string, properties?: IModelProperties<T>) {
-        type S = T & { _id: string, type: string };
+        type S = T & { _id: string, mstPouchType: string };
 
         const newProperties = Object.assign({
             _id: optionalIdentifierType,
-            type: name,
+            mstPouchType: name,
         }, properties as T) as S;
         const model = types.model<S>(name, newProperties);
 
@@ -68,14 +68,15 @@ export class MSTPouch<T extends { type: string } = { type: string }> {
                     this.update(self._id, self);
                 });
             };
-            const beforeDestroy = () => {
+            const removeFromDb = () => {
                 this.update(self._id, { _deleted: true });
                 dispose();
             };
 
             return {
                 afterCreate,
-                beforeDestroy
+                beforeDestroy: removeFromDb,
+                beforeDetach: removeFromDb
             };
         });
     }
@@ -110,7 +111,7 @@ export class MSTPouch<T extends { type: string } = { type: string }> {
             .actions(self => {
                 const afterCreate = () => {
                     this.db!.allDocs({ include_docs: true }).then(docs => {
-                        const byType = groupBy(docs.rows.map(r => r.doc), doc => doc!.type);
+                        const byType = groupBy(docs.rows.map(r => r.doc), doc => doc!.mstPouchType);
                         const data: { [index: string]: any } = {};
                         for (let k in byType) {
                             data[typeMap[k]] = mapKeys(byType[k], v => v!._id);

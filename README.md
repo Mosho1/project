@@ -7,7 +7,9 @@
 - [x] Multiple sockets
 - [x] Styling
 
-- [ ] import modules?
-- [ ] multiple values for boxes
+- [x] import modules? - works with webpack and require for now
+- [x] multiple values for boxes
+- [x] type coloring
 - [ ] type validation
 - [ ] type conversion
+- [ ] selection groups

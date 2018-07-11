@@ -7,6 +7,7 @@ import { ICodeBlock } from '../stores/models/code-block';
 @observer
 export class ContextMenu extends Component {
     root: HTMLDivElement | null = null;
+    input: HTMLInputElement | null = null;
 
     componentDidMount() {
         document.addEventListener('contextmenu', this._handleContextMenu);
@@ -22,13 +23,18 @@ export class ContextMenu extends Component {
 
     _handleContextMenu = (event: MouseEvent) => {
         event.preventDefault();
-        if (!this.root) this.store.contextMenu!.toggle(true);
+        if (!this.root) {
+            this.store.contextMenu!.toggle(true);
+            if (this.input) {
+                this.input.focus();
+            }
+        }
         this.store.contextMenu!.handleContextMenu(this.root!, event);
     };
 
     _handleClick = (event: MouseEvent) => {
-        if (!event.target) return;
-        const wasOutside = !((event.target as any).contains === this.root!);
+        if (!event.target || !this.root) return;
+        const wasOutside = !(this.root.contains(event.target as Node));
 
         if (wasOutside) this.store.contextMenu!.toggle(false);
     };
@@ -39,13 +45,24 @@ export class ContextMenu extends Component {
 
     handleClick = (b: ICodeBlock) => (e: React.MouseEvent) => {
         this.store.addBox(b.name, e.clientX, e.clientY, b);
+        this.store.contextMenu!.toggle(false);
     };
 
+    onFilterChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        this.store.contextMenu!.setFilter(e.target.value);
+    }
+
+
+    onFilterClick = (e: React.MouseEvent) => {
+        e.stopPropagation();
+    }
+
     render() {
-        const { isOpen, position } = this.store.contextMenu!;
+        const { isOpen, position, filteredCodeBlocks } = this.store.contextMenu!;
         return (isOpen || null) &&
             <div style={{ left: position.left, top: position.top }} ref={ref => { this.root = ref }} className={styles.contextMenu}>
-                {(this.store.sortedCodeBlocks.map(b =>
+                <input ref={ref => { this.input = ref }} onClick={this.onFilterClick} onChange={this.onFilterChange} />
+                {(filteredCodeBlocks.map(b =>
                     <div
                         key={b.name}
                         className={styles.option}

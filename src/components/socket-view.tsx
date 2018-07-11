@@ -42,14 +42,14 @@ export class SocketView extends Component<{ socket: ISocket }> {
 
     renderSocket() {
         
-        const { x, y, arrows } = this.props.socket;
+        const { x, y, arrows, color, fillColor } = this.props.socket;
 
         return <Circle
             x={x}
             y={y}
             radius={6}
-            fill={arrows.length > 0 ? 'green' : 'black'}
-            stroke={'green'}
+            fill={arrows.length > 0 ? fillColor : 'black'}
+            stroke={color}
             onMouseDown={this.onMouseDown}
             onMouseUp={this.onMouseUp}
             onClick={this.onClick}

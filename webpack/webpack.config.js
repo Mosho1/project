@@ -14,6 +14,7 @@ module.exports = (env) => {
   return {
     devtool: ifDev('cheap-module-source-map'),
     mode,
+    context: path.join(__dirname, '../'),
     entry: {
       app: removeEmpty([
         ifDev(`webpack-hot-middleware/client?http://localhost:${env.port}`),
