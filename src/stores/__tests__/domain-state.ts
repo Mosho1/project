@@ -18,9 +18,9 @@ test('addBox', () => {
 });
 
 test('setSelection', () => {
-    // expect(store.setSelection(null).selection).toBeNull();
-    // const box = createTestBox();
-    // expect(store.setSelection(box).selection).toBe(box);
+    expect(store.setSelection([]).selection).toHaveProperty('length', 0);
+    const box = createTestBox();
+    expect(store.setSelection([box]).selection[0]).toBe(box);
 });
 
 // test('createBox', () => {
