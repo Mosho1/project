@@ -28,34 +28,24 @@ const env = {
 
 const devServerConfig = {};
 
-if (env.dev) {
-  const cssWatch = spawn(/^win/.test(process.platform) ? 'npm.cmd' : 'npm', ['run', 'css:watch']);
-  const log = data => console.log(`[tcm] ${data}`);
-  cssWatch.stdout.on('data', log);
-  cssWatch.stderr.on('data', log);
-}
+const cssWatch = spawn('npm.cmd', ['run', 'css:watch']);
+const log = data => console.log(`[tcm] ${data}`);
+cssWatch.stdout.on('data', log);
+cssWatch.stderr.on('data', log);
 
 const app = express();
 const compiler = webpack(webpackConfig(env));
-
-app.use(history());
-
 const devMiddleware = WebpackDevMiddleware(compiler, devServerConfig);
+const hotMiddleware = WebpackHotMiddleware(compiler);
+app.use(history());
 app.use(devMiddleware);
-
-if (env.dev) {
-  const hotMiddleware = WebpackHotMiddleware(compiler);
-  app.use(hotMiddleware);
-}
-
+app.use(hotMiddleware);
 app.listen(port, 'localhost', err => {
   if (err) {
     console.error(err);
   }
   console.log(`Server listening to port ${port}`);
-  if (env.dev) {
-    opn(`http://localhost:${port}`);
-  }
+  opn(`http://localhost:${port}`);
 });
 
 var WebSocketServer = require("ws").Server;
