@@ -29,7 +29,7 @@ const env = {
 const devServerConfig = {};
 
 if (env.dev) {
-  const cssWatch = spawn('npm.cmd', ['run', 'css:watch']);
+  const cssWatch = spawn(/^win/.test(process.platform) ? 'npm.cmd' : 'npm', ['run', 'css:watch']);
   const log = data => console.log(`[tcm] ${data}`);
   cssWatch.stdout.on('data', log);
   cssWatch.stderr.on('data', log);
@@ -45,8 +45,8 @@ app.use(devMiddleware);
 
 if (env.dev) {
   const hotMiddleware = WebpackHotMiddleware(compiler);
+  app.use(hotMiddleware);
 }
-app.use(hotMiddleware);
 
 app.listen(port, 'localhost', err => {
   if (err) {
