@@ -2,8 +2,8 @@ let app, server,
     express = require('express'),
     path = require('path'),
     http = require('http'),
-    host = process.env.HOST || '127.0.0.1',
-    port = process.env.PORT || 7770,
+    host = process.env.HOST || '0.0.0.0',
+    port = process.env.PORT || 3000,
     root = __dirname;
 
 app = express();
