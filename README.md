@@ -16,7 +16,13 @@
 - [ ] drag selection box
 - [ ] context menu on drop arrow
 - [ ] permanent box groups
+- [ ] zoom and pane
+- [ ] function list
+- [ ] composable functions
+- [ ] import modules automatically
+- [ ] use remote couchdb
+- [ ] run and stop
+- [ ] user login
+- [ ] electron app
+- [ ] demos
 
-### bugs
-
-1.
