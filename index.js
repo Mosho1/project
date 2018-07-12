@@ -2,7 +2,7 @@ let app, server,
     express = require('express'),
     path = require('path'),
     host = process.env.HOST || '127.0.0.1',
-    port = process.env.PORT || 3000,
+    port = process.env.PORT || 80,
     root = __dirname;
 
 app = express();
