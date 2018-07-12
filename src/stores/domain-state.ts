@@ -8,6 +8,38 @@ import { values } from './utils/utils';
 import { run } from './run';
 import { SocketTypeEnum, areSocketsCompatible } from './models/socket';
 
+const Position = types.model('Position', {
+    x: types.number,
+    y: types.number
+});
+
+const Stage = types.model('Stage', {
+    scale: types.optional(types.number, 1),
+    position: types.optional(Position, { x: 0, y: 0 })
+}).actions(self => ({
+    move(dx: number, dy: number) {
+        self.position.x += dx;
+        self.position.y += dy;
+        return self;
+    },
+    handleScale(e: WheelEvent) {
+        const mousePointTo = {
+            x: e.clientX / self.scale - self.position.x / self.scale,
+            y: e.clientY / self.scale - self.position.y / self.scale,
+        };
+
+        const scaleBy = e.ctrlKey ? 1.15 : 1.05;
+
+        const newScale = e.deltaY < 0 ? self.scale * scaleBy : self.scale / scaleBy;
+        self.scale = newScale;
+
+        self.position = {
+            x: -(mousePointTo.x - e.clientX / newScale) * newScale,
+            y: -(mousePointTo.y - e.clientY / newScale) * newScale
+        }
+    }
+}));
+
 export const Store = pouch.store('Store', {
     boxes: types.optional(types.map(models.Box), {}),
     sockets: types.optional(types.map(models.Socket), {}),
@@ -16,7 +48,8 @@ export const Store = pouch.store('Store', {
     selection: types.optional(types.array(types.reference(models.Box)), []),
     draggedArrow: types.maybe(models.DraggedArrow),
     draggedFromSocket: types.maybe(types.reference(models.Socket)),
-    contextMenu: types.maybe(ContextMenu)
+    contextMenu: types.maybe(ContextMenu),
+    stage: types.optional(Stage, {})
 })
     .actions(self => {
         const addBox = (name: string, x: number, y: number, code: ICodeBlock) => {
@@ -202,7 +235,7 @@ export const Store = pouch.store('Store', {
             deleteArrowsForSocket,
             runCode,
             addSocketToBox,
-            moveBoxOrSelection
+            moveBoxOrSelection,
         };
     })
 

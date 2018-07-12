@@ -37,17 +37,49 @@ class Canvas extends Component<any> {
         }
     };
 
+    onWheel = ({ evt: e }: KonvaEvent<WheelEvent>) => {
+        e.preventDefault();
+        e.stopPropagation();
+        this.store.stage.handleScale(e);
+    };
+
+    dragStartX: number = 0;
+    dragStartY: number = 0;
+
+    handleDragStart = ({ evt }: { evt: DragEvent }) => {
+        this.dragStartX = evt.clientX;
+        this.dragStartY = evt.clientY;
+    };
+
+    handleDragMove = ({ evt }: { evt: DragEvent }) => {
+        this.store.stage.move(
+            evt.clientX - this.dragStartX,
+            evt.clientY - this.dragStartY
+        );
+        this.dragStartX = evt.clientX;
+        this.dragStartY = evt.clientY;
+    };
+
     render() {
         const { store } = this;
         const { draggedArrow } = store;
         return (
             <div tabIndex={0} onKeyUp={this.onCanvasKeyPress}>
                 <Stage
+                x={store.stage.position.x}
+                y={store.stage.position.y}
+                    scaleX={store.stage.scale}
+                    scaleY={store.stage.scale}
+                    onDragMove={this.handleDragMove}
+                    onDragStart={this.handleDragStart}
+                    dragBoundFunc={_ => store.stage.position}
+                    draggable
                     onClick={this.onCanvasClick}
                     width={window.innerWidth}
                     height={window.innerHeight}
                     onMouseMove={this.onMouseMove}
                     onMouseUp={this.onMouseUp}
+                    onWheel={this.onWheel}
                 >
                     <Layer>
                         {draggedArrow && <Line
