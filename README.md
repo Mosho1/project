@@ -26,3 +26,10 @@
 - [ ] electron app
 - [ ] demos
 
+### db
+
+##### views
+
+- [ ] get fiddle for user
+- [ ] get store for fiddle
+- [ ] separate store per fiddle in FE
