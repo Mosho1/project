@@ -5,7 +5,7 @@ import { observer } from "mobx-react"
 
 import { IStore, getStore, replaceStore } from "./stores/domain-state"
 import App from "./components/app"
-import syncStoreWithBackend from "./stores/utils/socket"
+// import syncStoreWithBackend from "./stores/utils/socket"
 
 // const socket = new WebSocket("ws://localhost:4001")
 
