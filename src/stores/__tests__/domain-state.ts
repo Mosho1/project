@@ -1,7 +1,7 @@
 // import { getSnapshot, applyAction } from "mobx-state-tree"
 import { Store, IStore } from '../domain-state';
 import { product, mock } from '../test-utils';
-import { socketTypes, Socket } from '../models/socket';
+import { socketTypes } from '../models/socket';
 import { createTestCodeBlock } from '../models/__tests__/code-block';
 import { createTestBox } from '../models/__tests__/box';
 import { createTestSocket } from '../models/__tests__/socket';
@@ -109,7 +109,7 @@ test('endDragArrow', () => {
     b2.addSocket(s2);
 
     mock(store, { draggedArrow: {}, draggedFromSocket: s1 });
-    store.endDragArrow(s2);
+    store.endDragArrow(0, 0, s2);
 
     expect(store.hasArrow(s1, s2)).toBe(true);
     expect(store.draggedArrow).toBeNull();

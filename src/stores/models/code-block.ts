@@ -7,7 +7,7 @@ const parseFunction = (value: string) => {
     return fn;
 };
 
-const codeType = types.custom<string, Function>({
+export const codeType = types.custom<string, Function>({
     name: 'CodeBlock',
     fromSnapshot(value: string) {
         return parseFunction(value);
@@ -42,7 +42,7 @@ const nonEditableTypes = types.enumeration('nonEditableTypes', [
 
 export const typeNames = ['string', 'number', 'any', 'void'];
 
-const primitiveTypes = types.union(editableTypes, nonEditableTypes);
+export const primitiveTypes = types.union(editableTypes, nonEditableTypes);
 
 export const CodeBlockIO = types.model('CodeBlockIO', {
     id: optionalIdentifierType,

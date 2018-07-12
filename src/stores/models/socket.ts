@@ -123,6 +123,7 @@ export const Socket = pouch.model('Socket', {
                 return areSocketsCompatible(self as any, socket as any);
             },
             setValue(value: any) {
+                /* istanbul ignore next */
                 self.value = value;
             }
         }

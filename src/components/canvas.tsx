@@ -9,17 +9,17 @@ import { Key } from 'ts-keycode-enum';
 class Canvas extends Component<any> {
 
 
-    onMouseUp = () => {
-        this.store.endDragArrow();
+    onMouseUp = ({ evt }: KonvaEvent) => {
+        this.store.endDragArrow(evt.clientX, evt.clientY);
     };
 
-    onMouseMove = ({ evt }: any) => {
+    onMouseMove = ({ evt }: KonvaEvent) => {
         if (this.store.draggedArrow) {
             this.store.moveDragArrow(evt.clientX, evt.clientY);
         }
     };
 
-    onCanvasClick = ({ evt: e }: any) => {
+    onCanvasClick = ({ evt: e }: KonvaEvent) => {
         const { store } = this;
         if (e.ctrlKey === false) {
             store.setSelection([]);

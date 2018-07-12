@@ -6,7 +6,7 @@ export const runBox = (box: modelTypes['Box']): any => {
 
     const context = {
         values: box.valuesValueMap,
-        emit(eventName: string) {
+        emit(eventName = '') {
             const execOutput = box.execOutputs.find(x => x.name === eventName);
             if (!execOutput) {
                 throw new Error(`no execOutput found for event: ${eventName}`);

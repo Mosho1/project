@@ -2,12 +2,16 @@ import { types, hasParent, getParent } from 'mobx-state-tree'
 import { IStore } from './domain-state';
 import { modelTypes } from './models';
 import { values, filterBy } from './utils/utils';
+import { codeType, ICodeBlock } from './models/code-block';
 
 export const ContextMenu = types.model('ContextMenu', {
     position: types.optional(types.model({ left: types.number, top: types.number }), { left: 0, top: 0 }),
     isOpen: types.optional(types.boolean, false),
-    filter: types.optional(types.string, '')
-})
+    filter: types.optional(types.string, ''),
+    typeFilter: types.maybe(codeType)
+}).volatile(_self => ({
+    ref: null as null | HTMLElement
+}))
     .views(self => ({
         get store(): null | IStore {
             if (!hasParent(self, 1)) return null;
@@ -21,24 +25,24 @@ export const ContextMenu = types.model('ContextMenu', {
     }))
     .views(self => ({
         get filteredCodeBlocks(): modelTypes['CodeBlock'][] {
-            return filterBy(self.sortedCodeBlocks, self.filter, b => b.name);
+            const filtered = filterBy(self.sortedCodeBlocks, self.filter, b => b.name);
+            if (!self.typeFilter) return filtered;
+            return filtered.filter(self.typeFilter as (codeBock: ICodeBlock) => boolean);
         }
     }))
     .actions(self => ({
-        toggle(value?: boolean) {
-            if (typeof value === 'boolean') self.isOpen = value;
-            else self.isOpen = !self.isOpen;
-            if (!self.isOpen) self.filter = '';
+        setRef(ref: null | HTMLElement) {
+            self.ref = ref;
         },
         setFilter(value: string) {
             self.filter = value;
         },
-        handleContextMenu(contextMenuElement: HTMLElement, event: MouseEvent) {
+        handleContextMenu(clientX: number, clientY: number, contextMenuElement = self.ref) {
             if (!contextMenuElement) return;
             self.isOpen = true;
 
-            const clickX = event.clientX;
-            const clickY = event.clientY;
+            const clickX = clientX;
+            const clickY = clientY;
             const screenW = window.innerWidth;
             const screenH = window.innerHeight;
             const rootW = contextMenuElement.offsetWidth;
@@ -63,6 +67,29 @@ export const ContextMenu = types.model('ContextMenu', {
 
             if (bottom) {
                 self.position.top = clickY - rootH - 5;
+            }
+        }
+    })).actions(self => ({
+        _toggle(value: boolean, typeFilter?: null | ((codeBock: ICodeBlock) => boolean)) {
+            if (typeof value === 'boolean') self.isOpen = value;
+            else self.isOpen = !self.isOpen;
+            if (typeFilter) {
+                self.typeFilter = typeFilter;
+            }
+            if (!self.isOpen) {
+                self.filter = '';
+                self.typeFilter = null;
+                // TODO: this isn't the right place to put this
+                if (self.store) {
+                    self.store.setDraggedFromSocket(null);
+                }
+            }
+            return self.isOpen;
+        },
+    })).volatile(self => ({
+        toggle(value: boolean, clientX = 0, clientY = 0, typeFilter?: null | ((codeBock: ICodeBlock) => boolean)) {
+            if (self._toggle(value, typeFilter)) {
+                self.handleContextMenu(clientX, clientY);
             }
         }
     }));

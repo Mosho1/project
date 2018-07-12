@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { IStore } from '../stores/domain-state';
 
-export class Component<T = any> extends React.Component<T, any> {
+export class Component<T = any, S = any> extends React.Component<T, S> {
     store: IStore;
     static contextTypes = {
         store: () => null

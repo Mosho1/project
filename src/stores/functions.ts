@@ -2,9 +2,9 @@ import { ICodeBlockSnapshot } from './models/code-block';
 
 /* istanbul ignore file */
 
-type Emitter = { values: any, emit: (name: string) => void };
+type Emitter = { values: { [index: string]: any }, emit: (name?: string) => void };
 
-export const functions: {[index: string]: ICodeBlockSnapshot} = {
+export const functions: { [index: string]: ICodeBlockSnapshot } = {
     start: {
         name: 'start',
         id: 'start',
@@ -12,6 +12,21 @@ export const functions: {[index: string]: ICodeBlockSnapshot} = {
         code: function code(this: Emitter) {
             this.emit('');
         },
+        execOutputs: [{}],
+    },
+    interval: {
+        name: 'interval',
+        id: 'interval',
+        runOnStart: true,
+        code: function code(this: Emitter) {
+            const interval = Number(this.values.interval);
+            setInterval(() => {
+                this.emit();
+            }, interval);
+        },
+        values: [
+            { name: 'interval', type: 'number' },
+        ],
         execOutputs: [{}],
     },
     add: {
@@ -24,7 +39,7 @@ export const functions: {[index: string]: ICodeBlockSnapshot} = {
             { name: 'a', type: 'number' },
             { name: 'b', type: 'number' },
         ],
-        returns: {type: 'number'}
+        returns: { type: 'number' }
     },
     log: {
         name: 'log',
@@ -34,7 +49,7 @@ export const functions: {[index: string]: ICodeBlockSnapshot} = {
         },
         inputs: [{ name: 'input', type: 'any' }],
         execInputs: [{}],
-        returns: {type: 'void'}
+        returns: { type: 'void' }
     },
     number: {
         name: 'number',
@@ -45,7 +60,7 @@ export const functions: {[index: string]: ICodeBlockSnapshot} = {
         code: function code(this: Emitter) {
             return Number(this.values.value);
         },
-        returns: {type: 'number'}
+        returns: { type: 'number' }
     },
     string: {
         name: 'string',
@@ -56,13 +71,13 @@ export const functions: {[index: string]: ICodeBlockSnapshot} = {
         code: function code(this: Emitter) {
             return this.values.value;
         },
-        returns: {type: 'string'}
+        returns: { type: 'string' }
     },
     concat: {
         name: 'concat',
         id: 'concat',
-        inputs: [{name: 'a', type: 'string'}, {name: 'b', type: 'string'}],
-        returns: {type: 'string'},
+        inputs: [{ name: 'a', type: 'string' }, { name: 'b', type: 'string' }],
+        returns: { type: 'string' },
         code: function code(a: string, b: string) {
             return a + b;
         }
@@ -72,9 +87,9 @@ export const functions: {[index: string]: ICodeBlockSnapshot} = {
 for (let k in functions) {
     const fn = functions[k];
     if (k !== fn.id) throw new Error('function id different from key');
-    if (fn.inputs) fn.inputs = fn.inputs.map((x: any, i: number) => ({...x, id: `${k}/inputs/${i}`}))
-    if (fn.execInputs) fn.execInputs = fn.execInputs.map((x: any, i: number) => ({...x, id: `${k}/execInputs/${i}`}))
-    if (fn.execOutputs) fn.execOutputs = fn.execOutputs.map((x: any, i: number) => ({...x, id: `${k}/execOutputs/${i}`}))
+    if (fn.inputs) fn.inputs = fn.inputs.map((x: any, i: number) => ({ ...x, id: `${k}/inputs/${i}` }))
+    if (fn.execInputs) fn.execInputs = fn.execInputs.map((x: any, i: number) => ({ ...x, id: `${k}/execInputs/${i}` }))
+    if (fn.execOutputs) fn.execOutputs = fn.execOutputs.map((x: any, i: number) => ({ ...x, id: `${k}/execOutputs/${i}` }))
     if (fn.returns) fn.returns.id = `${k}/returns`;
 }
 

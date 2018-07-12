@@ -6,7 +6,7 @@ import { ICodeBlock, ICodeBlockIO } from './models/code-block';
 import * as codeBlocks from './functions';
 import { values } from './utils/utils';
 import { run } from './run';
-import { SocketTypeEnum } from './models/socket';
+import { SocketTypeEnum, areSocketsCompatible } from './models/socket';
 
 export const Store = pouch.store('Store', {
     boxes: types.optional(types.map(models.Box), {}),
@@ -37,6 +37,18 @@ export const Store = pouch.store('Store', {
             }
             self.boxes.put(box);
             return box;
+        };
+        const addBoxAndArrowIfDragged = (name: string, x: number, y: number, code: ICodeBlock) => {
+            const b = addBox(name, x, y, code);
+            if (self.draggedFromSocket) {
+                for (const socket of b.sockets) {
+                    if (areSocketsCompatible(socket, self.draggedFromSocket)) {
+                        const a = addArrowFromDraggedSocket(socket);
+                        if (a !== null) return true;
+                    }
+                }
+            }
+            return false;
         };
         const setSelection = (selection: modelTypes['Box'][]) => {
             self.selection.replace(selection);
@@ -73,9 +85,11 @@ export const Store = pouch.store('Store', {
         };
         const startDragArrow = (socket: modelTypes['Socket']) => {
             const { x, y } = socket;
+            if (socket.isInput && socket.arrows.length > 0) return;
             self.draggedArrow = models.DraggedArrow.create({ startX: x, startY: y, endX: x, endY: y });
-            self.draggedFromSocket = socket;
+            setDraggedFromSocket(socket);
         };
+
         const moveDragArrow = (x: number, y: number) => {
             if (self.draggedArrow) {
                 if (self.draggedFromSocket!.isInput) {
@@ -93,24 +107,56 @@ export const Store = pouch.store('Store', {
             }));
         };
         const addArrow = (input: modelTypes['Socket'], output: modelTypes['Socket']) => {
-            let arrow: null | modelTypes['Arrow'] = null;
             if (input.isCompatibleWith(output) &&
                 !hasArrow(input, output)) {
+                let arrow: null | modelTypes['Arrow'] = null;
                 arrow = models.Arrow.create({ input, output });
                 self.arrows.put(arrow);
+                return arrow;
             }
-            return arrow;
+
+            return null;
+
         };
-        const endDragArrow = (socket?: modelTypes['Socket']) => {
+        const addArrowFromDraggedSocket = (socket: modelTypes['Socket']) => {
+            if (!self.draggedFromSocket) return;
+            const [input, output] = socket.isInput ? [socket, self.draggedFromSocket] : [self.draggedFromSocket, socket];
+            setDraggedFromSocket(null);
+            return addArrow(input, output);
+        };
+        const setDraggedFromSocket = (socket: modelTypes['Socket'] | null) => {
+            self.draggedFromSocket = socket;
+        };
+        const endDragArrow = (clientX: number, clientY: number, socket?: modelTypes['Socket']) => {
             self.draggedArrow = null;
-            if (self.draggedFromSocket && socket) {
-                const [input, output] = socket.isInput ? [socket, self.draggedFromSocket] : [self.draggedFromSocket, socket];
-                addArrow(input, output);
+            if (!self.draggedFromSocket) return;
+            if (socket) {
+                addArrowFromDraggedSocket(socket);
+            } else if (self.contextMenu) {
+                const { isInput, isExec, code } = self.draggedFromSocket;
+                let typeFilter: null | ((code: ICodeBlock) => boolean) = null;
+                if (isExec) {
+                    if (isInput) {
+                        typeFilter = (c) => c.execOutputs.some(i => i.type === code.type);
+                    } else {
+                        typeFilter = (c) => c.execInputs.some(i => i.type === code.type);
+                    }
+                } else {
+                    switch (code.type) {
+                        case 'number':
+                        case 'string':
+                            if (isInput) {
+                                typeFilter = (c) => c.returns ? c.returns.type === 'any' || c.returns.type === code.type : false;
+                            } else {
+                                typeFilter = (c) => c.inputs.some(i => i.type === 'any' || i.type === code.type);
+                            }
+                    }
+                }
+                setTimeout(() => self.contextMenu!.toggle(true, clientX, clientY, typeFilter));
             }
-            self.draggedFromSocket = null;
         };
         const deleteArrowsForSocket = (socket: modelTypes['Socket']) => {
-            for (const arrow of self.arrows.values()) {
+            for (const arrow of values(self.arrows)) {
                 if (arrow.input === socket || arrow.output === socket) {
                     detach(arrow);
                     // arrowsToDelete.push(arrow._id);
@@ -141,6 +187,7 @@ export const Store = pouch.store('Store', {
 
         return {
             addBox,
+            addBoxAndArrowIfDragged,
             hasArrow,
             setSelection,
             addToSelection,
@@ -151,6 +198,7 @@ export const Store = pouch.store('Store', {
             startDragArrow,
             moveDragArrow,
             endDragArrow,
+            setDraggedFromSocket,
             deleteArrowsForSocket,
             runCode,
             addSocketToBox,

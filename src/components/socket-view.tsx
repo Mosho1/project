@@ -5,7 +5,9 @@ import { Rect, Group, Circle, Text } from 'react-konva';
 import { ISocket } from '../stores/models/socket';
 
 @observer
-export class SocketView extends Component<{ socket: ISocket }> {
+export class SocketView extends Component<{ socket: ISocket }, { hovered: boolean }> {
+
+    state = { hovered: false };
 
     onMouseDown = (e: KonvaEvent) => {
         if (!e.evt.ctrlKey) {
@@ -14,7 +16,7 @@ export class SocketView extends Component<{ socket: ISocket }> {
     };
 
     onMouseUp = (e: KonvaEvent) => {
-        this.store.endDragArrow(this.props.socket);
+        this.store.endDragArrow(e.evt.clientX, e.evt.clientY, this.props.socket);
         e.cancelBubble = true;
     };
 
@@ -25,40 +27,53 @@ export class SocketView extends Component<{ socket: ISocket }> {
         e.cancelBubble = true;
     };
 
+    onMouseEnter = (_e: KonvaEvent) => {
+        this.setState({hovered: true});
+    };
+
+    onMouseLeave = (_e: KonvaEvent) => {
+        this.setState({hovered: false});
+    };
+
+    get size() {
+        return this.state.hovered ? 8 : 6;
+    }
+
     renderExecSocket() {
         const { x, y, arrows } = this.props.socket;
         return <Rect
-            x={x - 6}
-            y={y - 6}
-            height={12}
-            width={12}
+            x={x - this.size}
+            y={y - this.size}
+            height={this.size * 2}
+            width={this.size * 2}
             fill={arrows.length > 0 ? '#dacfcf' : 'black'}
             stroke={'#dacfcf'}
-            onMouseDown={this.onMouseDown}
-            onMouseUp={this.onMouseUp}
-            onClick={this.onClick}
         />
     }
 
     renderSocket() {
-        
+
         const { x, y, arrows, color, fillColor } = this.props.socket;
 
         return <Circle
             x={x}
             y={y}
-            radius={6}
+            radius={this.size}
             fill={arrows.length > 0 ? fillColor : 'black'}
             stroke={color}
-            onMouseDown={this.onMouseDown}
-            onMouseUp={this.onMouseUp}
-            onClick={this.onClick}
+
         />
     }
 
     render() {
         const { x, y, name, socketType, isExec } = this.props.socket;
-        return <Group>
+        return <Group
+            onMouseDown={this.onMouseDown}
+            onMouseUp={this.onMouseUp}
+            onClick={this.onClick}
+            onMouseEnter={this.onMouseEnter}
+            onMouseLeave={this.onMouseLeave}
+        >
             {isExec ? this.renderExecSocket() : this.renderSocket()}
             <Text
                 x={x + (socketType === 'input' ? 15 : -40)}
