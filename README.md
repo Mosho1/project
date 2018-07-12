@@ -16,3 +16,7 @@
 - [ ] drag selection box
 - [ ] context menu on drop arrow
 - [ ] permanent box groups
+
+### bugs
+
+1. 
