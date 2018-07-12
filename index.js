@@ -10,7 +10,7 @@ app = express();
 app.use(function (req, res, next) { console.log(req.url); next(); });
 app.use(express.static(root + '/build'));
 server = http.createServer(app);
-server.listen(port, host, serverStarted);
+server.listen(port);
 
 function serverStarted() {
     console.log('Server started', host, port);
