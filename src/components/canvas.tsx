@@ -10,7 +10,9 @@ class Canvas extends Component<any> {
 
 
     onMouseUp = ({ evt }: KonvaEvent) => {
-        this.store.endDragArrow(evt.clientX, evt.clientY);
+        if (this.store.draggedArrow) {
+            this.store.endDragArrow(evt.clientX, evt.clientY);
+        }
     };
 
     onMouseMove = ({ evt }: KonvaEvent) => {
@@ -66,8 +68,8 @@ class Canvas extends Component<any> {
         return (
             <div tabIndex={0} onKeyUp={this.onCanvasKeyPress}>
                 <Stage
-                x={store.stage.position.x}
-                y={store.stage.position.y}
+                    x={store.stage.position.x}
+                    y={store.stage.position.y}
                     scaleX={store.stage.scale}
                     scaleY={store.stage.scale}
                     onDragMove={this.handleDragMove}
