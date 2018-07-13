@@ -37,19 +37,21 @@ export class BoxView extends Component<{ box: IBox }> {
     dragStartX: number = 0;
     dragStartY: number = 0;
 
-    handleDragStart = ({ evt }: { evt: DragEvent }) => {
-        this.dragStartX = evt.clientX;
-        this.dragStartY = evt.clientY;
+    handleDragStart = (e: KonvaEvent) => {
+        e.cancelBubble = true;
+        this.dragStartX = e.evt.clientX;
+        this.dragStartY = e.evt.clientY;
     };
 
-    handleDragMove = ({ evt }: { evt: DragEvent }) => {
+    handleDragMove = (e: KonvaEvent) => {
+        e.cancelBubble = true;
         this.store.moveBoxOrSelection(
             this.props.box,
-            evt.clientX - this.dragStartX,
-            evt.clientY - this.dragStartY
+            e.evt.clientX - this.dragStartX,
+            e.evt.clientY - this.dragStartY
         );
-        this.dragStartX = evt.clientX;
-        this.dragStartY = evt.clientY;
+        this.dragStartX = e.evt.clientX;
+        this.dragStartY = e.evt.clientY;
     };
 
     socketView = (s: ISocket) =>
