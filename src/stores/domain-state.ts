@@ -262,7 +262,7 @@ export const Store = pouch.store('Store', {
             return s;
         };
         const moveBoxOrSelection = (box: modelTypes['Box'], dx: number, dy: number) => {
-            if (self.selection.length > 0) {
+            if (self.selection.length > 0 && self.selection.indexOf(box) > -1) {
                 for (const box of self.selection) {
                     box.move(dx, dy);
                 }
