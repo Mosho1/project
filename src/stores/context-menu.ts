@@ -10,7 +10,8 @@ export const ContextMenu = types.model('ContextMenu', {
     filter: types.optional(types.string, ''),
     typeFilter: types.maybe(codeType)
 }).volatile(_self => ({
-    ref: null as null | HTMLElement
+    ref: null as null | HTMLElement,
+    onNextToggle: null as null | Function
 }))
     .views(self => ({
         get store(): null | IStore {
@@ -70,7 +71,9 @@ export const ContextMenu = types.model('ContextMenu', {
             }
         }
     })).actions(self => ({
-        _toggle(value: boolean, typeFilter?: null | ((codeBock: ICodeBlock) => boolean)) {
+        _toggle(value: boolean, typeFilter?: null | ((codeBock: ICodeBlock) => boolean), onNextToggle?: Function) {
+            if (self.onNextToggle) self.onNextToggle(value);
+            self.onNextToggle = onNextToggle || null;
             if (typeof value === 'boolean') self.isOpen = value;
             else self.isOpen = !self.isOpen;
             if (typeFilter) {
@@ -83,8 +86,8 @@ export const ContextMenu = types.model('ContextMenu', {
             return self.isOpen;
         },
     })).volatile(self => ({
-        toggle(value: boolean, clientX = 0, clientY = 0, typeFilter?: null | ((codeBock: ICodeBlock) => boolean)) {
-            if (self._toggle(value, typeFilter)) {
+        toggle(value: boolean, clientX = 0, clientY = 0, typeFilter?: null | ((codeBock: ICodeBlock) => boolean), onNextToggle?: Function) {
+            if (self._toggle(value, typeFilter, onNextToggle)) {
                 self.handleContextMenu(clientX, clientY);
             }
         }

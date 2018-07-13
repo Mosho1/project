@@ -48,6 +48,13 @@ const Stage = types.model('Stage', {
             x: -(mousePointTo.x - e.clientX / newScale) * newScale,
             y: -(mousePointTo.y - e.clientY / newScale) * newScale
         }
+    },
+    getAbsolutePosition(x: number, y: number) {
+        return {
+            
+            x: x - self.position.x,
+            y: y - self.position.y,
+        }
     }
 }));
 
@@ -62,11 +69,16 @@ export const Store = pouch.store('Store', {
     contextMenu: types.maybe(ContextMenu),
     stage: types.optional(Stage, {})
 })
+    .actions(self => ({
+        setDraggedFromSocket(socket: modelTypes['Socket'] | null) {
+            self.draggedFromSocket = socket;
+        }
+    }))
     .actions(self => {
         const addBox = (name: string, x: number, y: number, code: ICodeBlock) => {
             const { inputs, returns, execInputs, execOutputs, values } = code;
             const boxValues = values.map(v => ({ name: v.name, value: v.defaultValue || '' }));
-            const box = models.Box.create({ name, x, y, code, values: boxValues });
+            const box = models.Box.create({ name, code, values: boxValues, ...self.stage.getAbsolutePosition(x, y) });
             for (const input of inputs) {
                 addSocketToBox(box, 'input', input);
             }
@@ -130,7 +142,7 @@ export const Store = pouch.store('Store', {
             const { x, y } = socket;
             if (socket.isInput && socket.arrows.length > 0) return;
             self.draggedArrow = models.DraggedArrow.create({ startX: x, startY: y, endX: x, endY: y });
-            setDraggedFromSocket(socket);
+            self.setDraggedFromSocket(socket);
         };
 
         const moveDragArrow = (x: number, y: number) => {
@@ -164,11 +176,8 @@ export const Store = pouch.store('Store', {
         const addArrowFromDraggedSocket = (socket: modelTypes['Socket']) => {
             if (!self.draggedFromSocket) return;
             const [input, output] = socket.isInput ? [socket, self.draggedFromSocket] : [self.draggedFromSocket, socket];
-            setDraggedFromSocket(null);
+            self.setDraggedFromSocket(null);
             return addArrow(input, output);
-        };
-        const setDraggedFromSocket = (socket: modelTypes['Socket'] | null) => {
-            self.draggedFromSocket = socket;
         };
         const endDragArrow = (
             socket?: modelTypes['Socket'] | null,
@@ -199,7 +208,9 @@ export const Store = pouch.store('Store', {
                             }
                     }
                 }
-                setTimeout(() => self.contextMenu!.toggle(true, clientX, clientY, typeFilter));
+                setTimeout(() => self.contextMenu!.toggle(true, clientX, clientY, typeFilter, () => {
+                    self.setDraggedFromSocket(null);
+                }));
             }
         };
         const deleteArrowsForSocket = (socket: modelTypes['Socket']) => {
@@ -245,7 +256,6 @@ export const Store = pouch.store('Store', {
             startDragArrow,
             moveDragArrow,
             endDragArrow,
-            setDraggedFromSocket,
             deleteArrowsForSocket,
             runCode,
             addSocketToBox,
