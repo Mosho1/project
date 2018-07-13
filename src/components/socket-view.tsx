@@ -16,7 +16,9 @@ export class SocketView extends Component<{ socket: ISocket }, { hovered: boolea
     };
 
     onMouseUp = (e: KonvaEvent) => {
-        this.store.endDragArrow(e.evt.clientX, e.evt.clientY, this.props.socket);
+        if (this.store.draggedArrow) {
+            this.store.endDragArrow(e.evt.clientX, e.evt.clientY, this.props.socket);
+        }
         e.cancelBubble = true;
     };
 
@@ -28,11 +30,11 @@ export class SocketView extends Component<{ socket: ISocket }, { hovered: boolea
     };
 
     onMouseEnter = (_e: KonvaEvent) => {
-        this.setState({hovered: true});
+        this.setState({ hovered: true });
     };
 
     onMouseLeave = (_e: KonvaEvent) => {
-        this.setState({hovered: false});
+        this.setState({ hovered: false });
     };
 
     get size() {
