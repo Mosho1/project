@@ -26,8 +26,8 @@ module.exports = (env) => {
       extensions: ['.ts', '.tsx', '.js', '.json'],
     },
     output: {
-      filename: '[name].[hash].js',
-      sourceMapFilename: '[name].[hash].map.js',
+      filename: env.prod ? '[name].[hash].js' : '[name].js',
+      sourceMapFilename: env.prod ? '[name].[hash].map.js' : '[name].map.js',
       path: path.join(__dirname, '../build/'),
       // publicPath: '/', can uncomment if you want everything relative to root '/'
     },
