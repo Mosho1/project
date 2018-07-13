@@ -14,9 +14,9 @@
 - [ ] type validation
 - [ ] type conversion
 - [ ] drag selection box
-- [ ] context menu on drop arrow
+- [x] context menu on drop arrow
 - [ ] permanent box groups
-- [ ] zoom and pane
+- [x] zoom and pane
 - [ ] function list
 - [ ] composable functions
 - [ ] import modules automatically
