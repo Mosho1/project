@@ -1,11 +1,11 @@
 import { types } from 'mobx-state-tree'
-import { Socket } from './socket';
+import { Socket, ISocket } from './socket';
 import { calculateBezierPoints } from '../utils/utils';
 import { pouch } from '../utils/pouchdb-model';
 
 export const Arrow = pouch.model('Arrow', {
-    input: types.reference(Socket),
-    output: types.reference(Socket)
+    input: types.reference<ISocket>(Socket),
+    output: types.reference<ISocket>(Socket)
 }).views(self => {
     return {
         get color() {

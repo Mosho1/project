@@ -1,9 +1,8 @@
 import { types, getParent, hasParent } from 'mobx-state-tree'
 import { pouch } from '../utils/pouchdb-model';
-import { Socket } from './socket';
+import { Socket, ISocket } from './socket';
 import { IStore } from '../domain-state';
-import { CodeBlock } from './code-block';
-import { modelTypes } from './index';
+import { CodeBlock, ICodeBlock } from './code-block';
 
 interface BoxEditableProps {
     x?: number;
@@ -22,7 +21,7 @@ const BoxValue = types.model('BoxValue', {
         width: 50,
     }))
     .views(self => ({
-        get box(): modelTypes['Box'] {
+        get box(): IBox {
             if (!hasParent(self, 2)) return null as any;
             return getParent(self, 2);
         },
@@ -50,8 +49,8 @@ export const Box = pouch.model('Box',
         x: 0,
         y: 0,
         values: types.optional(types.array(BoxValue), []),
-        sockets: types.optional(types.array(types.reference(Socket)), []),
-        code: types.reference(CodeBlock)
+        sockets: types.optional(types.array(types.reference<ISocket>(Socket)), []),
+        code: types.reference<ICodeBlock>(CodeBlock)
     })
     .volatile(_self => ({
         width: 150,
@@ -108,7 +107,7 @@ export const Box = pouch.model('Box',
             /* istanbul ignore next */
             Object.assign(self, props);
         },
-        addSocket(socket: modelTypes['Socket']) {
+        addSocket(socket: ISocket) {
             self.sockets.push(socket);
             return socket;
         },

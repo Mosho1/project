@@ -3,7 +3,7 @@ import { values } from '../utils/utils';
 import { modelTypes } from './index';
 import { pouch } from '../utils/pouchdb-model';
 import { IStore } from '../domain-state';
-import { CodeBlockIO } from './code-block';
+import { CodeBlockIO, ICodeBlockIO } from './code-block';
 
 const socketType = types.enumeration('socketType', [
     'input',
@@ -31,7 +31,7 @@ export const areSocketsCompatible = (s1: ISocket, s2: ISocket) => {
 export const Socket = pouch.model('Socket', {
     socketType,
     name: types.optional(types.string, ''),
-    code: types.reference(CodeBlockIO)
+    code: types.reference<ICodeBlockIO>(CodeBlockIO)
 }).volatile(_self => ({
     value: null,
 }))

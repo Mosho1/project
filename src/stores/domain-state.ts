@@ -103,8 +103,7 @@ export const Store = pouch.store('Store', {
             return self;
         };
         const deleteBox = (box: modelTypes['Box']) => {
-            self.selection.remove(box);
-
+            // self.selection.remove(box);
             for (const socket of box.sockets) {
                 deleteArrowsForSocket(socket);
             }
