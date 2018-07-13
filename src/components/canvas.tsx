@@ -26,6 +26,9 @@ class Canvas extends Component<any> {
         if (e.ctrlKey === false) {
             store.setSelection([]);
         }
+        if (this.store.draggedFromSocket) {
+            this.store.setDraggedFromSocket(null);
+        }
         //  else {
         //     store.createBox("Hi.", e.clientX - 50, e.clientY - 20);
         // }

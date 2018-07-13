@@ -79,10 +79,6 @@ export const ContextMenu = types.model('ContextMenu', {
             if (!self.isOpen) {
                 self.filter = '';
                 self.typeFilter = null;
-                // TODO: this isn't the right place to put this
-                if (self.store) {
-                    self.store.setDraggedFromSocket(null);
-                }
             }
             return self.isOpen;
         },
