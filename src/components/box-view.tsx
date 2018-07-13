@@ -1,14 +1,14 @@
 import * as React from "react"
 import { observer } from "mobx-react"
-import { Component } from './component';
 import { Rect, Group } from 'react-konva';
 import { IBox } from '../stores/models/box';
+import { IStore } from '../stores/domain-state';
 
 @observer
-export class BoxView extends Component<{ box: IBox }> {
+export class BoxView extends React.Component<{ box: IBox, store: IStore }> {
     handleClick = (evt: { evt: MouseEvent, cancelBubble: boolean }) => {
         const { box } = this.props;
-        this.store.setSelection([box]);
+        this.props.store.setSelection([box]);
         evt.cancelBubble = true;
     };
 
