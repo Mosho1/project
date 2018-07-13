@@ -13,6 +13,7 @@ export class SocketView extends Component<{ socket: ISocket }, { hovered: boolea
         if (!e.evt.ctrlKey) {
             this.store.startDragArrow(this.props.socket);
         }
+        e.cancelBubble = true;
     };
 
     onMouseUp = (e: KonvaEvent) => {

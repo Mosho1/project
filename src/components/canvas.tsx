@@ -16,9 +16,7 @@ class Canvas extends Component<any> {
     };
 
     onMouseMove = ({ evt }: KonvaEvent) => {
-        if (this.store.draggedArrow) {
-            this.store.moveDragArrow(evt.clientX, evt.clientY);
-        }
+        evt;
     };
 
     onCanvasClick = ({ evt: e }: KonvaEvent) => {
@@ -49,17 +47,22 @@ class Canvas extends Component<any> {
     dragStartY: number = 0;
 
     handleDragStart = ({ evt }: { evt: DragEvent }) => {
+        if (this.store.draggedArrow) return;
         this.dragStartX = evt.clientX;
         this.dragStartY = evt.clientY;
     };
 
     handleDragMove = ({ evt }: { evt: DragEvent }) => {
-        this.store.stage.move(
-            evt.clientX - this.dragStartX,
-            evt.clientY - this.dragStartY
-        );
-        this.dragStartX = evt.clientX;
-        this.dragStartY = evt.clientY;
+        if (this.store.draggedArrow) {
+            this.store.moveDragArrow(evt.clientX, evt.clientY);
+        } else {
+            this.store.stage.move(
+                evt.clientX - this.dragStartX,
+                evt.clientY - this.dragStartY
+            );
+            this.dragStartX = evt.clientX;
+            this.dragStartY = evt.clientY;
+        }
     };
 
     render() {
