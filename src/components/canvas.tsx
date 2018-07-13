@@ -47,22 +47,24 @@ class Canvas extends Component<any> {
     dragStartY: number = 0;
 
     handleDragStart = ({ evt }: { evt: DragEvent }) => {
-        if (this.store.draggedArrow) return;
         this.dragStartX = evt.clientX;
         this.dragStartY = evt.clientY;
     };
 
     handleDragMove = ({ evt }: { evt: DragEvent }) => {
         if (this.store.draggedArrow) {
-            this.store.moveDragArrow(evt.clientX, evt.clientY);
+            this.store.moveDragArrow(
+                evt.clientX - this.dragStartX,
+                evt.clientY - this.dragStartY
+            );
         } else {
             this.store.stage.move(
                 evt.clientX - this.dragStartX,
                 evt.clientY - this.dragStartY
             );
-            this.dragStartX = evt.clientX;
-            this.dragStartY = evt.clientY;
         }
+        this.dragStartX = evt.clientX;
+        this.dragStartY = evt.clientY;
     };
 
     render() {

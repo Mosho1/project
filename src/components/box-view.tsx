@@ -85,7 +85,7 @@ export class BoxView extends Component<{ box: IBox }> {
                     draggable
                     onDragMove={this.handleDragMove}
                     onDragStart={this.handleDragStart}
-                    dragBoundFunc={_ => box}
+                    // dragBoundFunc={_ => box}
                     onClick={this.handleClick}
                 />
                 <Text
