@@ -1,10 +1,6 @@
 import * as React from "react";
 import { observer } from "mobx-react";
-import DevTools from "mobx-react-devtools";
-
-import Sidebar from "./sidebar";
 import Canvas from './canvas';
-import { ContextMenu } from './context-menu';
 
 class App extends React.Component<{ getStore: Function }> {
     static childContextTypes = {
@@ -17,10 +13,7 @@ class App extends React.Component<{ getStore: Function }> {
 
     render() {
         return (<div>
-            <DevTools />
             <Canvas />
-            <Sidebar />
-            <ContextMenu />
         </div>
         );
     }

@@ -3,7 +3,7 @@ import { observer } from "mobx-react";
 
 import BoxView from "./box-view";
 import { Component } from './component';
-import { Layer, Stage, Line } from 'react-konva';
+import { Layer, Stage } from 'react-konva';
 import { values } from '../stores/utils/utils';
 import { Key } from 'ts-keycode-enum';
 
@@ -12,9 +12,6 @@ class Canvas extends Component<any> {
 
 
     onMouseUp = (_e: KonvaEvent) => {
-        if (this.store.draggedArrow) {
-            this.store.endDragArrow(null, _e.evt.clientX, _e.evt.clientY);
-        }
     };
 
     onMouseMove = ({ evt }: KonvaEvent) => {
@@ -39,7 +36,6 @@ class Canvas extends Component<any> {
     onWheel = ({ evt: e }: KonvaEvent<WheelEvent>) => {
         e.preventDefault();
         e.stopPropagation();
-        this.store.stage.handleScale(e);
     };
 
     dragStartX: number = 0;
@@ -50,36 +46,11 @@ class Canvas extends Component<any> {
         this.dragStartY = evt.clientY;
     };
 
-    handleDragMove = ({ evt }: { evt: DragEvent }) => {
-        if (this.store.draggedArrow) {
-            this.store.moveDragArrow(
-                evt.clientX - this.dragStartX,
-                evt.clientY - this.dragStartY
-            );
-        } else {
-            this.store.stage.move(
-                evt.clientX - this.dragStartX,
-                evt.clientY - this.dragStartY
-            );
-        }
-        this.dragStartX = evt.clientX;
-        this.dragStartY = evt.clientY;
-    };
-
     render() {
         const { store } = this;
-        const { draggedArrow } = store;
         return (
             <div tabIndex={0} onKeyDown={this.onCanvasKeyPress}>
                 <Stage
-                    x={store.stage.position.x}
-                    y={store.stage.position.y}
-                    scaleX={store.stage.scale}
-                    scaleY={store.stage.scale}
-                    onDragMove={this.handleDragMove}
-                    onDragStart={this.handleDragStart}
-                    dragBoundFunc={_ => store.stage.position}
-                    draggable
                     onClick={this.onCanvasClick}
                     width={window.innerWidth}
                     height={window.innerHeight}
@@ -88,22 +59,6 @@ class Canvas extends Component<any> {
                     onWheel={this.onWheel}
                 >
                     <Layer>
-                        {draggedArrow && <Line
-                            points={draggedArrow.points}
-                            stroke="black"
-                            bezier
-                        />}
-                        {values(store.arrows).map(a =>
-                            // <Group key={a._id}>
-                            // {chunk<number>(a.points, 2).map(x => <Circle fill="black" x={x[0]} y={x[1]} radius={5}/>)}
-                            <Line
-                                key={a._id}
-                                points={a.points}
-                                stroke={a.isExec ? '#dacfcf' : a.color}
-                                bezier
-                            />
-                            // </Group> 
-                        )}
                         {values(store.boxes).map(b => <BoxView key={b._id} box={b} />)}
                     </Layer>
                 </Stage>

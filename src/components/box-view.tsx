@@ -26,11 +26,7 @@ class BoxValueView extends Component<{ boxValue: IBoxValue }> {
 export class BoxView extends Component<{ box: IBox }> {
     handleClick = (evt: { evt: MouseEvent, cancelBubble: boolean }) => {
         const { box } = this.props;
-        if (evt.evt.ctrlKey) {
-            this.store.addToSelection([box])
-        } else {
-            this.store.setSelection([box]);
-        }
+        this.store.setSelection([box]);
         evt.cancelBubble = true;
     };
 
@@ -45,11 +41,11 @@ export class BoxView extends Component<{ box: IBox }> {
 
     handleDragMove = (e: KonvaEvent) => {
         e.cancelBubble = true;
-        this.store.moveBoxOrSelection(
-            this.props.box,
-            e.evt.clientX - this.dragStartX,
-            e.evt.clientY - this.dragStartY
-        );
+        // this.store.moveBoxOrSelection(
+        //     this.props.box,
+        //     e.evt.clientX - this.dragStartX,
+        //     e.evt.clientY - this.dragStartY
+        // );
         this.dragStartX = e.evt.clientX;
         this.dragStartY = e.evt.clientY;
     };

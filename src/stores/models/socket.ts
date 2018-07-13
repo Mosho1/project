@@ -1,9 +1,8 @@
 import { types, getParent, hasParent } from 'mobx-state-tree'
 import { values } from '../utils/utils';
-import { modelTypes } from './index';
 import { pouch } from '../utils/pouchdb-model';
 import { IStore } from '../domain-state';
-import { CodeBlockIO, ICodeBlockIO } from './code-block';
+import { IBox } from './box';
 
 const socketType = types.enumeration('socketType', [
     'input',
@@ -19,19 +18,12 @@ export const socketTypes = (socketType as any).types.map((x: any) => x.value) as
 export const areSocketsCompatible = (s1: ISocket, s2: ISocket) => {
     if (s1.isInput === s2.isInput) return false;
     if (s1.isExec !== s2.isExec) return false;
-    if (s1.code.type !== 'any' &&
-        s2.code.type !== 'any' &&
-        s1.code.type !== s2.code.type) return false;
-    const [input, output] = s1.isInput ? [s1, s2] : [s2, s1];
-    if (input.isExec && (input.arrows.length > 0 || output.arrows.length > 0)) return false;
-    if (input.arrows.length > 0) return false;
     return true;
 };
 
 export const Socket = pouch.model('Socket', {
     socketType,
     name: types.optional(types.string, ''),
-    code: types.reference<ICodeBlockIO>(CodeBlockIO)
 }).volatile(_self => ({
     value: null,
 }))
@@ -42,7 +34,7 @@ export const Socket = pouch.model('Socket', {
         },
     }))
     .views(self => ({
-        get box(): null | modelTypes['Box'] {
+        get box(): null | IBox {
             if (!self.store) return null;
             return values(self.store.boxes).find(b => Boolean(b.sockets.find(s => s === self))) || null;
         },
@@ -72,10 +64,6 @@ export const Socket = pouch.model('Socket', {
         get isInput() {
             return self.socketType === 'execInput' || self.socketType === 'input';
         },
-        get arrows() {
-            if (!self.box || !self.box.store) return [];
-            return values(self.box.store.arrows).filter(a => a.input === self || a.output === self);
-        },
         get x() {
             if (!self.box) return 0;
             if (self.socketType === 'input' || self.socketType === 'execInput') {
@@ -90,28 +78,14 @@ export const Socket = pouch.model('Socket', {
         },
 
     }))
-    .views(self => ({
+    .views(_self => ({
         get color() {
-            switch (self.code.type) {
-                case 'number':
-                    return 'green';
-                case 'string':
-                    return 'red';
-                default:
-                    return '#fff';
-            }
+            return 'green';
         },
     }))
     .views(self => ({
         get fillColor() {
-            switch (self.code.type) {
-                case 'any':
-                    if (self.arrows.length > 0) {
-                        return self.arrows[0].color;
-                    }
-                default:
-                    return self.color;
-            }
+            return self.color;
         }
     }))
     .actions(self => {

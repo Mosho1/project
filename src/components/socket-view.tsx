@@ -10,23 +10,14 @@ export class SocketView extends Component<{ socket: ISocket }, { hovered: boolea
     state = { hovered: false };
 
     onMouseDown = (e: KonvaEvent) => {
-        if (!e.evt.ctrlKey) {
-            this.store.startDragArrow(this.props.socket);
-        }
         e.cancelBubble = true;
     };
 
     onMouseUp = (e: KonvaEvent) => {
-        if (this.store.draggedArrow) {
-            this.store.endDragArrow(this.props.socket, e.evt.clientX, e.evt.clientY);
-        }
         e.cancelBubble = true;
     };
 
     onClick = (e: KonvaEvent) => {
-        if (e.evt.ctrlKey) {
-            this.store.deleteArrowsForSocket(this.props.socket);
-        }
         e.cancelBubble = true;
     };
 
@@ -43,26 +34,26 @@ export class SocketView extends Component<{ socket: ISocket }, { hovered: boolea
     }
 
     renderExecSocket() {
-        const { x, y, arrows } = this.props.socket;
+        const { x, y } = this.props.socket;
         return <Rect
             x={x - this.size}
             y={y - this.size}
             height={this.size * 2}
             width={this.size * 2}
-            fill={arrows.length > 0 ? '#dacfcf' : 'black'}
+            fill={'black'}
             stroke={'#dacfcf'}
         />
     }
 
     renderSocket() {
 
-        const { x, y, arrows, color, fillColor } = this.props.socket;
+        const { x, y, color } = this.props.socket;
 
         return <Circle
             x={x}
             y={y}
             radius={this.size}
-            fill={arrows.length > 0 ? fillColor : 'black'}
+            fill={'black'}
             stroke={color}
 
         />

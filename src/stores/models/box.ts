@@ -2,7 +2,6 @@ import { types, getParent, hasParent } from 'mobx-state-tree'
 import { pouch } from '../utils/pouchdb-model';
 import { Socket, ISocket } from './socket';
 import { IStore } from '../domain-state';
-import { CodeBlock, ICodeBlock } from './code-block';
 
 interface BoxEditableProps {
     x?: number;
@@ -50,7 +49,6 @@ export const Box = pouch.model('Box',
         y: 0,
         values: types.optional(types.array(BoxValue), []),
         sockets: types.optional(types.array(types.reference<ISocket>(Socket)), []),
-        code: types.reference<ICodeBlock>(CodeBlock)
     })
     .volatile(_self => ({
         width: 150,
