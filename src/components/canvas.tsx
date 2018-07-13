@@ -11,20 +11,6 @@ import { Key } from 'ts-keycode-enum';
 class Canvas extends Component<any> {
 
 
-    onMouseUp = (_e: KonvaEvent) => {
-    };
-
-    onMouseMove = ({ evt }: KonvaEvent) => {
-        evt;
-    };
-
-    onCanvasClick = ({ evt: e }: KonvaEvent) => {
-        const { store } = this;
-        if (e.ctrlKey === false) {
-            store.setSelection([]);
-        }
-    }
-
     onCanvasKeyPress = (e: React.KeyboardEvent<HTMLDivElement>) => {
         e.stopPropagation();
         switch (e.which) {
@@ -33,30 +19,13 @@ class Canvas extends Component<any> {
         }
     };
 
-    onWheel = ({ evt: e }: KonvaEvent<WheelEvent>) => {
-        e.preventDefault();
-        e.stopPropagation();
-    };
-
-    dragStartX: number = 0;
-    dragStartY: number = 0;
-
-    handleDragStart = ({ evt }: { evt: DragEvent }) => {
-        this.dragStartX = evt.clientX;
-        this.dragStartY = evt.clientY;
-    };
-
     render() {
         const { store } = this;
         return (
             <div tabIndex={0} onKeyDown={this.onCanvasKeyPress}>
                 <Stage
-                    onClick={this.onCanvasClick}
                     width={window.innerWidth}
                     height={window.innerHeight}
-                    onMouseMove={this.onMouseMove}
-                    onMouseUp={this.onMouseUp}
-                    onWheel={this.onWheel}
                 >
                     <Layer>
                         {values(store.boxes).map(b => <BoxView key={b._id} box={b} />)}
