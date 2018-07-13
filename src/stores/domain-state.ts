@@ -23,13 +23,12 @@ const Stage = types.model('Stage', {
     },
 })).actions(self => ({
     move(dx: number, dy: number) {
-        // self.position.x += dx;
-        // self.position.y += dy;
-        if (!self.store) return self;
-        for (const box of values(self.store.boxes)) {
-            box.move(dx, dy);
-        }
+        self.position.x += dx;
+        self.position.y += dy;
         return self;
+    },
+    setScale(scale: number) {
+        self.scale = scale;
     },
     handleScale(e: WheelEvent) {
         const mousePointTo = {
@@ -37,9 +36,12 @@ const Stage = types.model('Stage', {
             y: e.clientY / self.scale - self.position.y / self.scale,
         };
 
-        const scaleBy = e.ctrlKey ? 1.15 : 1.05;
+        const scaleBy = e.ctrlKey ? 1.3 : 1.1;
 
         const newScale = e.deltaY < 0 ? self.scale * scaleBy : self.scale / scaleBy;
+
+        if (newScale > 3 || newScale < 0.4) return;
+
         self.scale = newScale;
 
         self.position = {
