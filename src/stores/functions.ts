@@ -2,7 +2,11 @@ import { ICodeBlockSnapshot } from './models/code-block';
 
 /* istanbul ignore file */
 
-type Emitter = { values: { [index: string]: any }, emit: (name?: string) => void };
+type Emitter = {
+    values: { [index: string]: any },
+    emit: (name?: string) => void,
+    dispose: Function
+};
 
 export const functions: { [index: string]: ICodeBlockSnapshot } = {
     start: {
@@ -20,9 +24,10 @@ export const functions: { [index: string]: ICodeBlockSnapshot } = {
         runOnStart: true,
         code: function code(this: Emitter) {
             const interval = Number(this.values.interval);
-            setInterval(() => {
+            const id = setInterval(() => {
                 this.emit();
             }, interval);
+            this.dispose = () => clearInterval(id);
         },
         values: [
             { name: 'interval', type: 'number' },

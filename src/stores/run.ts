@@ -2,10 +2,14 @@ import { modelTypes } from './models';
 import { IExtendedObservableMap } from 'mobx-state-tree';
 import { values } from './utils/utils';
 
+const disposers: Function[] = [];
+const noop = () => {};
+
 export const runBox = (box: modelTypes['Box']): any => {
 
     const context = {
         values: box.valuesValueMap,
+        dispose: noop,
         emit(eventName = '') {
             const execOutput = box.execOutputs.find(x => x.name === eventName);
             if (!execOutput) {
@@ -23,8 +27,13 @@ export const runBox = (box: modelTypes['Box']): any => {
         args.push(runBox(fromOutput.box!));
     }
 
-    return box.code.code.apply(context, args);
+    const ret = box.code.code.apply(context, args);
 
+    if (context.dispose !== noop) {
+        disposers.push(context.dispose);
+    }
+
+    return ret;
 };
 
 export const run = (boxes: IExtendedObservableMap<modelTypes['Box']>) => {
@@ -34,4 +43,10 @@ export const run = (boxes: IExtendedObservableMap<modelTypes['Box']>) => {
     }
 
     runBox(start);
+};
+
+export const stop = () => {
+    for (const fn of disposers) {
+        fn();
+    }
 };
