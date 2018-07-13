@@ -161,6 +161,14 @@ declare module 'routes' {
 interface KonvaEvent<T = MouseEvent> {
   evt: T,
   cancelBubble: boolean;
+  target: {
+    attrs: {
+      width: number,
+      height: number,
+      x: number,
+      y: number
+    }
+  }
 }
 
 type NestedPartial<T> = { [K in keyof T]?: T[K] | NestedPartial<T[K]> };

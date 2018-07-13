@@ -56,9 +56,9 @@ export const Store = pouch.store('Store', {
     sockets: types.optional(types.map(models.Socket), {}),
     arrows: types.optional(types.map(models.Arrow), {}),
     codeBlocks: types.optional(types.map(models.CodeBlock), {}),
-    selection: types.optional(types.array(types.reference(models.Box)), []),
+    selection: types.optional(types.array(types.reference<modelTypes['Box']>(models.Box)), []),
     draggedArrow: types.maybe(models.DraggedArrow),
-    draggedFromSocket: types.maybe(types.reference(models.Socket)),
+    draggedFromSocket: types.maybe(types.reference<modelTypes['Socket']>(models.Socket)),
     contextMenu: types.maybe(ContextMenu),
     stage: types.optional(Stage, {})
 })
@@ -170,7 +170,11 @@ export const Store = pouch.store('Store', {
         const setDraggedFromSocket = (socket: modelTypes['Socket'] | null) => {
             self.draggedFromSocket = socket;
         };
-        const endDragArrow = (clientX: number, clientY: number, socket?: modelTypes['Socket']) => {
+        const endDragArrow = (
+            socket?: modelTypes['Socket'] | null,
+            clientX = self.draggedArrow!.endX,
+            clientY = self.draggedArrow!.endY,
+        ) => {
             self.draggedArrow = null;
             if (!self.draggedFromSocket) return;
             if (socket) {

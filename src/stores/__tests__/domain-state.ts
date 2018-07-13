@@ -109,7 +109,7 @@ test('endDragArrow', () => {
     b2.addSocket(s2);
 
     mock(store, { draggedArrow: {}, draggedFromSocket: s1 });
-    store.endDragArrow(0, 0, s2);
+    store.endDragArrow(s2, 0, 0, );
 
     expect(store.hasArrow(s1, s2)).toBe(true);
     expect(store.draggedArrow).toBeNull();

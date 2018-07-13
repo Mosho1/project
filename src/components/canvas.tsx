@@ -6,12 +6,14 @@ import { Component } from './component';
 import { Layer, Stage, Line } from 'react-konva';
 import { values } from '../stores/utils/utils';
 import { Key } from 'ts-keycode-enum';
+
+@observer
 class Canvas extends Component<any> {
 
 
-    onMouseUp = ({ evt }: KonvaEvent) => {
+    onMouseUp = (_e: KonvaEvent) => {
         if (this.store.draggedArrow) {
-            this.store.endDragArrow(evt.clientX, evt.clientY);
+            this.store.endDragArrow(null, _e.evt.clientX, _e.evt.clientY);
         }
     };
 
@@ -71,7 +73,7 @@ class Canvas extends Component<any> {
         const { store } = this;
         const { draggedArrow } = store;
         return (
-            <div tabIndex={0} onKeyUp={this.onCanvasKeyPress}>
+            <div tabIndex={0} onKeyDown={this.onCanvasKeyPress}>
                 <Stage
                     x={store.stage.position.x}
                     y={store.stage.position.y}
@@ -113,4 +115,4 @@ class Canvas extends Component<any> {
     }
 }
 
-export default observer(Canvas)
+export default Canvas;
