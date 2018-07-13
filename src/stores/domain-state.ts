@@ -1,4 +1,4 @@
-import { types, getEnv, applySnapshot, getSnapshot, detach } from 'mobx-state-tree'
+import { types, getEnv, applySnapshot, getSnapshot, detach, hasParent, getParent } from 'mobx-state-tree'
 import { pouch } from './utils/pouchdb-model';
 import { models, modelTypes } from './models/index';
 import { ContextMenu } from './context-menu';
@@ -16,10 +16,19 @@ const Position = types.model('Position', {
 const Stage = types.model('Stage', {
     scale: types.optional(types.number, 1),
     position: types.optional(Position, { x: 0, y: 0 })
-}).actions(self => ({
+}).views(self => ({
+    get store(): null | IStore {
+        if (!hasParent(self, 1)) return null;
+        return getParent(self, 1);
+    },
+})).actions(self => ({
     move(dx: number, dy: number) {
-        self.position.x += dx;
-        self.position.y += dy;
+        // self.position.x += dx;
+        // self.position.y += dy;
+        if (!self.store) return self;
+        for (const box of values(self.store.boxes)) {
+            box.move(dx, dy);
+        }
         return self;
     },
     handleScale(e: WheelEvent) {
