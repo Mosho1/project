@@ -13,7 +13,7 @@
 - [x] move selection
 - [ ] type validation
 - [ ] type conversion
-- [ ] drag selection box
+- [x] drag selection box
 - [x] context menu on drop arrow
 - [ ] permanent box groups
 - [x] zoom and pane
@@ -21,7 +21,7 @@
 - [ ] composable functions
 - [ ] import modules automatically
 - [ ] use remote couchdb
-- [ ] run and stop
+- [x] run and stop
 - [ ] user login
 - [ ] electron app
 - [ ] demos

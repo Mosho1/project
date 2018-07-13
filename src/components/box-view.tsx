@@ -87,6 +87,7 @@ export class BoxView extends Component<{ box: IBox }> {
                     onDragStart={this.handleDragStart}
                     // dragBoundFunc={_ => console.log(box.x, box.y)||box}
                     onClick={this.handleClick}
+                    onMouseUp={(e: KonvaEvent) => e.cancelBubble = true}
                 />
                 <Text
                     x={box.x}

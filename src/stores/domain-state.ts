@@ -7,6 +7,7 @@ import * as codeBlocks from './functions';
 import { values } from './utils/utils';
 import { run, stop } from './run';
 import { SocketTypeEnum, areSocketsCompatible } from './models/socket';
+import { observable } from 'mobx';
 
 const Position = types.model('Position', {
     x: types.number,
@@ -51,12 +52,14 @@ const Stage = types.model('Stage', {
     },
     getAbsolutePosition(x: number, y: number) {
         return {
-            
             x: x - self.position.x,
             y: y - self.position.y,
         }
     }
 }));
+
+type IStageType = typeof Stage.Type;
+export interface IStage extends IStageType { };
 
 export const Store = pouch.store('Store', {
     boxes: types.optional(types.map(models.Box), {}),
@@ -65,6 +68,7 @@ export const Store = pouch.store('Store', {
     codeBlocks: types.optional(types.map(models.CodeBlock), {}),
     selection: types.optional(types.array(types.reference<modelTypes['Box']>(models.Box)), []),
     draggedArrow: types.maybe(models.DraggedArrow),
+    draggedRect: types.maybe(models.DraggedRect),
     draggedFromSocket: types.maybe(types.reference<modelTypes['Socket']>(models.Socket)),
     contextMenu: types.maybe(ContextMenu),
     stage: types.optional(Stage, {})
@@ -188,12 +192,31 @@ export const Store = pouch.store('Store', {
                 }));
             }
         };
+        const startDragRect = (x: number, y: number) => {
+            self.draggedRect = models.DraggedRect.create({ startX: x, startY: y, endX: x, endY: y });
+        };
+
+        const moveDragRect = (x: number, y: number) => {
+            if (!self.draggedRect) return;
+            self.draggedRect.end(x, y);
+        };
+        const endDragRect = () => {
+            if (!self.draggedRect) return;
+            const selection = observable<modelTypes['Box']>([]);
+            for (const box of values(self.boxes)) {
+                if (self.draggedRect.hasIntersection(box)) {
+                    selection.push(box);
+                }
+            }
+            self.selection = selection;
+            self.draggedRect = null;
+        };
         const hasArrow = (from: modelTypes['Socket'], to?: modelTypes['Socket']) => {
             const [input, output] = from.isInput ? [from, to] : [to, from];
             return Boolean(values(self.arrows).find(a => {
                 return (!input || a.input === input) &&
                     (!output || a.output === output);
-                }));
+            }));
         };
         const addArrow = (input: modelTypes['Socket'], output: modelTypes['Socket']) => {
             if (input.isCompatibleWith(output) &&
@@ -261,6 +284,9 @@ export const Store = pouch.store('Store', {
             startDragArrow,
             moveDragArrow,
             endDragArrow,
+            startDragRect,
+            moveDragRect,
+            endDragRect,
             deleteArrowsForSocket,
             runCode,
             stopCode,

@@ -119,3 +119,5 @@ export const Box = pouch.model('Box',
 
 type IBoxType = typeof Box.Type;
 export interface IBox extends IBoxType { };
+
+// export const Box = BoxModel as IModelType<Snapshot<IBox>, IBox>;
