@@ -1,9 +1,10 @@
-import { getParent, hasParent } from 'mobx-state-tree'
-import { pouch } from '../utils/pouchdb-model';
+import { getParent, hasParent, types } from 'mobx-state-tree'
 import { IStore } from '../domain-state';
+import { optionalIdentifierType } from '../utils/utils';
 
-export const Box = pouch.model('Box',
+export const Box = types.model('Box',
     {
+        _id: optionalIdentifierType,
         name: 'hal',
         x: 0,
         y: 0,

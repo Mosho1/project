@@ -1,8 +1,9 @@
 import { types } from 'mobx-state-tree'
-import { pouch } from './utils/pouchdb-model';
 import { Box, IBox } from './models/box';
+import { optionalIdentifierType } from './utils/utils';
 
-export const Store = pouch.store('Store', {
+export const Store = types.model('Store', {
+    _id: optionalIdentifierType,
     boxes: types.optional(types.map(Box), {}),
     selection: types.optional(types.array(types.reference<IBox>(Box)), []),
 })
