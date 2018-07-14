@@ -14,7 +14,10 @@ app.use(express.static(root + '/build'));
 app.use('/db', expressPouchDB(PouchDB, {
     // inMemoryConfig: true,
     mode: 'minimumForPouchDB',
-    logPath: process.env['POUCHDB_LOGS'] || './pouchdb_log.txt'
+    logPath: process.env['POUCHDB_LOGS'] || './pouchdb_log.txt',
+    overrideMode: {
+        include: ['routes/fauxton']
+    }
 }))
 server = http.createServer(app);
 server.listen(port, host, serverStarted);
