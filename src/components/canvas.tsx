@@ -36,28 +36,43 @@ class Canvas extends Component<any> {
     }
 
     onCanvasKeyPress = (e: React.KeyboardEvent<HTMLDivElement>) => {
-        e.stopPropagation();
-        e.preventDefault();
+        let caught = false;
+
         switch (e.which) {
             case Key.Delete:
-                return this.store.deleteSelection();
+                this.store.deleteSelection();
+                caught = true;
+                break;
             case Key.F8:
                 if (this.store.running) {
-                    return this.store.runCode();
+                    this.store.runCode();
+                    caught = true;
                 }
+                break;
             case Key.F5:
                 if (!this.store.running) {
                     return this.store.runCode();
+                    caught = true;
+                    break;
                 }
             case Key.R:
-                if (e.ctrlKey) {
+                if (!e.ctrlKey && e.shiftKey) {
                     this.store.stopCode();
                     return this.store.runCode();
+                    caught = true;
+                    break;
                 }
             case Key.F7:
                 if (e.shiftKey) {
                     this.store.stopCode();
+                    caught = true;
+                    break;
                 }
+        }
+
+        if (caught) {
+            e.stopPropagation();
+            e.preventDefault();
         }
     };
 
