@@ -53,22 +53,23 @@ class Canvas extends Component<any> {
                 if (!this.store.running) {
                     return this.store.runCode();
                     caught = true;
-                    break;
                 }
+                break;
             case Key.R:
                 if (!e.ctrlKey && e.shiftKey) {
                     this.store.stopCode();
                     return this.store.runCode();
                     caught = true;
-                    break;
                 }
+                break;
             case Key.F7:
                 if (e.shiftKey) {
                     this.store.stopCode();
                     caught = true;
-                    break;
                 }
+                break;
         }
+
 
         if (caught) {
             e.stopPropagation();
