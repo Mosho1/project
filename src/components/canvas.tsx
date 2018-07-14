@@ -37,9 +37,27 @@ class Canvas extends Component<any> {
 
     onCanvasKeyPress = (e: React.KeyboardEvent<HTMLDivElement>) => {
         e.stopPropagation();
+        e.preventDefault();
         switch (e.which) {
             case Key.Delete:
                 return this.store.deleteSelection();
+            case Key.F8:
+                if (this.store.running) {
+                    return this.store.runCode();
+                }
+            case Key.F5:
+                if (!this.store.running) {
+                    return this.store.runCode();
+                }
+            case Key.R:
+                if (e.ctrlKey) {
+                    this.store.stopCode();
+                    return this.store.runCode();
+                }
+            case Key.F7:
+                if (e.shiftKey) {
+                    this.store.stopCode();
+                }
         }
     };
 
@@ -95,8 +113,7 @@ class Canvas extends Component<any> {
                     onMouseMove={this.onMouseMove}
                     onMouseUp={this.onMouseUp}
                     onClick={this.onCanvasClick}
-                    
-                    // onWheel={this.onWheel}
+                // onWheel={this.onWheel}
                 >
                     <Layer>
                         {draggedArrow && <Line

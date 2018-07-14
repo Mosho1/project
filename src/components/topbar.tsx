@@ -23,8 +23,8 @@ class Sidebar extends Component {
     }
 
     get isRunning() {
-        const { running, breakpointCallback } = this.store;
-        return running && breakpointCallback;
+        const { running } = this.store;
+        return running;
     }
 
     get runDisabled() {
@@ -41,13 +41,13 @@ class Sidebar extends Component {
                         disabled={this.runDisabled}
                         onClick={this.play}
                         className={styles.button}>
-                        {this.isRunning ? 'Resume' : 'Run'}
+                        {this.isRunning ? 'Resume (F8)' : 'Run (F5)'}
                     </Button>
                     <Button
                         color="inherit"
                         onClick={this.stop}
                         className={styles.button}>
-                        Stop
+                        Stop (shift + F7)
                     </Button>
                 </Toolbar>
             </AppBar>
