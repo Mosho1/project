@@ -1,6 +1,6 @@
 import * as React from "react";
 import { observer } from "mobx-react";
-import DevTools from "mobx-react-devtools";
+// import DevTools from "mobx-react-devtools";
 
 import Sidebar from "./sidebar";
 import TopBar from "./topbar";
@@ -18,7 +18,7 @@ class App extends React.Component<{ getStore: Function }> {
 
     render() {
         return (<div>
-            <DevTools />
+            {/* <DevTools /> */}
             <Canvas />
             <TopBar />
             <Sidebar />

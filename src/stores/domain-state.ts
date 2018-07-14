@@ -1,8 +1,16 @@
-import { types, getEnv, applySnapshot, getSnapshot, detach, hasParent, getParent } from 'mobx-state-tree'
+import {
+    types,
+    getEnv,
+    applySnapshot,
+    getSnapshot,
+    detach,
+    hasParent,
+    getParent
+} from 'mobx-state-tree'
 import { pouch } from './utils/pouchdb-model';
 import { models, modelTypes } from './models/index';
 import { ContextMenu } from './context-menu';
-import { ICodeBlock, ICodeBlockIO } from './models/code-block';
+import { ICodeBlock, ICodeBlockIO, codeType } from './models/code-block';
 import * as codeBlocks from './functions';
 import { values } from './utils/utils';
 import { run, stop } from './run';
@@ -71,12 +79,24 @@ export const Store = pouch.store('Store', {
     draggedRect: types.maybe(models.DraggedRect),
     draggedFromSocket: types.maybe(types.reference<modelTypes['Socket']>(models.Socket)),
     contextMenu: types.maybe(ContextMenu),
-    stage: types.optional(Stage, {})
+    stage: types.optional(Stage, {}),
+    running: false,
+    breakpointCallback: types.maybe(codeType),
+    breakPosition: types.maybe(types.reference<modelTypes['Box']>(models['Box']))
 })
     .actions(self => ({
         setDraggedFromSocket(socket: modelTypes['Socket'] | null) {
             self.draggedFromSocket = socket;
+        },
+        setBreakpoint(box: modelTypes['Box'], cb: Function) {
+            self.breakpointCallback = cb;
+            self.breakPosition = box;
+        },
+        continueAfterBreakpoint() {
+            self.breakpointCallback = null;
+            self.breakPosition = null;
         }
+
     }))
     .actions(self => {
         const addBox = (name: string, x: number, y: number, code: ICodeBlock) => {
@@ -247,11 +267,23 @@ export const Store = pouch.store('Store', {
             //     self.arrows.delete(id);
             // }
         };
+
         const runCode = () => {
-            return getEnv(self).run(self.boxes);
+            if (self.running) {
+                if (self.breakpointCallback) {
+                    self.breakpointCallback();
+                    self.continueAfterBreakpoint();
+                }
+            } else {
+                self.running = true;
+                getEnv<{ run: typeof run }>(self).run(self.boxes, (box, resume) =>
+                    self.setBreakpoint(box, resume));
+            }
         };
 
         const stopCode = () => {
+            self.running = false;
+            self.continueAfterBreakpoint();
             return getEnv(self).stop();
         };
 

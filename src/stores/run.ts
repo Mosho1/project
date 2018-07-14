@@ -3,20 +3,21 @@ import { IExtendedObservableMap } from 'mobx-state-tree';
 import { values } from './utils/utils';
 
 const disposers: Function[] = [];
-const noop = () => {};
 
-export const runBox = (box: modelTypes['Box']): any => {
+const noop = () => { };
+
+export const runBox = async (box: modelTypes['Box'], onBreakpoint?: (box: modelTypes['Box'], cb: Function) => void): Promise<any> => {
 
     const context = {
         values: box.valuesValueMap,
         dispose: noop,
-        emit(eventName = '') {
+        async emit(eventName = '') {
             const execOutput = box.execOutputs.find(x => x.name === eventName);
             if (!execOutput) {
                 throw new Error(`no execOutput found for event: ${eventName}`);
             }
             for (const a of execOutput.arrows) {
-                runBox(a.input.box!);
+                await runBox(a.input.box!, onBreakpoint);
             }
         }
     };
@@ -24,7 +25,13 @@ export const runBox = (box: modelTypes['Box']): any => {
     let args = [];
     for (const input of box.inputs) {
         const fromOutput = input.arrows[0].output;
-        args.push(runBox(fromOutput.box!));
+        args.push(await runBox(fromOutput.box!, onBreakpoint));
+    }
+
+    if (box.breakpoint && onBreakpoint) {
+        await new Promise(resolve => {
+            onBreakpoint(box, resolve);
+        });
     }
 
     const ret = box.code.code.apply(context, args);
@@ -36,13 +43,13 @@ export const runBox = (box: modelTypes['Box']): any => {
     return ret;
 };
 
-export const run = (boxes: IExtendedObservableMap<modelTypes['Box']>) => {
+export const run = (boxes: IExtendedObservableMap<modelTypes['Box']>, onBreakpoint?: (box: modelTypes['Box'], cb: Function) => void) => {
     const start = values(boxes).find(b => b.code.runOnStart);
     if (!start) {
         throw new Error('no start found');
     }
 
-    runBox(start);
+    return runBox(start, onBreakpoint);
 };
 
 export const stop = () => {

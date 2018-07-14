@@ -66,6 +66,17 @@ export class BoxView extends Component<{ box: IBox }> {
             key={i}
         />
 
+    get fill() {
+        const {box} = this.props;
+        if (box.isBreaking) {
+            return '#d50000'
+        }
+        if (box.isSelected) {
+            return '#4150b5'
+        }
+        return '#42515f';
+    }
+
     render() {
         const { box } = this.props;
         return (
@@ -76,12 +87,14 @@ export class BoxView extends Component<{ box: IBox }> {
                     y={box.y}
                     width={box.width}
                     height={box.height}
-                    fill={box.isSelected ? '#4150b5' : '#42515f'}
+                    fill={this.fill}
                     shadowBlur={4}
+                    stroke={box.breakpoint ? '#f44336' : ''}
+                    strokeWidth={4}
                     shadowOffsetX={1}
                     shadowOffsetY={5}
                     cornerRadius={10}
-                    opacity={0.4}
+                    opacity={.45}
                     draggable
                     onDragMove={this.handleDragMove}
                     onDragStart={this.handleDragStart}

@@ -3,6 +3,7 @@ import { observer } from "mobx-react"
 import * as styles from './styles/topbar.css';
 import Component from './component';
 import Button from '@material-ui/core/Button';
+import { AppBar, Toolbar } from '@material-ui/core';
 
 @observer
 class Sidebar extends Component {
@@ -21,10 +22,35 @@ class Sidebar extends Component {
         this.store.stopCode();
     }
 
+    get isRunning() {
+        const { running, breakpointCallback } = this.store;
+        return running && breakpointCallback;
+    }
+
+    get runDisabled() {
+        const { running, breakpointCallback } = this.store;
+        return Boolean(running && !breakpointCallback);
+    }
+
     render() {
-        return <div ref={ref => this.topbar = ref} className={`${styles.topbar}`}>
-            <Button onClick={this.play} className={styles.button} variant="contained">Play</Button>
-            <Button onClick={this.stop} className={styles.button} variant="contained">Stop</Button>
+        return <div ref={ref => this.topbar = ref}>
+            <AppBar className={`${styles.topbar}`}>
+                <Toolbar>
+                    <Button
+                        color="inherit"
+                        disabled={this.runDisabled}
+                        onClick={this.play}
+                        className={styles.button}>
+                        {this.isRunning ? 'Resume' : 'Run'}
+                    </Button>
+                    <Button
+                        color="inherit"
+                        onClick={this.stop}
+                        className={styles.button}>
+                        Stop
+                    </Button>
+                </Toolbar>
+            </AppBar>
         </div>;
     }
 }

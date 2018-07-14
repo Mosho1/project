@@ -50,7 +50,8 @@ export const Box = pouch.model('Box',
         y: 0,
         values: types.optional(types.array(BoxValue), []),
         sockets: types.optional(types.array(types.reference<ISocket>(Socket)), []),
-        code: types.reference<ICodeBlock>(CodeBlock)
+        code: types.reference<ICodeBlock>(CodeBlock),
+        breakpoint: false
     })
     .volatile(_self => ({
         width: 150,
@@ -90,6 +91,9 @@ export const Box = pouch.model('Box',
         get isSelected() {
             return Boolean(self.store && self.store.selection.find(b => b === self));
         },
+        get isBreaking() {
+            return Boolean(self.store && self.store.breakPosition === self);
+        },
         get height() {
             return 50 + Math.max(
                 self.execInputs.length + self.inputs.length,
@@ -114,6 +118,10 @@ export const Box = pouch.model('Box',
         setValue(key: string, value: string) {
             /* istanbul ignore next */
             self.valuesMap[key].value = value;
+        },
+        toggleBreakpoint(value?: boolean) {
+            if (typeof value === 'boolean') self.breakpoint = value;
+            else self.breakpoint = !self.breakpoint;
         }
     }));
 
