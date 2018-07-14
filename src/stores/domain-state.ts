@@ -208,9 +208,8 @@ export const Store = pouch.store('Store', {
                             }
                     }
                 }
-                setTimeout(() => self.contextMenu!.toggle(true, clientX, clientY, typeFilter, () => {
-                    self.setDraggedFromSocket(null);
-                }));
+
+                setTimeout(() => self.contextMenu!.toggle(true, clientX, clientY, typeFilter));
             }
         };
         const startDragRect = (x: number, y: number) => {
