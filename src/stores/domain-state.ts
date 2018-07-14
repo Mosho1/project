@@ -10,7 +10,7 @@ import {
 import { pouch } from './utils/pouchdb-model';
 import { models, modelTypes } from './models/index';
 import { ContextMenu } from './context-menu';
-import { ICodeBlock, ICodeBlockIO, codeType } from './models/code-block';
+import { ICodeBlock, ICodeBlockIO } from './models/code-block';
 import * as codeBlocks from './functions';
 import { values } from './utils/utils';
 import { run, stop } from './run';
@@ -80,10 +80,11 @@ export const Store = pouch.store('Store', {
     draggedFromSocket: types.maybe(types.reference<modelTypes['Socket']>(models.Socket)),
     contextMenu: types.maybe(ContextMenu),
     stage: types.optional(Stage, {}),
+}).volatile(_ => ({
     running: false,
-    breakpointCallback: types.maybe(codeType),
-    breakPosition: types.maybe(types.reference<modelTypes['Box']>(models['Box']))
-})
+    breakpointCallback: null as Function | null,
+    breakPosition: null as modelTypes['Box'] | null
+}))
     .actions(self => ({
         setDraggedFromSocket(socket: modelTypes['Socket'] | null) {
             self.draggedFromSocket = socket;

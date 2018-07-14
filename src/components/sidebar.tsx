@@ -50,8 +50,8 @@ class Sidebar extends Component {
                         </FormControlLabel>
                     </ListItem>}
                     {selection.length === 1 && selection[0].values.map((v, i) =>
-                        <ListItem>
-                            <FormControl key={i} fullWidth>
+                        <ListItem key={i}>
+                            <FormControl fullWidth>
                                 <InputLabel htmlFor="adornment-amount">{v.name}</InputLabel>
                                 <Input
                                     id="adornment-amount"

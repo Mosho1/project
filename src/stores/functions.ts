@@ -5,7 +5,8 @@ import { ICodeBlockSnapshot } from './models/code-block';
 type Emitter = {
     values: { [index: string]: any },
     emit: (name?: string) => void,
-    dispose: Function
+    dispose: Function,
+    onBreak: boolean
 };
 
 export const functions: { [index: string]: ICodeBlockSnapshot } = {
@@ -25,7 +26,9 @@ export const functions: { [index: string]: ICodeBlockSnapshot } = {
         code: function code(this: Emitter) {
             const interval = Number(this.values.interval);
             const id = setInterval(() => {
-                this.emit();
+                if (!this.onBreak) {
+                    this.emit();
+                }
             }, interval);
             this.dispose = () => clearInterval(id);
         },

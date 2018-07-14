@@ -6,9 +6,15 @@ const disposers: Function[] = [];
 
 const noop = () => { };
 
+const globalContext = {
+    onBreak: false
+};
 export const runBox = async (box: modelTypes['Box'], onBreakpoint?: (box: modelTypes['Box'], cb: Function) => void): Promise<any> => {
 
     const context = {
+        get onBreak() {
+            return globalContext.onBreak;
+        },
         values: box.valuesValueMap,
         dispose: noop,
         async emit(eventName = '') {
@@ -22,16 +28,18 @@ export const runBox = async (box: modelTypes['Box'], onBreakpoint?: (box: modelT
         }
     };
 
+    if (box.breakpoint && onBreakpoint) {
+        globalContext.onBreak = true;
+        await new Promise(resolve => {
+            onBreakpoint(box, resolve);
+        });
+        globalContext.onBreak = false;
+    }
+
     let args = [];
     for (const input of box.inputs) {
         const fromOutput = input.arrows[0].output;
         args.push(await runBox(fromOutput.box!, onBreakpoint));
-    }
-
-    if (box.breakpoint && onBreakpoint) {
-        await new Promise(resolve => {
-            onBreakpoint(box, resolve);
-        });
     }
 
     const ret = box.code.code.apply(context, args);
