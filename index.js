@@ -12,7 +12,7 @@ app = express();
 app.use(function (req, res, next) { console.log(req.url); next(); });
 app.use(express.static(root + '/build'));
 app.use('/db', expressPouchDB(PouchDB, {
-    // inMemoryConfig: true,
+    inMemoryConfig: true,
     mode: 'minimumForPouchDB',
     logPath: process.env['POUCHDB_LOGS'] || './pouchdb_log.txt',
     overrideMode: {
