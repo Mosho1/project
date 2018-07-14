@@ -61,6 +61,7 @@ export const run = (boxes: IExtendedObservableMap<modelTypes['Box']>, onBreakpoi
 };
 
 export const stop = () => {
+    globalContext.onBreak = false;
     for (const fn of disposers) {
         fn();
     }
