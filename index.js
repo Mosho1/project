@@ -18,7 +18,8 @@ app.use('/db', expressPouchDB(PouchDB, {
     overrideMode: {
         include: ['routes/fauxton']
     }
-}))
+}));
+
 server = http.createServer(app);
 server.listen(port, host, serverStarted);
 
