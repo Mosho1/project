@@ -20,6 +20,7 @@ app.use('/db', expressPouchDB(PouchDB, {
     }
 }));
 
+
 server = http.createServer(app);
 server.listen(port, host, serverStarted);
 
