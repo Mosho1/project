@@ -14,6 +14,7 @@ export class MSTPouch<T extends { mstPouchType: string } = { mstPouchType: strin
     updates: { [index: string]: IStateTreeNode } = {};
     finishedLoading = false;
     static enabled = !global.__TEST__;
+    dbUrl = 'http://localhost:3000/db';
     constructor({ name = 'store', saveDelay = 1000 } = {}) {
         if (!MSTPouch.enabled) {
             this.db = null;
@@ -21,6 +22,9 @@ export class MSTPouch<T extends { mstPouchType: string } = { mstPouchType: strin
         }
 
         this.db = new PouchDB<T>(name);
+        this.db.replicate.from(this.dbUrl).on('complete', _info => {
+            this.db!.sync(this.dbUrl, { live: true }).on('error', console.error);
+        });
         this.queueUpdate = throttle(this.queueUpdate, saveDelay, { leading: false });
         (window as any)['db'] = this.db;
     }
