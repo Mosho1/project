@@ -110,19 +110,23 @@ export class MSTPouch<T extends { mstPouchType: string } = { mstPouchType: strin
                 };
             })
             .actions(self => {
+
+                const getData = () => this.db!.allDocs({ include_docs: true }).then(docs => {
+                    const byType = groupBy(docs.rows.map(r => r.doc), doc => doc!.mstPouchType);
+                    const data: { [index: string]: any } = {};
+                    for (let k in byType) {
+                        data[typeMap[k]] = mapKeys(byType[k], v => v!._id);
+                    }
+                    self.setData(data);
+                    this.finishedLoading = true;
+                });
+
                 const afterCreate = () => {
-                    this.db!.replicate.from(this.dbUrl).on('complete', _info => {
+                    this.db!.replicate.from(this.dbUrl)
+                    .on('complete', _info => {
                         this.db!.sync(this.dbUrl, { live: true }).on('error', console.error);
-                        this.db!.allDocs({ include_docs: true }).then(docs => {
-                            const byType = groupBy(docs.rows.map(r => r.doc), doc => doc!.mstPouchType);
-                            const data: { [index: string]: any } = {};
-                            for (let k in byType) {
-                                data[typeMap[k]] = mapKeys(byType[k], v => v!._id);
-                            }
-                            self.setData(data);
-                            this.finishedLoading = true;
-                        });
-                    });
+                        getData();    
+                    }).on('error', getData);
                 };
 
                 return {
