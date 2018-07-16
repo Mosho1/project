@@ -3,7 +3,7 @@ import { values } from '../utils/utils';
 import { modelTypes } from './index';
 import { pouch } from '../utils/pouchdb-model';
 import { IStore } from '../domain-state';
-import { CodeBlockIO, ICodeBlockIO } from './code-block';
+import { CodeBlockIO, ICodeBlockIO, IPrimitiveTypes } from './code-block';
 
 const socketType = types.enumeration('socketType', [
     'input',
@@ -26,6 +26,12 @@ export const areSocketsCompatible = (s1: ISocket, s2: ISocket) => {
     if (input.isExec && (input.arrows.length > 0 || output.arrows.length > 0)) return false;
     if (input.arrows.length > 0) return false;
     return true;
+};
+
+const typeColors: {[T in IPrimitiveTypes]?: string} = {
+    any: '#fff',
+    number: 'green',
+    string: 'red'
 };
 
 export const Socket = pouch.model('Socket', {
@@ -92,14 +98,7 @@ export const Socket = pouch.model('Socket', {
     }))
     .views(self => ({
         get color() {
-            switch (self.code.type) {
-                case 'number':
-                    return 'green';
-                case 'string':
-                    return 'red';
-                default:
-                    return '#fff';
-            }
+            return typeColors[self.code.type] || '#fff';
         },
     }))
     .views(self => ({
