@@ -67,7 +67,7 @@ export class BoxView extends Component<{ box: IBox }> {
         />
 
     get fill() {
-        const {box} = this.props;
+        const { box } = this.props;
         if (box.isBreaking) {
             return '#d50000'
         }
@@ -75,6 +75,12 @@ export class BoxView extends Component<{ box: IBox }> {
             return '#4150b5'
         }
         return '#42515f';
+    }
+
+    onMouseUp = (e: KonvaEvent) => {
+        if (!this.store.draggedArrow && !this.store.draggedRect) {
+            e.cancelBubble = true;
+        }
     }
 
     render() {
@@ -100,7 +106,7 @@ export class BoxView extends Component<{ box: IBox }> {
                     onDragStart={this.handleDragStart}
                     // dragBoundFunc={_ => console.log(box.x, box.y)||box}
                     onClick={this.handleClick}
-                    // onMouseUp={(e: KonvaEvent) => e.cancelBubble = true}
+                    onMouseUp={this.onMouseUp}
                 />
                 <Text
                     x={box.x}
