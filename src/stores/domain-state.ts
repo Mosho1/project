@@ -140,7 +140,7 @@ export const Store = pouch.store('Store', {
             return self;
         };
         const deleteBox = (box: modelTypes['Box']) => {
-            // self.selection.remove(box);
+            self.selection.remove(box);
             for (const socket of box.sockets) {
                 deleteArrowsForSocket(socket);
             }
@@ -276,7 +276,8 @@ export const Store = pouch.store('Store', {
                 }
             } else {
                 self.running = true;
-                getEnv<{ run: typeof run }>(self).run(self.boxes, (box, resume) =>
+                const env = getEnv<{ run: typeof run }>(self);
+                env.run(self.boxes, (box, resume) =>
                     self.setBreakpoint(box, resume));
             }
         };
