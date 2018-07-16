@@ -1,0 +1,813 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`hasIntersection 1`] = `true`;
+
+exports[`hasIntersection 2`] = `true`;
+
+exports[`hasIntersection 3`] = `false`;
+
+exports[`hasIntersection 4`] = `true`;
+
+exports[`hasIntersection 5`] = `true`;
+
+exports[`hasIntersection 6`] = `false`;
+
+exports[`hasIntersection 7`] = `false`;
+
+exports[`hasIntersection 8`] = `false`;
+
+exports[`hasIntersection 9`] = `false`;
+
+exports[`hasIntersection 10`] = `false`;
+
+exports[`hasIntersection 11`] = `true`;
+
+exports[`hasIntersection 12`] = `false`;
+
+exports[`hasIntersection 13`] = `false`;
+
+exports[`hasIntersection 14`] = `true`;
+
+exports[`hasIntersection 15`] = `false`;
+
+exports[`hasIntersection 16`] = `false`;
+
+exports[`hasIntersection 17`] = `false`;
+
+exports[`hasIntersection 18`] = `false`;
+
+exports[`hasIntersection 19`] = `false`;
+
+exports[`hasIntersection 20`] = `true`;
+
+exports[`hasIntersection 21`] = `false`;
+
+exports[`hasIntersection 22`] = `false`;
+
+exports[`hasIntersection 23`] = `true`;
+
+exports[`hasIntersection 24`] = `false`;
+
+exports[`hasIntersection 25`] = `false`;
+
+exports[`hasIntersection 26`] = `false`;
+
+exports[`hasIntersection 27`] = `false`;
+
+exports[`hasIntersection 28`] = `false`;
+
+exports[`hasIntersection 29`] = `false`;
+
+exports[`hasIntersection 30`] = `false`;
+
+exports[`hasIntersection 31`] = `true`;
+
+exports[`hasIntersection 32`] = `true`;
+
+exports[`hasIntersection 33`] = `false`;
+
+exports[`hasIntersection 34`] = `false`;
+
+exports[`hasIntersection 35`] = `false`;
+
+exports[`hasIntersection 36`] = `false`;
+
+exports[`hasIntersection 37`] = `false`;
+
+exports[`hasIntersection 38`] = `false`;
+
+exports[`hasIntersection 39`] = `false`;
+
+exports[`hasIntersection 40`] = `false`;
+
+exports[`hasIntersection 41`] = `true`;
+
+exports[`hasIntersection 42`] = `false`;
+
+exports[`hasIntersection 43`] = `false`;
+
+exports[`hasIntersection 44`] = `false`;
+
+exports[`hasIntersection 45`] = `false`;
+
+exports[`hasIntersection 46`] = `false`;
+
+exports[`hasIntersection 47`] = `false`;
+
+exports[`hasIntersection 48`] = `false`;
+
+exports[`hasIntersection 49`] = `false`;
+
+exports[`hasIntersection 50`] = `true`;
+
+exports[`hasIntersection 51`] = `false`;
+
+exports[`hasIntersection 52`] = `false`;
+
+exports[`hasIntersection 53`] = `false`;
+
+exports[`hasIntersection 54`] = `false`;
+
+exports[`hasIntersection 55`] = `false`;
+
+exports[`hasIntersection 56`] = `false`;
+
+exports[`hasIntersection 57`] = `false`;
+
+exports[`hasIntersection 58`] = `true`;
+
+exports[`hasIntersection 59`] = `true`;
+
+exports[`hasIntersection 60`] = `false`;
+
+exports[`hasIntersection 61`] = `false`;
+
+exports[`hasIntersection 62`] = `false`;
+
+exports[`hasIntersection 63`] = `false`;
+
+exports[`hasIntersection 64`] = `false`;
+
+exports[`hasIntersection 65`] = `false`;
+
+exports[`hasIntersection 66`] = `false`;
+
+exports[`hasIntersection 67`] = `false`;
+
+exports[`hasIntersection 68`] = `true`;
+
+exports[`hasIntersection 69`] = `false`;
+
+exports[`hasIntersection 70`] = `false`;
+
+exports[`hasIntersection 71`] = `false`;
+
+exports[`hasIntersection 72`] = `false`;
+
+exports[`hasIntersection 73`] = `false`;
+
+exports[`hasIntersection 74`] = `false`;
+
+exports[`hasIntersection 75`] = `false`;
+
+exports[`hasIntersection 76`] = `false`;
+
+exports[`hasIntersection 77`] = `true`;
+
+exports[`hasIntersection 78`] = `false`;
+
+exports[`hasIntersection 79`] = `false`;
+
+exports[`hasIntersection 80`] = `false`;
+
+exports[`hasIntersection 81`] = `false`;
+
+exports[`start/end/width/height: -20,-20 1`] = `
+Object {
+  "endX": -350,
+  "endY": -110,
+  "startX": -460,
+  "startY": -220,
+}
+`;
+
+exports[`start/end/width/height: -20,-20 2`] = `
+Object {
+  "endX": -350,
+  "endY": -110,
+  "startX": -460,
+  "startY": -220,
+}
+`;
+
+exports[`start/end/width/height: -20,-20 3`] = `-460`;
+
+exports[`start/end/width/height: -20,-20 4`] = `-220`;
+
+exports[`start/end/width/height: -20,-20 5`] = `110`;
+
+exports[`start/end/width/height: -20,-20 6`] = `110`;
+
+exports[`start/end/width/height: -20,-60 1`] = `
+Object {
+  "endX": -350,
+  "endY": -110,
+  "startX": -440,
+  "startY": -200,
+}
+`;
+
+exports[`start/end/width/height: -20,-60 2`] = `
+Object {
+  "endX": -350,
+  "endY": -110,
+  "startX": -440,
+  "startY": -200,
+}
+`;
+
+exports[`start/end/width/height: -20,-60 3`] = `-440`;
+
+exports[`start/end/width/height: -20,-60 4`] = `-200`;
+
+exports[`start/end/width/height: -20,-60 5`] = `90`;
+
+exports[`start/end/width/height: -20,-60 6`] = `90`;
+
+exports[`start/end/width/height: -20,-100 1`] = `
+Object {
+  "endX": -330,
+  "endY": -50,
+  "startX": -440,
+  "startY": -200,
+}
+`;
+
+exports[`start/end/width/height: -20,-100 2`] = `
+Object {
+  "endX": -330,
+  "endY": -50,
+  "startX": -440,
+  "startY": -200,
+}
+`;
+
+exports[`start/end/width/height: -20,-100 3`] = `-440`;
+
+exports[`start/end/width/height: -20,-100 4`] = `-200`;
+
+exports[`start/end/width/height: -20,-100 5`] = `110`;
+
+exports[`start/end/width/height: -20,-100 6`] = `150`;
+
+exports[`start/end/width/height: -20,20 1`] = `
+Object {
+  "endX": -370,
+  "endY": -90,
+  "startX": -460,
+  "startY": -220,
+}
+`;
+
+exports[`start/end/width/height: -20,20 2`] = `
+Object {
+  "endX": -370,
+  "endY": -90,
+  "startX": -460,
+  "startY": -220,
+}
+`;
+
+exports[`start/end/width/height: -20,20 3`] = `-460`;
+
+exports[`start/end/width/height: -20,20 4`] = `-220`;
+
+exports[`start/end/width/height: -20,20 5`] = `90`;
+
+exports[`start/end/width/height: -20,20 6`] = `130`;
+
+exports[`start/end/width/height: -20,60 1`] = `
+Object {
+  "endX": -370,
+  "endY": -90,
+  "startX": -480,
+  "startY": -160,
+}
+`;
+
+exports[`start/end/width/height: -20,60 2`] = `
+Object {
+  "endX": -370,
+  "endY": -90,
+  "startX": -480,
+  "startY": -160,
+}
+`;
+
+exports[`start/end/width/height: -20,60 3`] = `-480`;
+
+exports[`start/end/width/height: -20,60 4`] = `-160`;
+
+exports[`start/end/width/height: -20,60 5`] = `110`;
+
+exports[`start/end/width/height: -20,60 6`] = `70`;
+
+exports[`start/end/width/height: -60,-20 1`] = `
+Object {
+  "endX": -270,
+  "endY": -110,
+  "startX": -360,
+  "startY": -120,
+}
+`;
+
+exports[`start/end/width/height: -60,-20 2`] = `
+Object {
+  "endX": -270,
+  "endY": -110,
+  "startX": -360,
+  "startY": -120,
+}
+`;
+
+exports[`start/end/width/height: -60,-20 3`] = `-360`;
+
+exports[`start/end/width/height: -60,-20 4`] = `-120`;
+
+exports[`start/end/width/height: -60,-20 5`] = `90`;
+
+exports[`start/end/width/height: -60,-20 6`] = `10`;
+
+exports[`start/end/width/height: -60,-60 1`] = `
+Object {
+  "endX": -210,
+  "endY": -90,
+  "startX": -360,
+  "startY": -120,
+}
+`;
+
+exports[`start/end/width/height: -60,-60 2`] = `
+Object {
+  "endX": -210,
+  "endY": -90,
+  "startX": -360,
+  "startY": -120,
+}
+`;
+
+exports[`start/end/width/height: -60,-60 3`] = `-360`;
+
+exports[`start/end/width/height: -60,-60 4`] = `-120`;
+
+exports[`start/end/width/height: -60,-60 5`] = `150`;
+
+exports[`start/end/width/height: -60,-60 6`] = `30`;
+
+exports[`start/end/width/height: -60,-100 1`] = `
+Object {
+  "endX": -210,
+  "endY": -90,
+  "startX": -300,
+  "startY": -60,
+}
+`;
+
+exports[`start/end/width/height: -60,-100 2`] = `
+Object {
+  "endX": -210,
+  "endY": -90,
+  "startX": -300,
+  "startY": -60,
+}
+`;
+
+exports[`start/end/width/height: -60,-100 3`] = `-300`;
+
+exports[`start/end/width/height: -60,-100 4`] = `-90`;
+
+exports[`start/end/width/height: -60,-100 5`] = `90`;
+
+exports[`start/end/width/height: -60,-100 6`] = `-30`;
+
+exports[`start/end/width/height: -60,20 1`] = `
+Object {
+  "endX": -270,
+  "endY": -110,
+  "startX": -420,
+  "startY": -100,
+}
+`;
+
+exports[`start/end/width/height: -60,20 2`] = `
+Object {
+  "endX": -270,
+  "endY": -110,
+  "startX": -420,
+  "startY": -100,
+}
+`;
+
+exports[`start/end/width/height: -60,20 3`] = `-420`;
+
+exports[`start/end/width/height: -60,20 4`] = `-110`;
+
+exports[`start/end/width/height: -60,20 5`] = `150`;
+
+exports[`start/end/width/height: -60,20 6`] = `-10`;
+
+exports[`start/end/width/height: -60,60 1`] = `
+Object {
+  "endX": -330,
+  "endY": -50,
+  "startX": -420,
+  "startY": -100,
+}
+`;
+
+exports[`start/end/width/height: -60,60 2`] = `
+Object {
+  "endX": -330,
+  "endY": -50,
+  "startX": -420,
+  "startY": -100,
+}
+`;
+
+exports[`start/end/width/height: -60,60 3`] = `-420`;
+
+exports[`start/end/width/height: -60,60 4`] = `-100`;
+
+exports[`start/end/width/height: -60,60 5`] = `90`;
+
+exports[`start/end/width/height: -60,60 6`] = `50`;
+
+exports[`start/end/width/height: -100,-20 1`] = `
+Object {
+  "endX": -50,
+  "endY": -10,
+  "startX": -200,
+  "startY": -120,
+}
+`;
+
+exports[`start/end/width/height: -100,-20 2`] = `
+Object {
+  "endX": -50,
+  "endY": -10,
+  "startX": -200,
+  "startY": -120,
+}
+`;
+
+exports[`start/end/width/height: -100,-20 3`] = `-200`;
+
+exports[`start/end/width/height: -100,-20 4`] = `-120`;
+
+exports[`start/end/width/height: -100,-20 5`] = `150`;
+
+exports[`start/end/width/height: -100,-20 6`] = `110`;
+
+exports[`start/end/width/height: -100,-60 1`] = `
+Object {
+  "endX": -50,
+  "endY": -10,
+  "startX": -100,
+  "startY": -100,
+}
+`;
+
+exports[`start/end/width/height: -100,-60 2`] = `
+Object {
+  "endX": -50,
+  "endY": -10,
+  "startX": -100,
+  "startY": -100,
+}
+`;
+
+exports[`start/end/width/height: -100,-60 3`] = `-100`;
+
+exports[`start/end/width/height: -100,-60 4`] = `-100`;
+
+exports[`start/end/width/height: -100,-60 5`] = `50`;
+
+exports[`start/end/width/height: -100,-60 6`] = `90`;
+
+exports[`start/end/width/height: -100,-100 1`] = `
+Object {
+  "endX": 50,
+  "endY": 50,
+  "startX": -100,
+  "startY": -100,
+}
+`;
+
+exports[`start/end/width/height: -100,-100 2`] = `
+Object {
+  "endX": 50,
+  "endY": 50,
+  "startX": -100,
+  "startY": -100,
+}
+`;
+
+exports[`start/end/width/height: -100,-100 3`] = `-100`;
+
+exports[`start/end/width/height: -100,-100 4`] = `-100`;
+
+exports[`start/end/width/height: -100,-100 5`] = `150`;
+
+exports[`start/end/width/height: -100,-100 6`] = `150`;
+
+exports[`start/end/width/height: -100,20 1`] = `
+Object {
+  "endX": -150,
+  "endY": 10,
+  "startX": -200,
+  "startY": -120,
+}
+`;
+
+exports[`start/end/width/height: -100,20 2`] = `
+Object {
+  "endX": -150,
+  "endY": 10,
+  "startX": -200,
+  "startY": -120,
+}
+`;
+
+exports[`start/end/width/height: -100,20 3`] = `-200`;
+
+exports[`start/end/width/height: -100,20 4`] = `-120`;
+
+exports[`start/end/width/height: -100,20 5`] = `50`;
+
+exports[`start/end/width/height: -100,20 6`] = `130`;
+
+exports[`start/end/width/height: -100,60 1`] = `
+Object {
+  "endX": -150,
+  "endY": 10,
+  "startX": -300,
+  "startY": -60,
+}
+`;
+
+exports[`start/end/width/height: -100,60 2`] = `
+Object {
+  "endX": -150,
+  "endY": 10,
+  "startX": -300,
+  "startY": -60,
+}
+`;
+
+exports[`start/end/width/height: -100,60 3`] = `-300`;
+
+exports[`start/end/width/height: -100,60 4`] = `-60`;
+
+exports[`start/end/width/height: -100,60 5`] = `150`;
+
+exports[`start/end/width/height: -100,60 6`] = `70`;
+
+exports[`start/end/width/height: 20,-20 1`] = `
+Object {
+  "endX": -330,
+  "endY": -210,
+  "startX": -460,
+  "startY": -220,
+}
+`;
+
+exports[`start/end/width/height: 20,-20 2`] = `
+Object {
+  "endX": -330,
+  "endY": -210,
+  "startX": -460,
+  "startY": -220,
+}
+`;
+
+exports[`start/end/width/height: 20,-20 3`] = `-460`;
+
+exports[`start/end/width/height: 20,-20 4`] = `-220`;
+
+exports[`start/end/width/height: 20,-20 5`] = `130`;
+
+exports[`start/end/width/height: 20,-20 6`] = `10`;
+
+exports[`start/end/width/height: 20,-60 1`] = `
+Object {
+  "endX": -350,
+  "endY": -190,
+  "startX": -460,
+  "startY": -220,
+}
+`;
+
+exports[`start/end/width/height: 20,-60 2`] = `
+Object {
+  "endX": -350,
+  "endY": -190,
+  "startX": -460,
+  "startY": -220,
+}
+`;
+
+exports[`start/end/width/height: 20,-60 3`] = `-460`;
+
+exports[`start/end/width/height: 20,-60 4`] = `-220`;
+
+exports[`start/end/width/height: 20,-60 5`] = `110`;
+
+exports[`start/end/width/height: 20,-60 6`] = `30`;
+
+exports[`start/end/width/height: 20,-100 1`] = `
+Object {
+  "endX": -350,
+  "endY": -190,
+  "startX": -480,
+  "startY": -160,
+}
+`;
+
+exports[`start/end/width/height: 20,-100 2`] = `
+Object {
+  "endX": -350,
+  "endY": -190,
+  "startX": -480,
+  "startY": -160,
+}
+`;
+
+exports[`start/end/width/height: 20,-100 3`] = `-480`;
+
+exports[`start/end/width/height: 20,-100 4`] = `-190`;
+
+exports[`start/end/width/height: 20,-100 5`] = `130`;
+
+exports[`start/end/width/height: 20,-100 6`] = `-30`;
+
+exports[`start/end/width/height: 20,20 1`] = `
+Object {
+  "endX": -330,
+  "endY": -210,
+  "startX": -440,
+  "startY": -200,
+}
+`;
+
+exports[`start/end/width/height: 20,20 2`] = `
+Object {
+  "endX": -330,
+  "endY": -210,
+  "startX": -440,
+  "startY": -200,
+}
+`;
+
+exports[`start/end/width/height: 20,20 3`] = `-440`;
+
+exports[`start/end/width/height: 20,20 4`] = `-210`;
+
+exports[`start/end/width/height: 20,20 5`] = `110`;
+
+exports[`start/end/width/height: 20,20 6`] = `-10`;
+
+exports[`start/end/width/height: 20,60 1`] = `
+Object {
+  "endX": -310,
+  "endY": -150,
+  "startX": -440,
+  "startY": -200,
+}
+`;
+
+exports[`start/end/width/height: 20,60 2`] = `
+Object {
+  "endX": -310,
+  "endY": -150,
+  "startX": -440,
+  "startY": -200,
+}
+`;
+
+exports[`start/end/width/height: 20,60 3`] = `-440`;
+
+exports[`start/end/width/height: 20,60 4`] = `-200`;
+
+exports[`start/end/width/height: 20,60 5`] = `130`;
+
+exports[`start/end/width/height: 20,60 6`] = `50`;
+
+exports[`start/end/width/height: 60,-20 1`] = `
+Object {
+  "endX": -250,
+  "endY": -210,
+  "startX": -320,
+  "startY": -320,
+}
+`;
+
+exports[`start/end/width/height: 60,-20 2`] = `
+Object {
+  "endX": -250,
+  "endY": -210,
+  "startX": -320,
+  "startY": -320,
+}
+`;
+
+exports[`start/end/width/height: 60,-20 3`] = `-320`;
+
+exports[`start/end/width/height: 60,-20 4`] = `-320`;
+
+exports[`start/end/width/height: 60,-20 5`] = `70`;
+
+exports[`start/end/width/height: 60,-20 6`] = `110`;
+
+exports[`start/end/width/height: 60,-60 1`] = `
+Object {
+  "endX": -250,
+  "endY": -210,
+  "startX": -380,
+  "startY": -300,
+}
+`;
+
+exports[`start/end/width/height: 60,-60 2`] = `
+Object {
+  "endX": -250,
+  "endY": -210,
+  "startX": -380,
+  "startY": -300,
+}
+`;
+
+exports[`start/end/width/height: 60,-60 3`] = `-380`;
+
+exports[`start/end/width/height: 60,-60 4`] = `-300`;
+
+exports[`start/end/width/height: 60,-60 5`] = `130`;
+
+exports[`start/end/width/height: 60,-60 6`] = `90`;
+
+exports[`start/end/width/height: 60,-100 1`] = `
+Object {
+  "endX": -310,
+  "endY": -150,
+  "startX": -380,
+  "startY": -300,
+}
+`;
+
+exports[`start/end/width/height: 60,-100 2`] = `
+Object {
+  "endX": -310,
+  "endY": -150,
+  "startX": -380,
+  "startY": -300,
+}
+`;
+
+exports[`start/end/width/height: 60,-100 3`] = `-380`;
+
+exports[`start/end/width/height: 60,-100 4`] = `-300`;
+
+exports[`start/end/width/height: 60,-100 5`] = `70`;
+
+exports[`start/end/width/height: 60,-100 6`] = `150`;
+
+exports[`start/end/width/height: 60,20 1`] = `
+Object {
+  "endX": -190,
+  "endY": -190,
+  "startX": -320,
+  "startY": -320,
+}
+`;
+
+exports[`start/end/width/height: 60,20 2`] = `
+Object {
+  "endX": -190,
+  "endY": -190,
+  "startX": -320,
+  "startY": -320,
+}
+`;
+
+exports[`start/end/width/height: 60,20 3`] = `-320`;
+
+exports[`start/end/width/height: 60,20 4`] = `-320`;
+
+exports[`start/end/width/height: 60,20 5`] = `130`;
+
+exports[`start/end/width/height: 60,20 6`] = `130`;
+
+exports[`start/end/width/height: 60,60 1`] = `
+Object {
+  "endX": -190,
+  "endY": -190,
+  "startX": -260,
+  "startY": -260,
+}
+`;
+
+exports[`start/end/width/height: 60,60 2`] = `
+Object {
+  "endX": -190,
+  "endY": -190,
+  "startX": -260,
+  "startY": -260,
+}
+`;
+
+exports[`start/end/width/height: 60,60 3`] = `-260`;
+
+exports[`start/end/width/height: 60,60 4`] = `-260`;
+
+exports[`start/end/width/height: 60,60 5`] = `70`;
+
+exports[`start/end/width/height: 60,60 6`] = `70`;

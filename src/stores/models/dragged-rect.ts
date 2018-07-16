@@ -25,7 +25,7 @@ export const DraggedRect = types.model('DraggedRect', {
     }
 })).views(self => ({
     get absoluteCoords(): { x: number, y: number } {
-        if (!self.stage) return { x: 0, y: 0 };
+        if (!self.stage) return { x: self.startX, y: self.startY };
         return self.stage.getAbsolutePosition(
             self.startX,
             self.startY
