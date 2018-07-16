@@ -109,7 +109,7 @@ class Canvas extends Component<any> {
 
     render() {
         const { store } = this;
-        const { draggedArrow, draggedRect } = store;
+        const { draggedArrow, draggedRect, draggedFromSocket } = store;
         return (
             <div
                 tabIndex={0}
@@ -134,12 +134,12 @@ class Canvas extends Component<any> {
                     <Layer>
                         {draggedArrow && <Line
                             points={draggedArrow.points}
-                            stroke="black"
+                            stroke={draggedFromSocket ? draggedFromSocket.color : 'black'}
                             bezier
                         />}
 
                         {draggedRect && <Rect
-                            stroke="#8BC34A"
+                            stroke="#E0E0E0"
                             strokeWidth={1}
                             width={draggedRect.width}
                             height={draggedRect.height}
