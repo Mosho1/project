@@ -2,8 +2,8 @@
 
 exports[`end 1`] = `
 Object {
-  "endX": 1,
-  "endY": 2,
+  "endX": 51,
+  "endY": 52,
   "startX": 0,
   "startY": 0,
 }
@@ -11,8 +11,8 @@ Object {
 
 exports[`end 2`] = `
 Object {
-  "endX": 3,
-  "endY": 4,
+  "endX": 54,
+  "endY": 56,
   "startX": 0,
   "startY": 0,
 }
@@ -44,7 +44,7 @@ exports[`start 2`] = `
 Object {
   "endX": 50,
   "endY": 50,
-  "startX": 3,
-  "startY": 4,
+  "startX": 4,
+  "startY": 6,
 }
 `;

@@ -1517,6 +1517,7 @@ exports[`index tests: output,1,1,1,1 1`] = `0`;
 exports[`move 1`] = `
 Object {
   "_id": "test",
+  "breakpoint": false,
   "code": "cbId",
   "mstPouchType": "Box",
   "name": "hal",
@@ -1530,6 +1531,7 @@ Object {
 exports[`move 2`] = `
 Object {
   "_id": "test",
+  "breakpoint": false,
   "code": "cbId",
   "mstPouchType": "Box",
   "name": "hal",
