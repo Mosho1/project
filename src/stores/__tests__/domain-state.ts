@@ -116,9 +116,10 @@ test('endDragArrow', () => {
 });
 
 test('runCode', () => {
-    const obj = { run: () => null };
+    const obj = { run: () => null, callback: () => null };
     spyOn(obj, 'run');
+    spyOn(obj, 'callback');
     store = Store.create({}, obj);
-    store.runCode();
-    expect(obj.run).toHaveBeenCalledWith(store.boxes);
+    store.runCode(obj.callback);
+    expect(obj.run).toHaveBeenCalledWith(store.boxes, obj.callback);
 });

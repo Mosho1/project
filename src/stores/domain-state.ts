@@ -99,7 +99,7 @@ export const Store = pouch.store('Store', {
         }
 
     }))
-    .actions(self => {
+    .actions((self) => {
         const addBox = (name: string, x: number, y: number, code: ICodeBlock) => {
             const { inputs, returns, execInputs, execOutputs, values } = code;
             const boxValues = values.map(v => ({ name: v.name, value: v.defaultValue || '' }));
@@ -268,7 +268,10 @@ export const Store = pouch.store('Store', {
             // }
         };
 
-        const runCode = () => {
+        const onBreakpoint: (box: modelTypes['Box'], cb: Function) => void = (box, resume) =>
+            self.setBreakpoint(box, resume);
+
+        const runCode = (onBreakpointCallback = onBreakpoint) => {
             if (self.running) {
                 if (self.breakpointCallback) {
                     self.breakpointCallback();
@@ -277,8 +280,7 @@ export const Store = pouch.store('Store', {
             } else {
                 self.running = true;
                 const env = getEnv<{ run: typeof run }>(self);
-                env.run(self.boxes, (box, resume) =>
-                    self.setBreakpoint(box, resume));
+                env.run(self.boxes, onBreakpointCallback);
             }
         };
 
