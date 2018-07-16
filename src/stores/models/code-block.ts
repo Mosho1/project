@@ -44,6 +44,8 @@ export const typeNames = ['string', 'number', 'any', 'void'];
 
 export const primitiveTypes = types.union(editableTypes, nonEditableTypes);
 
+export type IPrimitiveTypes = typeof primitiveTypes.Type;
+
 export const CodeBlockIO = types.model('CodeBlockIO', {
     id: optionalIdentifierType,
     name: types.optional(types.string, ''),

@@ -1,10 +1,23 @@
 import { modelTypes } from './models';
-import { IExtendedObservableMap } from 'mobx-state-tree';
+import { IExtendedObservableMap, types, typecheck } from 'mobx-state-tree';
 import { values } from './utils/utils';
+import { IPrimitiveTypes } from './models/code-block';
 
 const disposers: Function[] = [];
 
 const noop = () => { };
+
+const typeCheckers: {[T in IPrimitiveTypes]?: (value: any) => void} = {
+    any: noop,
+    string: (value) => typecheck(types.string, value),
+    number: (value) => typecheck(types.number, value),
+};
+
+const checktype = (type: IPrimitiveTypes, value: any) => {
+    const checker = typeCheckers[type];
+    if (!checker) return;
+    checker(value);
+};
 
 const globalContext = {
     onBreak: false
@@ -39,7 +52,9 @@ export const runBox = async (box: modelTypes['Box'], onBreakpoint?: (box: modelT
     let args = [];
     for (const input of box.inputs) {
         const fromOutput = input.arrows[0].output;
-        args.push(await runBox(fromOutput.box!, onBreakpoint));
+        const value = await runBox(fromOutput.box!, onBreakpoint);
+        checktype(fromOutput.code.type, value);
+        args.push(value);
     }
 
     const ret = box.code.code.apply(context, args);
