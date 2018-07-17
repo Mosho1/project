@@ -200,9 +200,9 @@ export const Store = pouch.store('Store', {
             return box;
         };
         const startDragArrow = (socket: modelTypes['Socket']) => {
-            const { x, y } = socket;
+            const { absX, absY } = socket;
             if (socket.isInput && socket.arrows.length > 0) return;
-            self.draggedArrow = models.DraggedArrow.create({ startX: x, startY: y, endX: x, endY: y });
+            self.draggedArrow = models.DraggedArrow.create({ startX: absX, startY: absY, endX: absX, endY: absY });
             self.setDraggedFromSocket(socket);
         };
 

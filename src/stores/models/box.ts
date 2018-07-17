@@ -35,10 +35,10 @@ const BoxValue = types.model('BoxValue', {
     }))
     .views(self => ({
         get x() {
-            return self.box.x + self.index * self.width + 10;
+            return self.index * self.width + 10;
         },
         get y() {
-            return self.box.y + 3 * self.box.height / 5;
+            return 3 * self.box.height / 5;
         },
         get type() {
             return self.box.code.values[self.index].type;

@@ -86,11 +86,18 @@ export class BoxView extends Component<{ box: IBox }> {
     render() {
         const { box } = this.props;
         return (
-            <Group>
+            <Group
+                onDragMove={this.handleDragMove}
+                onDragStart={this.handleDragStart}
+                onClick={this.handleClick}
+                onMouseUp={this.onMouseUp}
+                x={box.x}
+                y={box.y}
+                draggable
+            // dragBoundFunc={_ => console.log(box.x, box.y)||box}
+            >
                 <Rect
                     ref="rect"
-                    x={box.x}
-                    y={box.y}
                     width={box.width}
                     height={box.height}
                     fill={this.fill}
@@ -101,16 +108,10 @@ export class BoxView extends Component<{ box: IBox }> {
                     shadowOffsetY={5}
                     cornerRadius={10}
                     opacity={.45}
-                    draggable
-                    onDragMove={this.handleDragMove}
-                    onDragStart={this.handleDragStart}
-                    // dragBoundFunc={_ => console.log(box.x, box.y)||box}
-                    onClick={this.handleClick}
-                    onMouseUp={this.onMouseUp}
                 />
                 <Text
-                    x={box.x}
-                    y={box.y + 12}
+                    x={0}
+                    y={12}
                     fill={'#fff'}
                     text={box.name}
                     align="center"

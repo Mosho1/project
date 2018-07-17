@@ -15,10 +15,10 @@ export const Arrow = pouch.model('Arrow', {
         },
         get points() {
             return calculateBezierPoints(
-                self.output.x,
-                self.output.y,
-                self.input.x,
-                self.input.y,
+                self.output.absX,
+                self.output.absY,
+                self.input.absX,
+                self.input.absY,
             );
         },
         get isExec() {

@@ -88,18 +88,25 @@ export const Socket = pouch.model('Socket', {
         get x() {
             if (!self.box) return 0;
             if (self.socketType === 'input' || self.socketType === 'execInput') {
-                return self.box.x + 18;
+                return 18;
             } else {
-                return self.box.x + self.box.width - 18;
+                return self.box.width - 18;
             }
         },
         get y() {
-            if (!self.box) return 0;
-            return 50 + self.box.y + self.index * 30;
+            return 50 + self.index * 30;
         },
 
     }))
     .views(self => ({
+        get absX() {
+            if (!self.box) return 0;
+            return self.x + self.box.x;
+        },
+        get absY() {
+            if (!self.box) return 0;
+            return self.y + self.box.y;
+        },
         get color() {
             return typeColors[self.code.type] || '#fff';
         },
