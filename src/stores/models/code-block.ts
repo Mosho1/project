@@ -1,6 +1,6 @@
 import { types } from 'mobx-state-tree';
 import { optionalIdentifierType } from '../utils/utils';
-import { primitiveTypes } from './types';
+import { primitiveTypes, mstTypes } from './types';
 
 const parseFunction = (value: string) => {
     const fn = eval(`(${value})`);
@@ -33,7 +33,11 @@ export const CodeBlockIO = types.model('CodeBlockIO', {
     id: optionalIdentifierType,
     name: types.optional(types.string, ''),
     type: types.optional(primitiveTypes, 'any'),
-    defaultValue: types.maybe(types.string)
+    defaultValue: types.maybe(types.union(
+        mstTypes.string,
+        mstTypes.number,
+        mstTypes.boolean,
+    ))
 });
 
 export const CodeBlock = types.model('CodeBlock', {

@@ -1,4 +1,4 @@
-import { types, typecheck } from 'mobx-state-tree';
+import { types, typecheck, ISimpleType } from 'mobx-state-tree';
 import { noop, identity } from '../utils/utils';
 
 export const editableTypes = types.enumeration('editableTypes', [
@@ -17,6 +17,14 @@ const nonEditableTypes = types.enumeration('nonEditableTypes', [
 export const primitiveTypes = types.union(editableTypes, nonEditableTypes);
 export type IPrimitiveTypes = typeof primitiveTypes.Type;
 export const typeNames: IPrimitiveTypes[] = ['string', 'number', 'boolean', 'any', 'void'];
+
+export const mstTypes: { [T in IPrimitiveTypes]: ISimpleType<any> } = {
+    any: types.frozen,
+    void: types.null,
+    string: types.string,
+    number: types.number,
+    boolean: types.boolean
+};
 
 class TypeError extends Error { }
 

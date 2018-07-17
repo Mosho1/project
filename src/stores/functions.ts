@@ -109,7 +109,7 @@ export const functions: { [index: string]: ICodeBlockSnapshot } = {
         name: 'boolean',
         id: 'boolean',
         values: [
-            { name: 'value', type: 'boolean' },
+            { name: 'value', type: 'boolean', defaultValue: true },
         ],
         code: function code(this: Emitter) {
             return this.values.value;
@@ -146,20 +146,14 @@ export const functions: { [index: string]: ICodeBlockSnapshot } = {
         code: (x: any) => x.toString(),
         returns: { type: 'string' }
     },
-    doSomethingWithString: {
-        name: 'doSomethingWithString',
-        id: 'doSomethingWithString',
-        inputs: [{ type: 'string' }],
-        code: (x: any) => x,
-        returns: { type: 'string' }
-    },
-    
+
 };
 
 for (let k in functions) {
     const fn = functions[k];
     if (k !== fn.id) throw new Error('function id different from key');
     if (fn.inputs) fn.inputs = fn.inputs.map((x: any, i: number) => ({ ...x, id: `${k}/inputs/${i}` }))
+    if (fn.values) fn.values = fn.values.map((x: any, i: number) => ({ ...x, id: `${k}/values/${i}` }))
     if (fn.execInputs) fn.execInputs = fn.execInputs.map((x: any, i: number) => ({ ...x, id: `${k}/execInputs/${i}` }))
     if (fn.execOutputs) fn.execOutputs = fn.execOutputs.map((x: any, i: number) => ({ ...x, id: `${k}/execOutputs/${i}` }))
     if (fn.returns) fn.returns.id = `${k}/returns`;
