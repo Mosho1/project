@@ -49,15 +49,12 @@ export const runBox = async (box: modelTypes['Box'], callbacks: callbacks): Prom
     for (const input of box.inputs) {
         const arrow = input.arrows[0]
         const fromOutput = arrow.output;
-        if (callbacks.onEmit) {
-            callbacks.onEmit(arrow);
-        }
         const value = await runBox(fromOutput.box!, callbacks);
         checkStaticType(fromOutput.code.type, value);
         args.push(value);
     }
 
-    const ret = box.code.code.apply(context, args);
+    const ret = await box.code.code.apply(context, args);
 
     if (context.dispose !== noop) {
         disposers.push(context.dispose);
