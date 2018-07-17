@@ -69,6 +69,10 @@ class Canvas extends Component<any> {
                     caught = true;
                 }
                 break;
+            case Key.Zero:
+                if (e.ctrlKey) {
+                    this.store.stage.setScale(1);
+                }
         }
 
 
@@ -78,11 +82,11 @@ class Canvas extends Component<any> {
         }
     };
 
-    // onWheel = ({ evt: e }: KonvaEvent<WheelEvent>) => {
-    //     e.preventDefault();
-    //     e.stopPropagation();
-    //     this.store.stage.handleScale(e);
-    // };
+    onWheel = ({ evt: e }: KonvaEvent<WheelEvent>) => {
+        e.preventDefault();
+        e.stopPropagation();
+        this.store.stage.handleScale(e);
+    };
 
     dragStartX: number = 0;
     dragStartY: number = 0;
@@ -130,7 +134,7 @@ class Canvas extends Component<any> {
                     onMouseMove={this.onMouseMove}
                     onMouseUp={this.onMouseUp}
                     onClick={this.onCanvasClick}
-                // onWheel={this.onWheel}
+                    onWheel={this.onWheel}
                 >
                     <Layer>
                         {draggedArrow && <Line
