@@ -47,7 +47,7 @@ class Sidebar extends Component {
                         color="inherit"
                         onClick={this.stop}
                         className={styles.button}>
-                        Stop (shift + F7)
+                        Stop (shif + F7)
                     </Button>
                 </Toolbar>
             </AppBar>
