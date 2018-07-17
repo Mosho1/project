@@ -67,7 +67,6 @@ class Sidebar extends Component {
                 <Checkbox
                     checked={v.value}
                     onChange={this.onCheckboxChange(v)}
-                    value={v.value}
                     color="primary"
                 />
             }
