@@ -81,6 +81,17 @@ export const functions: { [index: string]: ICodeBlockSnapshot } = {
         },
         returns: { type: 'string' }
     },
+    boolean: {
+        name: 'boolean',
+        id: 'boolean',
+        values: [
+            { name: 'value', type: 'boolean' },
+        ],
+        code: function code(this: Emitter) {
+            return this.values.value;
+        },
+        returns: { type: 'boolean' }
+    },
     concat: {
         name: 'concat',
         id: 'concat',

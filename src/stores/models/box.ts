@@ -2,7 +2,8 @@ import { types, getParent, hasParent } from 'mobx-state-tree'
 import { pouch } from '../utils/pouchdb-model';
 import { Socket, ISocket } from './socket';
 import { IStore } from '../domain-state';
-import { CodeBlock, ICodeBlock } from './code-block';
+import { CodeBlock, ICodeBlock, IPrimitiveTypes } from './code-block';
+import { noop, identity } from '../utils/utils';
 
 interface BoxEditableProps {
     x?: number;
@@ -13,9 +14,36 @@ interface BoxEditableProps {
     scaleY?: number;
 }
 
+class BoxTypeError extends Error { }
+
+const typeCheckers: { [T in IPrimitiveTypes]: (value: string | boolean) => any } = {
+    string: noop,
+    number(value) {
+        const parsed = Number(value);
+        if (Number.isNaN(parsed)) {
+            throw new BoxTypeError(`expected a number, got '${typeof value}'`);
+        }
+        return parsed;
+    },
+    boolean(value) {
+        if (typeof value !== 'boolean') {
+            throw new BoxTypeError(`expected a boolean, got '${typeof value}'`);
+        }
+        return value;
+    },
+    any: noop,
+    void: noop
+};
+
+
+const checkBoxValue = (type: IPrimitiveTypes, value: any) => {
+    return (typeCheckers[type] || identity)(value);
+};
+
 const BoxValue = types.model('BoxValue', {
-    name: types.string,
-    value: types.string,
+    name: '',
+    value: types.frozen,
+    validationMessage: ''
 })
     .volatile(_self => ({
         width: 50,
@@ -38,6 +66,24 @@ const BoxValue = types.model('BoxValue', {
         get y() {
             return self.box.y + 3 * self.box.height / 5;
         },
+        get type() {
+            return self.box.code.values[self.index].type;
+        },
+        get isValid() {
+            return !self.validationMessage;
+        }
+    }))
+    .actions(self => ({
+        setValue(value: string) {
+            try {
+                checkBoxValue(self.type, value);
+                self.validationMessage = '';
+            } catch (e) {
+                self.validationMessage = e.message;
+            } finally {
+                self.value = value;
+            }
+        }
     }));
 
 type IBoxValueType = typeof BoxValue.Type;
@@ -99,6 +145,9 @@ export const Box = pouch.model('Box',
                 self.execInputs.length + self.inputs.length,
                 self.execOutputs.length + self.outputs.length)
                 * 30;
+        },
+        get isValid() {
+            return self.values.every(v => v.isValid);
         }
     }))
     .actions(self => ({
@@ -115,9 +164,9 @@ export const Box = pouch.model('Box',
             self.sockets.push(socket);
             return socket;
         },
-        setValue(key: string, value: string) {
+        setValue(key: string, value: any) {
             /* istanbul ignore next */
-            self.valuesMap[key].value = value;
+            self.valuesMap[key].setValue(value);
         },
         toggleBreakpoint(value?: boolean) {
             if (typeof value === 'boolean') self.breakpoint = value;

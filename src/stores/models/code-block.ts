@@ -30,7 +30,8 @@ export const codeType = types.custom<string, Function>({
 
 export const editableTypes = types.enumeration('editableTypes', [
     'string',
-    'number'
+    'number',
+    'boolean'
 ]);
 
 export type IEditableTypes = typeof editableTypes.Type;
@@ -40,11 +41,9 @@ const nonEditableTypes = types.enumeration('nonEditableTypes', [
     'void'
 ]);
 
-export const typeNames = ['string', 'number', 'any', 'void'];
-
 export const primitiveTypes = types.union(editableTypes, nonEditableTypes);
-
 export type IPrimitiveTypes = typeof primitiveTypes.Type;
+export const typeNames: IPrimitiveTypes[] = ['string', 'number', 'boolean', 'any', 'void'];
 
 export const CodeBlockIO = types.model('CodeBlockIO', {
     id: optionalIdentifierType,

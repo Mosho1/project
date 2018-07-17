@@ -85,6 +85,11 @@ export const Store = pouch.store('Store', {
     breakpointCallback: null as Function | null,
     breakPosition: null as modelTypes['Box'] | null
 }))
+    .views(self => ({
+        get isValid() {
+            return values(self.boxes).every(b => b.isValid);
+        }
+    }))
     .actions(self => ({
         setDraggedFromSocket(socket: modelTypes['Socket'] | null) {
             self.draggedFromSocket = socket;

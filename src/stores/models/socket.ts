@@ -28,10 +28,12 @@ export const areSocketsCompatible = (s1: ISocket, s2: ISocket) => {
     return true;
 };
 
-const typeColors: {[T in IPrimitiveTypes]?: string} = {
+const typeColors: {[T in IPrimitiveTypes]: string} = {
     any: '#fff',
     number: 'green',
-    string: 'red'
+    string: 'red',
+    boolean: '#1565C0',
+    void: '#000'
 };
 
 export const Socket = pouch.model('Socket', {

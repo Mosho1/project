@@ -35,3 +35,6 @@ export const filterBy = <T>(arr: T[], filter: string, map: (x: T) => string) => 
         return v.toLowerCase().includes(filter.toLowerCase());
     });
 };
+
+export const noop = () => { };
+export const identity = <T>(x: T) => x;
