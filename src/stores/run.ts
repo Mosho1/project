@@ -5,12 +5,15 @@ import { checkStaticType } from './models/types';
 
 const disposers: Function[] = [];
 
-
-
 const globalContext = {
     onBreak: false
 };
-export const runBox = async (box: modelTypes['Box'], onBreakpoint?: (box: modelTypes['Box'], cb: Function) => void): Promise<any> => {
+
+interface callbacks {
+    onBreakpoint?: (box: modelTypes['Box'], cb: Function) => void;
+    onEmit?: (arrow: modelTypes['Arrow']) => void;
+}
+export const runBox = async (box: modelTypes['Box'], callbacks: callbacks): Promise<any> => {
 
     const context = {
         get onBreak() {
@@ -23,12 +26,17 @@ export const runBox = async (box: modelTypes['Box'], onBreakpoint?: (box: modelT
             if (!execOutput) {
                 throw new Error(`no execOutput found for event: ${eventName}`);
             }
-            for (const a of execOutput.arrows) {
-                await runBox(a.input.box!, onBreakpoint);
-            }
+
+            await Promise.all(execOutput.arrows.map(a => {
+                if (callbacks.onEmit) {
+                    callbacks.onEmit(a);
+                }
+                return runBox(a.input.box!, callbacks);
+            }));
         }
     };
 
+    const { onBreakpoint } = callbacks;
     if (box.breakpoint && onBreakpoint) {
         globalContext.onBreak = true;
         await new Promise(resolve => {
@@ -39,8 +47,12 @@ export const runBox = async (box: modelTypes['Box'], onBreakpoint?: (box: modelT
 
     let args = [];
     for (const input of box.inputs) {
-        const fromOutput = input.arrows[0].output;
-        const value = await runBox(fromOutput.box!, onBreakpoint);
+        const arrow = input.arrows[0]
+        const fromOutput = arrow.output;
+        if (callbacks.onEmit) {
+            callbacks.onEmit(arrow);
+        }
+        const value = await runBox(fromOutput.box!, callbacks);
         checkStaticType(fromOutput.code.type, value);
         args.push(value);
     }
@@ -54,13 +66,13 @@ export const runBox = async (box: modelTypes['Box'], onBreakpoint?: (box: modelT
     return ret;
 };
 
-export const run = (boxes: IExtendedObservableMap<modelTypes['Box']>, onBreakpoint?: (box: modelTypes['Box'], cb: Function) => void) => {
+export const run = (boxes: IExtendedObservableMap<modelTypes['Box']>, callbacks: callbacks) => {
     const start = values(boxes).find(b => b.code.runOnStart);
     if (!start) {
         throw new Error('no start found');
     }
 
-    return runBox(start, onBreakpoint);
+    return runBox(start, callbacks);
 };
 
 export const stop = () => {

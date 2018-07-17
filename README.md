@@ -30,6 +30,8 @@
 - [x] editable input names
 - [ ] copy/cut/paste
 - [ ] enums
+- [ ] box context menu
+- [ ] set variables
 
 ### db
 

@@ -306,7 +306,10 @@ export const Store = pouch.store('Store', {
         const onBreakpoint: (box: modelTypes['Box'], cb: Function) => void = (box, resume) =>
             self.setBreakpoint(box, resume);
 
-        const runCode = (onBreakpointCallback = onBreakpoint) => {
+        const onEmit: (arrow: modelTypes['Arrow']) => void =
+            (arrow) => arrow.onEmit && arrow.onEmit();
+
+        const runCode = (onBreakpointCallback = onBreakpoint, onEmitCallback = onEmit) => {
             if (self.running) {
                 if (self.breakpointCallback) {
                     self.breakpointCallback();
@@ -315,7 +318,10 @@ export const Store = pouch.store('Store', {
             } else {
                 self.running = true;
                 const env = getEnv<{ run: typeof run }>(self);
-                env.run(self.boxes, onBreakpointCallback);
+                env.run(self.boxes, {
+                    onBreakpoint: onBreakpointCallback,
+                    onEmit: onEmitCallback
+                });
             }
         };
 

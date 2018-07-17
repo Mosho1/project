@@ -6,6 +6,7 @@ import { Component } from './component';
 import { Layer, Stage, Line, Rect } from 'react-konva';
 import { values } from '../stores/utils/utils';
 import { Key } from 'ts-keycode-enum';
+import ArrowView from './arrow-view';
 
 @observer
 class Canvas extends Component<any> {
@@ -146,14 +147,7 @@ class Canvas extends Component<any> {
                             {...draggedRect.absoluteCoords}
                         />}
 
-                        {values(store.arrows).map(a =>
-                            <Line
-                                key={a._id}
-                                points={a.points}
-                                stroke={a.isExec ? '#dacfcf' : a.color}
-                                bezier
-                            />
-                        )}
+                        {values(store.arrows).map(a => <ArrowView key={a._id} arrow={a} />)}
                         {values(store.boxes).map(b => <BoxView key={b._id} box={b} />)}
                     </Layer>
                 </Stage>

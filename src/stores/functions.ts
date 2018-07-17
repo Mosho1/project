@@ -35,7 +35,6 @@ export const functions: { [index: string]: ICodeBlockSnapshot } = {
     interval: {
         name: 'interval',
         id: 'interval',
-        runOnStart: true,
         code: function code(this: Emitter) {
             const interval = Number(this.values.interval);
             const id = setInterval(() => {
@@ -49,6 +48,25 @@ export const functions: { [index: string]: ICodeBlockSnapshot } = {
             { name: 'interval', type: 'number' },
         ],
         execOutputs: [{}],
+        execInputs: [{}],
+    },
+    timeout: {
+        name: 'timeout',
+        id: 'timeout',
+        code: function code(this: Emitter) {
+            const timeout = Number(this.values.timeout);
+            const id = setTimeout(() => {
+                if (!this.onBreak) {
+                    this.emit();
+                }
+            }, timeout);
+            this.dispose = () => clearTimeout(id);
+        },
+        values: [
+            { name: 'timeout', type: 'number' },
+        ],
+        execOutputs: [{}],
+        execInputs: [{}],
     },
     add: getMathFunc('add', (a: number, b: number) => a + b),
     sub: getMathFunc('sub', (a: number, b: number) => a - b),

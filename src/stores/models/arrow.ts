@@ -6,7 +6,9 @@ import { pouch } from '../utils/pouchdb-model';
 export const Arrow = pouch.model('Arrow', {
     input: types.reference<ISocket>(Socket),
     output: types.reference<ISocket>(Socket)
-}).views(self => {
+}).volatile(_ => ({
+    onEmit: null as Function | null,
+})).views(self => {
     return {
         get color() {
             return self.output.color;
@@ -23,7 +25,11 @@ export const Arrow = pouch.model('Arrow', {
             return self.input.isExec;
         }
     };
-});
+}).actions(self => ({
+    setOnEmit(fn: Function | null) {
+        self.onEmit = fn;
+    }
+}));
 
 type IArrowType = typeof Arrow.Type;
 export interface IArrow extends IArrowType {};
