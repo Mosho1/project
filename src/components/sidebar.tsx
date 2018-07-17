@@ -4,9 +4,9 @@ import * as styles from './styles/index.css';
 import Component from './component';
 import { ISocket } from '../stores/models/socket';
 import Drawer from '@material-ui/core/Drawer';
-import { Checkbox, Input, FormControl, InputLabel, ListItem, FormControlLabel, List, FormHelperText } from '@material-ui/core';
-import { IPrimitiveTypes } from '../stores/models/code-block';
+import { Checkbox, Input, FormControl, InputLabel, ListItem, FormControlLabel, List, FormHelperText, FormGroup, Switch } from '@material-ui/core';
 import { IBoxValue } from '../stores/models/box';
+import { IPrimitiveTypes } from '../stores/models/types';
 styles.sidebar;
 class Sidebar extends Component {
     sidebar: HTMLDivElement | null = null;
@@ -23,27 +23,39 @@ class Sidebar extends Component {
         return <input onChange={this.onSocketNameChange(s)} defaultValue={s.name} key={s._id} />;
     };
 
-    onInputChange = (name: string) => (e: React.ChangeEvent<HTMLInputElement>) => {
-        const { selection } = this.store;
-        selection[0]!.setValue(name, e.target.value);
+    onInputChange = (v: IBoxValue) => (e: React.ChangeEvent<HTMLInputElement>) => {
+        v.setValue(e.target.value);
     };
 
-    onCheckboxChange = (name: string) => (e: React.ChangeEvent<HTMLInputElement>) => {
-        const { selection } = this.store;
-        selection[0]!.setValue(name, e.target.checked);
+    onCheckboxChange = (v: IBoxValue) => (e: React.ChangeEvent<HTMLInputElement>) => {
+        v.setValue(e.target.checked);
+    };
+
+    onInputNameChange = (socket: ISocket) => (e: React.ChangeEvent<HTMLInputElement>) => {
+        socket.setName(e.target.value);
     };
 
     onToggleBreakpoint = (e: React.ChangeEvent<HTMLInputElement>) => {
         this.store.selection[0].toggleBreakpoint(e.target.checked);
     }
 
+    renderName = (v: ISocket) => {
+        return <FormControl fullWidth>
+            <Input
+                id={`value-${v.name}`}
+                value={v.name}
+                onChange={this.onInputNameChange(v)}
+            />
+        </FormControl>;
+    };
+
     renderInput = (v: IBoxValue) => {
         return <FormControl fullWidth>
-            <InputLabel htmlFor="adornment-amount">{v.name}</InputLabel>
+            <InputLabel htmlFor={`value-${v.name}`}>{v.name}</InputLabel>
             <Input
-                id="adornment-amount"
+                id={`value-${v.name}`}
                 value={v.value}
-                onChange={this.onInputChange(v.name)}
+                onChange={this.onInputChange(v)}
             />
             <FormHelperText>{v.validationMessage}</FormHelperText>
         </FormControl>;
@@ -54,22 +66,13 @@ class Sidebar extends Component {
             control={
                 <Checkbox
                     checked={v.value}
-                    onChange={this.onCheckboxChange(v.name)}
+                    onChange={this.onCheckboxChange(v)}
                     value={v.value}
                     color="primary"
                 />
             }
             label={v.name}
         />;
-        return <FormControl fullWidth>
-            <InputLabel htmlFor="adornment-amount">{v.name}</InputLabel>
-            <Input
-                id="adornment-amount"
-                value={v.value}
-                onChange={this.onInputChange(v.name)}
-            />
-            <FormHelperText>{v.validationMessage}</FormHelperText>
-        </FormControl>;
     }
 
     renderValue: { [T in IPrimitiveTypes]: (value: IBoxValue) => JSX.Element | null } = {
@@ -80,8 +83,30 @@ class Sidebar extends Component {
         void: () => null
     };
 
-    render() {
+    renderValues() {
         const { selection } = this.store;
+        if (selection.length !== 1) return null;
+        return selection[0].values.map((v, i) =>
+            <ListItem key={i}>
+                {this.renderValue[v.type](v)}
+            </ListItem>);
+    }
+
+    renderNames() {
+        const { selection } = this.store;
+        if (selection.length !== 1) return null;
+        return selection[0].inputs.map((v, i) =>
+            <ListItem key={i}>
+                {this.renderName(v)}
+            </ListItem>);
+    }
+
+    onChangeContext = (e: React.ChangeEvent<HTMLInputElement>) => {
+        this.store.ui.sidebar.setContext(e.target.checked ? 'values' : 'names')
+    };
+
+    render() {
+        const { selection, ui } = this.store;
         return <div
             ref={ref => this.sidebar = ref}>
             <Drawer
@@ -91,18 +116,28 @@ class Sidebar extends Component {
             >
                 <List className={styles.sidebar}>
                     {selection.length === 1 && <ListItem>
-                        <FormControlLabel
-                            label="Breakpoint"
-                            control={<Checkbox
-                                checked={selection[0].breakpoint}
-                                onChange={this.onToggleBreakpoint}
-                            />}>
-                        </FormControlLabel>
+                        <FormGroup>
+                            <FormControlLabel
+                                label="Breakpoint"
+                                control={<Checkbox
+                                    checked={selection[0].breakpoint}
+                                    onChange={this.onToggleBreakpoint}
+                                />}>
+                            </FormControlLabel>
+                            <FormControlLabel
+                                label={ui.sidebar.context === 'values'
+                                    ? 'Values'
+                                    : 'Names'}
+                                control={<Switch
+                                    checked={ui.sidebar.context === 'values'}
+                                    onChange={this.onChangeContext}
+                                />}>
+                            </FormControlLabel>
+                        </FormGroup>
                     </ListItem>}
-                    {selection.length === 1 && selection[0].values.map((v, i) =>
-                        <ListItem key={i}>
-                            {this.renderValue[v.type](v)}
-                        </ListItem>)}
+                    {ui.sidebar.context === 'values'
+                        ? this.renderValues()
+                        : this.renderNames()}
                 </List>
             </Drawer>
         </div>;

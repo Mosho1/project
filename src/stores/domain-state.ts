@@ -16,6 +16,7 @@ import { values } from './utils/utils';
 import { run, stop } from './run';
 import { SocketTypeEnum, areSocketsCompatible } from './models/socket';
 import { observable } from 'mobx';
+import { getConversionIfExists } from './models/types';
 
 const Position = types.model('Position', {
     x: types.number,
@@ -69,6 +70,19 @@ const Stage = types.model('Stage', {
 type IStageType = typeof Stage.Type;
 export interface IStage extends IStageType { };
 
+const UiStore = types.model('UiStore', {
+    sidebar: types.model('Sidebar', {
+        context: types.optional(
+            types.enumeration('context', ['values', 'names']),
+            'values'
+        )
+    }).actions(self => ({
+        setContext(context: 'values' | 'names') {
+            self.context = context;
+        }
+    }))
+});
+
 export const Store = pouch.store('Store', {
     boxes: types.optional(types.map(models.Box), {}),
     sockets: types.optional(types.map(models.Socket), {}),
@@ -79,6 +93,7 @@ export const Store = pouch.store('Store', {
     draggedRect: types.maybe(models.DraggedRect),
     draggedFromSocket: types.maybe(types.reference<modelTypes['Socket']>(models.Socket)),
     contextMenu: types.maybe(ContextMenu),
+    ui: UiStore,
     stage: types.optional(Stage, {}),
 }).volatile(_ => ({
     running: false,
@@ -133,6 +148,22 @@ export const Store = pouch.store('Store', {
                         if (a !== null) return true;
                     }
                 }
+            }
+            return false;
+        };
+        const addBoxForConversion = (from: modelTypes['Socket'], to: modelTypes['Socket']) => {
+            const [input, output] = from.isInput ? [from, to] : [to, from];
+            const conversion = getConversionIfExists(output.code.type, input.code.type);
+            if (conversion) {
+                const code = self.codeBlocks.get(conversion);
+                if (code) {
+                    const x = (from.x + to.x) / 2;
+                    const y = (from.y + to.y) / 2;
+                    const b = addBox(conversion, x, y, code);
+                    addArrow(input, b.outputs[0]);
+                    addArrow(b.inputs[0], output);
+                }
+                return true;
             }
             return false;
         };
@@ -250,10 +281,9 @@ export const Store = pouch.store('Store', {
                 arrow = models.Arrow.create({ input, output });
                 self.arrows.put(arrow);
                 return arrow;
+            } else {
+                addBoxForConversion(input, output);
             }
-
-            return null;
-
         };
         const addArrowFromDraggedSocket = (socket: modelTypes['Socket']) => {
             if (!self.draggedFromSocket) return;
@@ -348,7 +378,12 @@ export const defaults: IStoreSnapshot = {
     codeBlocks: { ...codeBlocks.functions },
     selection: [],
     draggedArrow: null,
-    draggedFromSocket: null
+    draggedFromSocket: null,
+    ui: {
+        sidebar: {
+            context: 'values'
+        }
+    }
 };
 
 /* istanbul ignore next */

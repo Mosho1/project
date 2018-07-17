@@ -3,7 +3,8 @@ import { values } from '../utils/utils';
 import { modelTypes } from './index';
 import { pouch } from '../utils/pouchdb-model';
 import { IStore } from '../domain-state';
-import { CodeBlockIO, ICodeBlockIO, IPrimitiveTypes } from './code-block';
+import { CodeBlockIO, ICodeBlockIO } from './code-block';
+import { IPrimitiveTypes } from './types';
 
 const socketType = types.enumeration('socketType', [
     'input',

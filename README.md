@@ -11,8 +11,8 @@
 - [x] type coloring
 - [x] delete selection
 - [x] move selection
-- [ ] type validation
-- [ ] type conversion
+- [x] type validation
+- [x] type conversion
 - [x] drag selection box
 - [x] context menu on drop arrow
 - [ ] permanent box groups
@@ -20,11 +20,16 @@
 - [ ] function list
 - [ ] composable functions
 - [ ] import modules automatically
-- [ ] use remote couchdb
+- [x] use remote couchdb
 - [x] run and stop
 - [ ] user login
 - [ ] electron app
 - [ ] demos
+- [ ] variable number of inputs
+- [ ] function categories
+- [x] editable input names
+- [ ] copy/cut/paste
+- [ ] enums
 
 ### db
 

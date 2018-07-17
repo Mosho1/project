@@ -1,5 +1,6 @@
 import { types } from 'mobx-state-tree';
 import { optionalIdentifierType } from '../utils/utils';
+import { primitiveTypes } from './types';
 
 const parseFunction = (value: string) => {
     const fn = eval(`(${value})`);
@@ -27,23 +28,6 @@ export const codeType = types.custom<string, Function>({
         return value instanceof Function;
     }
 });
-
-export const editableTypes = types.enumeration('editableTypes', [
-    'string',
-    'number',
-    'boolean'
-]);
-
-export type IEditableTypes = typeof editableTypes.Type;
-
-const nonEditableTypes = types.enumeration('nonEditableTypes', [
-    'any',
-    'void'
-]);
-
-export const primitiveTypes = types.union(editableTypes, nonEditableTypes);
-export type IPrimitiveTypes = typeof primitiveTypes.Type;
-export const typeNames: IPrimitiveTypes[] = ['string', 'number', 'boolean', 'any', 'void'];
 
 export const CodeBlockIO = types.model('CodeBlockIO', {
     id: optionalIdentifierType,

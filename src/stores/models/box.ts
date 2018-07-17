@@ -2,8 +2,8 @@ import { types, getParent, hasParent } from 'mobx-state-tree'
 import { pouch } from '../utils/pouchdb-model';
 import { Socket, ISocket } from './socket';
 import { IStore } from '../domain-state';
-import { CodeBlock, ICodeBlock, IPrimitiveTypes } from './code-block';
-import { noop, identity } from '../utils/utils';
+import { CodeBlock, ICodeBlock } from './code-block';
+import { checkRuntimeType } from './types';
 
 interface BoxEditableProps {
     x?: number;
@@ -13,32 +13,6 @@ interface BoxEditableProps {
     scaleX?: number;
     scaleY?: number;
 }
-
-class BoxTypeError extends Error { }
-
-const typeCheckers: { [T in IPrimitiveTypes]: (value: string | boolean) => any } = {
-    string: noop,
-    number(value) {
-        const parsed = Number(value);
-        if (Number.isNaN(parsed)) {
-            throw new BoxTypeError(`expected a number, got '${typeof value}'`);
-        }
-        return parsed;
-    },
-    boolean(value) {
-        if (typeof value !== 'boolean') {
-            throw new BoxTypeError(`expected a boolean, got '${typeof value}'`);
-        }
-        return value;
-    },
-    any: noop,
-    void: noop
-};
-
-
-const checkBoxValue = (type: IPrimitiveTypes, value: any) => {
-    return (typeCheckers[type] || identity)(value);
-};
 
 const BoxValue = types.model('BoxValue', {
     name: '',
@@ -74,9 +48,9 @@ const BoxValue = types.model('BoxValue', {
         }
     }))
     .actions(self => ({
-        setValue(value: string) {
+        setValue(value: string | boolean) {
             try {
-                checkBoxValue(self.type, value);
+                checkRuntimeType(self.type, value);
                 self.validationMessage = '';
             } catch (e) {
                 self.validationMessage = e.message;
@@ -88,13 +62,15 @@ const BoxValue = types.model('BoxValue', {
 
 type IBoxValueType = typeof BoxValue.Type;
 export interface IBoxValue extends IBoxValueType { };
+type IBoxValueSnapshotType = typeof BoxValue.SnapshotType;
+export interface IBoxValueSnapshot extends IBoxValueSnapshotType { };
 
 export const Box = pouch.model('Box',
     {
         name: 'hal',
         x: 0,
         y: 0,
-        values: types.optional(types.array(BoxValue), []),
+        values: types.optional(types.array<IBoxValueSnapshot, IBoxValue>(BoxValue), []),
         sockets: types.optional(types.array(types.reference<ISocket>(Socket)), []),
         code: types.reference<ICodeBlock>(CodeBlock),
         breakpoint: false

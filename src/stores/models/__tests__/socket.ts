@@ -1,7 +1,8 @@
 import { Socket, SocketTypeEnum, socketTypes, areSocketsCompatible, ISocketSnapshot } from '../socket';
 import { mock, product } from '../../test-utils';
 import { ObservableMap } from 'mobx';
-import { CodeBlockIO, typeNames } from '../code-block';
+import { CodeBlockIO } from '../code-block';
+import { typeNames } from '../types';
 
 export const createTestSocket = (args?: ISocketSnapshot) => {
     const code = CodeBlockIO.create();

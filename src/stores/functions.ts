@@ -9,6 +9,19 @@ type Emitter = {
     onBreak: boolean
 };
 
+const getMathFunc = (name: string, code: (a: number, b: number) => number) => {
+    return {
+        name,
+        id: name,
+        code,
+        inputs: [
+            { name: 'a', type: 'number' },
+            { name: 'b', type: 'number' },
+        ],
+        returns: { type: 'number' }
+    };
+};
+
 export const functions: { [index: string]: ICodeBlockSnapshot } = {
     start: {
         name: 'start',
@@ -37,18 +50,11 @@ export const functions: { [index: string]: ICodeBlockSnapshot } = {
         ],
         execOutputs: [{}],
     },
-    add: {
-        name: 'add',
-        id: 'add',
-        code: function code(a: number, b: number) {
-            return a + b;
-        },
-        inputs: [
-            { name: 'a', type: 'number' },
-            { name: 'b', type: 'number' },
-        ],
-        returns: { type: 'number' }
-    },
+    add: getMathFunc('add', (a: number, b: number) => a + b),
+    sub: getMathFunc('sub', (a: number, b: number) => a - b),
+    mul: getMathFunc('mul', (a: number, b: number) => a * b),
+    div: getMathFunc('div', (a: number, b: number) => a / b),
+    mod: getMathFunc('mod', (a: number, b: number) => a % b),
     log: {
         name: 'log',
         id: 'log',
@@ -100,7 +106,36 @@ export const functions: { [index: string]: ICodeBlockSnapshot } = {
         code: function code(a: string, b: string) {
             return a + b;
         }
-    }
+    },
+    ifElse: {
+        name: 'ifElse',
+        id: 'ifElse',
+        inputs: [{ name: 'condition', type: 'boolean' }],
+        code: function code(this: Emitter, condition: boolean) {
+            if (condition) {
+                this.emit('true');
+            } else {
+                this.emit('false');
+            }
+        },
+        execInputs: [{}],
+        execOutputs: [{ name: 'true' }, { name: 'false' }],
+    },
+    toString: {
+        name: 'toString',
+        id: 'toString',
+        inputs: [{ type: 'any' }],
+        code: (x: any) => x.toString(),
+        returns: { type: 'string' }
+    },
+    doSomethingWithString: {
+        name: 'doSomethingWithString',
+        id: 'doSomethingWithString',
+        inputs: [{ type: 'string' }],
+        code: (x: any) => x,
+        returns: { type: 'string' }
+    },
+    
 };
 
 for (let k in functions) {
