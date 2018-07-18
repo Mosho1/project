@@ -150,8 +150,8 @@ class Canvas extends Component<any> {
                             height={draggedRect.height}
                             {...draggedRect.absoluteCoords}
                         />}
-                    </Layer>
-                    <Layer>
+                    {/* </Layer>
+                    <Layer> */}
                         {values(store.arrows).map(a => <ArrowView key={a._id} arrow={a} />)}
                         {values(store.boxes).map(b => <BoxView key={b._id} box={b} />)}
                     </Layer>
