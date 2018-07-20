@@ -3,7 +3,8 @@ import { observer } from "mobx-react"
 import * as styles from './styles/topbar.css';
 import Component from './component';
 import Button from '@material-ui/core/Button';
-import { AppBar, Toolbar } from '@material-ui/core';
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
 
 @observer
 class Sidebar extends Component {
