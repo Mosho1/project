@@ -1,5 +1,5 @@
 set -e
 
 npm i
-npm run build-browser -- --quiet
+npm run build-browser
 npm run serve
