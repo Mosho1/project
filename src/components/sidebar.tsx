@@ -16,7 +16,7 @@ import FormGroup from '@material-ui/core/FormGroup';
 import Switch from '@material-ui/core/Switch';
 import { IBoxValue } from '../stores/models/box';
 import { IPrimitiveTypes } from '../stores/models/types';
-styles.sidebar;
+
 class Sidebar extends Component {
     sidebar: HTMLDivElement | null = null;
     componentDidMount() {
