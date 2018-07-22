@@ -4,8 +4,6 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const Autoprefixer = require('autoprefixer');
 const path = require('path');
 
-
-
 module.exports = (env) => {
   const ifProd = plugin => env.prod ? plugin : undefined;
   const ifDev = plugin => env.dev ? plugin : undefined;
@@ -32,7 +30,7 @@ module.exports = (env) => {
       // publicPath: '/', can uncomment if you want everything relative to root '/'
     },
     optimization: {
-      minimize: env.prod,
+      minimize: false, // env.prod,
       splitChunks: {
         chunks: 'all',
       }
