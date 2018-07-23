@@ -25,11 +25,14 @@ export class ContextMenu extends Component {
         const { ref } = this.store.contextMenu!;
         if (!ref) {
             this.store.contextMenu!.toggle(true, event.clientX, event.clientY);
-            if (this.input) {
-                this.input.focus();
-            }
         }
     };
+
+    componentDidUpdate() {
+        if (this.input) {
+            this.input.focus();
+        }
+    }
 
     _handleClick = (event: MouseEvent) => {
         const { contextMenu } = this.store;
