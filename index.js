@@ -1,16 +1,15 @@
-let app, server,
-    express = require('express'),
-    PouchDB = require('pouchdb'),
-    expressPouchDB = require('express-pouchdb'),
-    path = require('path'),
-    http = require('http'),
-    host = process.env.HOST || '0.0.0.0',
-    port = process.env.PORT || 3000,
-    root = __dirname;
+const express = require('express');
+const PouchDB = require('pouchdb');
+const expressPouchDB = require('express-pouchdb');
+const history = require('connect-history-api-fallback');
+const path = require('path');
+const http = require('http');
+const host = process.env.HOST || '0.0.0.0';
+const port = process.env.PORT || 3000;
+const root = __dirname;
 
-app = express();
+const app = express();
 app.use(function (req, res, next) { console.log(req.url); next(); });
-app.use(express.static(root + '/build'));
 app.use('/db', expressPouchDB(PouchDB, {
     inMemoryConfig: true,
     mode: 'minimumForPouchDB',
@@ -19,8 +18,10 @@ app.use('/db', expressPouchDB(PouchDB, {
         include: ['routes/fauxton']
     }
 }));
+app.use(history());
+app.use(express.static(root + '/build'));
 
-server = http.createServer(app);
+const server = http.createServer(app);
 server.listen(port, host, serverStarted);
 
 function serverStarted() {
