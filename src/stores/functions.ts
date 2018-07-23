@@ -146,7 +146,16 @@ export const functions: { [index: string]: ICodeBlockSnapshot } = {
         code: (x: any) => x.toString(),
         returns: { type: 'string' }
     },
-
+    parallel: {
+        name: 'parallel',
+        id: 'parallel',
+        code: function code(this: Emitter) {
+            this.emit('1');
+            this.emit('2');
+        },
+        execInputs: [{}],
+        execOutputs: [{ name: '1' }, { name: '2' }],
+    }
 };
 
 for (let k in functions) {
