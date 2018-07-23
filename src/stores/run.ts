@@ -13,26 +13,38 @@ interface callbacks {
     onBreakpoint?: (box: modelTypes['Box'], cb: Function) => void;
     onEmit?: (arrow: modelTypes['Arrow']) => void;
 }
+
+export type RuntimeContext = {
+    values: { [index: string]: any },
+    emit: (name?: string) => void,
+    dispose: Function,
+    onBreak: boolean,
+    setOutput: (name: string, value: any) => void
+};
+
 export const runBox = async (box: modelTypes['Box'], callbacks: callbacks): Promise<any> => {
 
-    const context = {
+    const context: RuntimeContext = {
         get onBreak() {
             return globalContext.onBreak;
         },
         values: box.valuesValueMap,
         dispose: noop,
+        setOutput(name: string, value: any) {
+            box.socketsMap[name].setValue(value);
+        },
         async emit(eventName = '') {
             const execOutput = box.execOutputs.find(x => x.name === eventName);
             if (!execOutput) {
                 throw new Error(`no execOutput found for event: ${eventName}`);
             }
 
-            await Promise.all(execOutput.arrows.map(a => {
+            for (let a of execOutput.arrows) {
                 if (callbacks.onEmit) {
                     callbacks.onEmit(a);
                 }
-                return runBox(a.input.box!, callbacks);
-            }));
+                await runBox(a.input.box!, callbacks);
+            }
         }
     };
 
@@ -49,7 +61,14 @@ export const runBox = async (box: modelTypes['Box'], callbacks: callbacks): Prom
     for (const input of box.inputs) {
         const arrow = input.arrows[0]
         const fromOutput = arrow.output;
-        const value = await runBox(fromOutput.box!, callbacks);
+
+        let value;
+        if (fromOutput.value !== undefined) {
+            value = fromOutput.value;
+        } else {
+            value = await runBox(fromOutput.box!, callbacks);
+        }
+
         checkStaticType(fromOutput.code.type, value);
         args.push(value);
     }

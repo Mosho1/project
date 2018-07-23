@@ -1,13 +1,9 @@
 import { ICodeBlockSnapshot } from './models/code-block';
+import { RuntimeContext } from './run';
 
 /* istanbul ignore file */
 
-type Emitter = {
-    values: { [index: string]: any },
-    emit: (name?: string) => void,
-    dispose: Function,
-    onBreak: boolean
-};
+
 
 const getMathFunc = (name: string, code: (a: number, b: number) => number) => {
     return {
@@ -27,7 +23,7 @@ export const functions: { [index: string]: ICodeBlockSnapshot } = {
         name: 'start',
         id: 'start',
         runOnStart: true,
-        code: function code(this: Emitter) {
+        code: function code(this: RuntimeContext) {
             this.emit('');
         },
         execOutputs: [{}],
@@ -35,7 +31,7 @@ export const functions: { [index: string]: ICodeBlockSnapshot } = {
     interval: {
         name: 'interval',
         id: 'interval',
-        code: function code(this: Emitter) {
+        code: function code(this: RuntimeContext) {
             const interval = Number(this.values.interval);
             const id = setInterval(() => {
                 if (!this.onBreak) {
@@ -53,8 +49,7 @@ export const functions: { [index: string]: ICodeBlockSnapshot } = {
     timeout: {
         name: 'timeout',
         id: 'timeout',
-        code: function code(this: Emitter) {
-            const timeout = Number(this.values.timeout);
+        code: function code(this: RuntimeContext, timeout = this.values.timeout) {
             const id = setTimeout(() => {
                 if (!this.onBreak) {
                     this.emit();
@@ -64,6 +59,9 @@ export const functions: { [index: string]: ICodeBlockSnapshot } = {
         },
         values: [
             { name: 'timeout', type: 'number' },
+        ],
+        inputs: [
+            { name: '', type: 'number' },
         ],
         execOutputs: [{}],
         execInputs: [{}],
@@ -89,7 +87,7 @@ export const functions: { [index: string]: ICodeBlockSnapshot } = {
         values: [
             { name: 'value', type: 'number' },
         ],
-        code: function code(this: Emitter) {
+        code: function code(this: RuntimeContext) {
             return Number(this.values.value);
         },
         returns: { type: 'number' }
@@ -100,7 +98,7 @@ export const functions: { [index: string]: ICodeBlockSnapshot } = {
         values: [
             { name: 'value', type: 'string' },
         ],
-        code: function code(this: Emitter) {
+        code: function code(this: RuntimeContext) {
             return this.values.value;
         },
         returns: { type: 'string' }
@@ -111,7 +109,7 @@ export const functions: { [index: string]: ICodeBlockSnapshot } = {
         values: [
             { name: 'value', type: 'boolean', defaultValue: true },
         ],
-        code: function code(this: Emitter) {
+        code: function code(this: RuntimeContext) {
             return this.values.value;
         },
         returns: { type: 'boolean' }
@@ -129,7 +127,7 @@ export const functions: { [index: string]: ICodeBlockSnapshot } = {
         name: 'ifElse',
         id: 'ifElse',
         inputs: [{ name: 'condition', type: 'boolean' }],
-        code: function code(this: Emitter, condition: boolean) {
+        code: function code(this: RuntimeContext, condition: boolean) {
             if (condition) {
                 this.emit('true');
             } else {
@@ -149,13 +147,31 @@ export const functions: { [index: string]: ICodeBlockSnapshot } = {
     parallel: {
         name: 'parallel',
         id: 'parallel',
-        code: function code(this: Emitter) {
+        code: function code(this: RuntimeContext) {
             this.emit('1');
             this.emit('2');
         },
         execInputs: [{}],
         execOutputs: [{ name: '1' }, { name: '2' }],
-    }
+    },
+    forLoop: {
+        name: 'forLoop',
+        id: 'forLoop',
+        code: async function code(this: RuntimeContext, start: number, end: number, step: number) {
+            for (let i = start; i <= end; i += step) {
+                this.setOutput('index', i);
+                await this.emit();
+            }
+        },
+        inputs: [
+            { name: 'start', type: 'number' },
+            { name: 'end', type: 'number' },
+            { name: 'step', type: 'number' },
+        ],
+        returns: { name: 'index', type: 'number' },
+        execOutputs: [{}],
+        execInputs: [{}],
+    },
 };
 
 for (let k in functions) {
@@ -177,7 +193,7 @@ for (let k in functions) {
 //     (functions as any)[name] = {
 //         name,
 //         id: name,
-//         code: function code(this: Emitter, ...args: any[]) {
+//         code: function code(this: RuntimeContext, ...args: any[]) {
 //             return require('lodash/' + k)(...args);
 //         },
 //         inputs: Array((_ as any)[k].length).fill(null).map((_, i) => ({name: i.toString(), type: 'number'})),

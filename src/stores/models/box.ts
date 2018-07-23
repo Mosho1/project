@@ -89,6 +89,12 @@ export const Box = pouch.model('Box',
                 return acc;
             }, {} as { [index: string]: typeof BoxValue.Type });
         },
+        get socketsMap() {
+            return self.sockets.reduce((acc, cur) => {
+                acc[cur.name] = cur;
+                return acc;
+            }, {} as { [index: string]: typeof Socket.Type });
+        },
         get valuesValueMap() {
             return self.values.reduce((acc, cur) => {
                 acc[cur.name] = cur.value;

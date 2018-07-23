@@ -42,7 +42,7 @@ export const Socket = pouch.model('Socket', {
     name: types.optional(types.string, ''),
     code: types.reference<ICodeBlockIO>(CodeBlockIO)
 }).volatile(_self => ({
-    value: null,
+    value: undefined,
 }))
     .views(self => ({
         get store(): null | IStore {
