@@ -6,10 +6,10 @@
   "scripts": {
     "start": "cross-env NODE_ENV=development node webpack/webpack-dev-server --env.dev",
     "serve": "node index",
-    "build": "rm -Rf build/* && tcm src && npm run build-browser && npm run build-node",
+    "build": "rm -Rf build/* && npm run build-browser && npm run minify",
     "css:watch": "tcm src -w",
     "build-browser": "cross-env NODE_ENV=production webpack --config webpack/webpack.config.js --progress --env.prod",
-    "build-node": "cross-env NODE_ENV=development webpack --config webpack/webpack.config.node.js --progress --env.dev",
+    "minify": "uglifyjs-folder build -x \".js\" -e -o build",
     "test": "jest"
   },
   "jest": {
@@ -56,6 +56,7 @@
     "react-dom": "16.4.1",
     "react-konva": "1.7.9",
     "ts-keycode-enum": "1.0.6",
+    "uglifyjs-folder": "1.5.1",
     "uuid": "3.3.2",
     "ws": "5.2.1"
   },
