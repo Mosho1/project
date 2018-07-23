@@ -32,6 +32,8 @@
 - [ ] enums
 - [ ] box context menu
 - [ ] set variables
+- [ ] default input values
+- [ ] complex types
 
 ### db
 
