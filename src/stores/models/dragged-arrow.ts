@@ -6,15 +6,17 @@ export const DraggedArrow = types.model('DraggedArrow', {
     startY: types.number,
     endX: types.number,
     endY: types.number,
+    fromInput: types.boolean,
 }).views(self => {
     return {
         get points() {
-            return calculateBezierPoints(
-                self.startX,
-                self.startY,
-                self.endX,
-                self.endY,
-            );
+            const points = [self.startX, self.startY];
+            if (self.fromInput) {
+                points.unshift(self.endX, self.endY);
+            } else {
+                points.push(self.endX, self.endY);
+            }
+            return calculateBezierPoints(...points);
         }
     };
 }).actions(self => {
@@ -36,4 +38,4 @@ export const DraggedArrow = types.model('DraggedArrow', {
 });
 
 type IDraggedArrowType = typeof DraggedArrow.Type;
-export interface IDraggedArrow extends IDraggedArrowType {};
+export interface IDraggedArrow extends IDraggedArrowType { };

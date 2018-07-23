@@ -2,7 +2,7 @@ import * as v4 from "uuid/v4"
 import { types } from 'mobx-state-tree';
 
 /* istanbul ignore next */
-export const calculateBezierPoints = (startX: number, startY: number, endX: number, endY: number) => {
+export const calculateBezierPoints = (startX = 0, startY = 0, endX = 0, endY = 0) => {
     const dist = endX - startX;
     const distAbs = Math.abs(dist);
     const minDist = Math.max(100, distAbs);

@@ -46,7 +46,7 @@ export class ContextMenu extends Component {
     handleClick = (b: ICodeBlock) => (_e: React.MouseEvent) => {
         const {contextMenu} = this.store;
         if (!contextMenu) return;
-        this.store.addBoxAndArrowIfDragged(b.name, _e.clientX, _e.clientY, b);
+        this.store.addBoxAndArrowIfDragged(b.name, b, _e.clientX, _e.clientY);
         contextMenu.toggle(false);
     };
 

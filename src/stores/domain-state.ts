@@ -64,6 +64,12 @@ const Stage = types.model('Stage', {
             x: x - self.position.x,
             y: y - self.position.y,
         }
+    },
+    getRelativePosition(x: number, y: number) {
+        return {
+            x: x + self.position.x,
+            y: y + self.position.y,
+        }
     }
 }));
 
@@ -116,8 +122,10 @@ export const Store = pouch.store('Store', {
         continueAfterBreakpoint() {
             self.breakpointCallback = null;
             self.breakPosition = null;
+        },
+        deleteDraggedArrow() {
+            self.draggedArrow = null;
         }
-
     }))
     .actions((self) => {
         const addBox = (name: string, x: number, y: number, code: ICodeBlock) => {
@@ -139,7 +147,13 @@ export const Store = pouch.store('Store', {
             self.boxes.put(box);
             return box;
         };
-        const addBoxAndArrowIfDragged = (name: string, x: number, y: number, code: ICodeBlock) => {
+        const addBoxAndArrowIfDragged = (name: string, code: ICodeBlock, x: number, y: number) => {
+            if (self.draggedArrow) {
+                const { endX, endY } = self.draggedArrow;
+                const pos = self.stage.getRelativePosition(endX, endY);
+                x = pos.x;
+                y = pos.y;
+            }
             const b = addBox(name, x, y, code);
             if (self.draggedFromSocket) {
                 for (const socket of b.sockets) {
@@ -202,17 +216,19 @@ export const Store = pouch.store('Store', {
         const startDragArrow = (socket: modelTypes['Socket']) => {
             const { absX, absY } = socket;
             if (socket.isInput && socket.arrows.length > 0) return;
-            self.draggedArrow = models.DraggedArrow.create({ startX: absX, startY: absY, endX: absX, endY: absY });
+            self.draggedArrow = models.DraggedArrow.create({
+                startX: absX,
+                startY: absY,
+                endX: absX,
+                endY: absY,
+                fromInput: socket.isInput
+            });
             self.setDraggedFromSocket(socket);
         };
 
         const moveDragArrow = (x: number, y: number) => {
             if (self.draggedArrow) {
-                if (self.draggedFromSocket!.isInput) {
-                    self.draggedArrow.start(x, y);
-                } else {
-                    self.draggedArrow.end(x, y);
-                }
+                self.draggedArrow.end(x, y);
             }
         };
         const endDragArrow = (
@@ -220,9 +236,9 @@ export const Store = pouch.store('Store', {
             clientX = self.draggedArrow!.endX,
             clientY = self.draggedArrow!.endY,
         ) => {
-            self.draggedArrow = null;
             if (!self.draggedFromSocket) return;
             if (socket) {
+                self.draggedArrow = null;
                 addArrowFromDraggedSocket(socket);
             } else if (self.contextMenu) {
                 const { isInput, isExec, code } = self.draggedFromSocket;
@@ -245,13 +261,12 @@ export const Store = pouch.store('Store', {
                     }
                 }
 
-                setTimeout(() => self.contextMenu!.toggle(true, clientX, clientY, typeFilter));
+                setTimeout(() => self.contextMenu!.toggle(true, clientX, clientY, typeFilter, self.deleteDraggedArrow));
             }
         };
         const startDragRect = (x: number, y: number) => {
             self.draggedRect = models.DraggedRect.create({ startX: x, startY: y, endX: x, endY: y });
         };
-
         const moveDragRect = (x: number, y: number) => {
             if (!self.draggedRect) return;
             self.draggedRect.end(x, y);
