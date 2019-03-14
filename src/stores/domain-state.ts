@@ -96,6 +96,10 @@ const UiStore = types.model('UiStore', {
             } else {
                 self.isOpen = isOpen;
             }
+            if (self.isOpen) {
+                const store = getParent(self, 2);
+                store.getProgramList();
+            }
         }
     }))
 });
@@ -137,11 +141,14 @@ export const Store = pouch.store('Store', {
         },
         deleteDraggedArrow() {
             self.draggedArrow = null;
+        },
+        setProgramList(programList: string[]) {
+            self.programList = observable(programList.slice().sort());
         }
     }))
     .actions((self) => {
         const getProgramList = async () => {
-            self.programList = observable(await MSTPouch.allDbs());
+            self.setProgramList(await MSTPouch.allDbs());
         };
         const addBox = (name: string, x: number, y: number, code: ICodeBlock) => {
             const { inputs, returns, execInputs, execOutputs, values } = code;

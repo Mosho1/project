@@ -19,7 +19,7 @@ export class MSTPouch<T extends { mstPouchType: string } = { mstPouchType: strin
     get dbUrl() {
         return `${window.location.origin}/db/${this.dbName}`;
     }
-    constructor({ name = 'store', saveDelay = 1000 } = {}) {
+    constructor({ name = 'default', saveDelay = 1000 } = {}) {
         if (!MSTPouch.enabled) {
             this.db = null;
             return;
@@ -142,5 +142,5 @@ export class MSTPouch<T extends { mstPouchType: string } = { mstPouchType: strin
 }
 
 export const pouch = new MSTPouch({
-    name: location.pathname.slice(1) || 'store'
+    name: location.pathname.slice(1) || 'default'
 });
