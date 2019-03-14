@@ -3,6 +3,7 @@ import { observer } from "mobx-react";
 // import DevTools from "mobx-react-devtools";
 
 import Sidebar from "./sidebar";
+import ProgramList from './program-list';
 import TopBar from "./topbar";
 import Canvas from './canvas';
 import { ContextMenu } from './context-menu';
@@ -22,6 +23,7 @@ class App extends React.Component<{ getStore: Function }> {
             <Canvas />
             <TopBar />
             <Sidebar />
+            <ProgramList />
             <ContextMenu />
         </div>
         );

@@ -11,6 +11,7 @@ const path = require('path');
 const webpackConfig = require('./webpack.config');
 const opn = require('opn');
 const { spawn } = require('child_process');
+const dbMiddleware = require('../backend/db');
 
 
 /**
@@ -28,12 +29,12 @@ const env = {
 
 const devServerConfig = {};
 
-const cssWatch = spawn('npm.cmd', ['run', 'css:watch']);
+const cssWatch = spawn('npm', ['run', 'css:watch']);
 const log = data => console.log(`[tcm] ${data}`);
 cssWatch.stdout.on('data', log);
 cssWatch.stderr.on('data', log);
 
-const app = express();
+const app = dbMiddleware(express());
 const compiler = webpack(webpackConfig(env));
 const devMiddleware = WebpackDevMiddleware(compiler, devServerConfig);
 const hotMiddleware = WebpackHotMiddleware(compiler);

@@ -15,6 +15,7 @@ export class MSTPouch<T extends { mstPouchType: string } = { mstPouchType: strin
     finishedLoading = false;
     static enabled = !global.__TEST__;
     dbName?: string;
+    static allDbs = (): Promise<string[]> => fetch('all-dbs').then(res => res.json());
     get dbUrl() {
         return `${window.location.origin}/db/${this.dbName}`;
     }

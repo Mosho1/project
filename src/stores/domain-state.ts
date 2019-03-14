@@ -7,7 +7,7 @@ import {
     hasParent,
     getParent
 } from 'mobx-state-tree'
-import { pouch } from './utils/pouchdb-model';
+import { pouch, MSTPouch } from './utils/pouchdb-model';
 import { models, modelTypes } from './models/index';
 import { ContextMenu } from './context-menu';
 import { ICodeBlock, ICodeBlockIO } from './models/code-block';
@@ -86,6 +86,17 @@ const UiStore = types.model('UiStore', {
         setContext(context: 'values' | 'names') {
             self.context = context;
         }
+    })),
+    programList: types.model('ProgramList', {
+        isOpen: types.optional(types.boolean, false)
+    }).actions(self => ({
+        toggle(isOpen?: boolean) {
+            if (typeof isOpen === 'undefined') {
+                self.isOpen = !self.isOpen;
+            } else {
+                self.isOpen = isOpen;
+            }
+        }
     }))
 });
 
@@ -100,6 +111,7 @@ export const Store = pouch.store('Store', {
     draggedFromSocket: types.maybe(types.reference<modelTypes['Socket']>(models.Socket)),
     contextMenu: types.maybe(ContextMenu),
     ui: UiStore,
+    programList: types.array(types.string),
     stage: types.optional(Stage, {}),
 }).volatile(_ => ({
     running: false,
@@ -128,6 +140,9 @@ export const Store = pouch.store('Store', {
         }
     }))
     .actions((self) => {
+        const getProgramList = async () => {
+            self.programList = observable(await MSTPouch.allDbs());
+        };
         const addBox = (name: string, x: number, y: number, code: ICodeBlock) => {
             const { inputs, returns, execInputs, execOutputs, values } = code;
             const boxValues = values.map(v => ({ name: v.name, value: v.defaultValue || '' }));
@@ -363,6 +378,7 @@ export const Store = pouch.store('Store', {
         };
 
         return {
+            getProgramList,
             addBox,
             addBoxAndArrowIfDragged,
             hasArrow,
@@ -403,8 +419,12 @@ export const defaults: IStoreSnapshot = {
     ui: {
         sidebar: {
             context: 'values'
+        },
+        programList: {
+            isOpen: false
         }
-    }
+    },
+    programList: []
 };
 
 /* istanbul ignore next */
