@@ -2,11 +2,10 @@ const express = require('express');
 const PouchDB = require('pouchdb');
 const pouchDBAllDbs = require('pouchdb-all-dbs');
 const expressPouchDB = require('express-pouchdb');
-
 pouchDBAllDbs(PouchDB);
 
 const middleware = (app = express()) =>  {
-    app.use('/db', expressPouchDB(PouchDB, {
+    app.use('/db', expressPouchDB(PouchDB.defaults({prefix: './db/'}), {
         inMemoryConfig: true,
         mode: 'minimumForPouchDB',
         logPath: process.env['POUCHDB_LOGS'] || './pouchdb_log.txt',

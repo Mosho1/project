@@ -7,3 +7,5 @@ build
 store/
 coverage/
 *.pem
+db
+pouch__all_dbs__
