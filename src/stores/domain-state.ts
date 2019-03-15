@@ -105,6 +105,7 @@ const UiStore = types.model('UiStore', {
 });
 
 export const Store = pouch.store('Store', {
+    name: types.optional(types.string, pouch.dbName),
     boxes: types.optional(types.map(models.Box), {}),
     sockets: types.optional(types.map(models.Socket), {}),
     arrows: types.optional(types.map(models.Arrow), {}),

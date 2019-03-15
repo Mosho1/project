@@ -5,6 +5,9 @@ import Component from './component';
 import Button from '@material-ui/core/Button';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
+import compileToJS from '../stores/compilers/javascript';
+import { download } from '../utils/download';
+import compileToPython from '../stores/compilers/python';
 
 @observer
 class Sidebar extends Component {
@@ -21,6 +24,14 @@ class Sidebar extends Component {
 
     stop = () => {
         this.store.stopCode();
+    }
+
+    compileToJs = () => {
+        download(this.store.name + '.js', compileToJS(this.store.boxes));
+    }
+
+    compileToPython = () => {
+        download(this.store.name + '.py', compileToPython(this.store.boxes));
     }
 
     get isRunning() {
@@ -49,6 +60,18 @@ class Sidebar extends Component {
                         onClick={this.stop}
                         className={styles.button}>
                         Stop (shift + F7)
+                    </Button>
+                    <Button
+                        color="inherit"
+                        onClick={this.compileToJs}
+                        className={styles.button}>
+                        Compile to JS
+                    </Button>
+                    <Button
+                        color="inherit"
+                        onClick={this.compileToPython}
+                        className={styles.button}>
+                        Compile to Python
                     </Button>
                 </Toolbar>
             </AppBar>

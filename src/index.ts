@@ -5,12 +5,14 @@ import { observer } from "mobx-react"
 
 import { IStore, getStore, replaceStore } from "./stores/domain-state"
 import App from "./components/app"
+import { compileToJS } from './stores/compilers/javascript';
 // import syncStoreWithBackend from "./stores/utils/socket"
 
 // const socket = new WebSocket("ws://localhost:4001")
 
 // To support HMR of store, this ref holds the latest loaded store.
 const storeInstance = observable.box<IStore | null>(null);
+
 
 prepareStore();
 
@@ -30,7 +32,10 @@ function prepareStore(getStoreFn = getStore) {
         replaceStore(newStore, oldStore);
     }
     storeInstance.set(newStore);
+    document.title = 'WebFlow - ' + newStore.name;
+
     (window as any)['store'] = newStore;
+    (window as any).compileToJs = () => compileToJS(newStore.boxes);
     // syncStoreWithBackend(socket, newStore);
 }
 
