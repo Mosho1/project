@@ -144,6 +144,13 @@ export const functions: { [index: string]: ICodeBlockSnapshot } = {
         code: (x: any) => x.toString(),
         returns: { type: 'string' }
     },
+    Boolean: {
+        name: 'Boolean',
+        id: 'Boolean',
+        inputs: [{type: 'any'}],
+        code: (x: any) => Boolean(x),
+        returns: { type: 'boolean' }
+    },
     parallel: {
         name: 'parallel',
         id: 'parallel',

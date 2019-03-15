@@ -68,5 +68,6 @@ export const checkRuntimeType = (type: IPrimitiveTypes, value: any) => {
 
 export const getConversionIfExists = (_fromType: IPrimitiveTypes, toType: IPrimitiveTypes) => {
     if (toType === 'string') return 'toString';
+    if (toType === 'boolean') return 'Boolean';
     return null;
 };

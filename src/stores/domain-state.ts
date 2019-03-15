@@ -193,9 +193,10 @@ export const Store = pouch.store('Store', {
             if (conversion) {
                 const code = self.codeBlocks.get(conversion);
                 if (code) {
-                    const x = (from.x + to.x) / 2;
-                    const y = (from.y + to.y) / 2;
+                    const x = (from.absX + to.absX) / 2;
+                    const y = (from.absY + to.absY) / 2;
                     const b = addBox(conversion, x, y, code);
+                    b.move(b.width/2, b.height/2);
                     addArrow(input, b.outputs[0]);
                     addArrow(b.inputs[0], output);
                 }
