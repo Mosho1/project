@@ -2,6 +2,7 @@ import { modelTypes } from './models';
 import { IExtendedObservableMap } from 'mobx-state-tree';
 import { values, noop } from './utils/utils';
 import { checkStaticType } from './models/types';
+import * as _ from 'lodash';
 
 const disposers: Function[] = [];
 
@@ -20,6 +21,12 @@ export type RuntimeContext = {
     dispose: Function,
     onBreak: boolean,
     setOutput: (name: string, value: any) => void
+    setValue: (key: string, value: any) => void
+};
+
+const getImplicitExecBoxesForBox = (box: modelTypes['Box']) => {
+    const boxes = _.flatMap(box.outputs, o => o.arrows.map(a => a.input.box).filter(b => b && b.code.implicitExec));
+    return boxes as modelTypes['Box'][];
 };
 
 export const runBox = async (box: modelTypes['Box'], callbacks: callbacks): Promise<any> => {
@@ -33,17 +40,25 @@ export const runBox = async (box: modelTypes['Box'], callbacks: callbacks): Prom
         setOutput(name: string, value: any) {
             box.socketsMap[name].setValue(value);
         },
+        setValue(key: string, value: any) {
+            box.setValue(key, value);
+        },
         async emit(eventName = '') {
             const execOutput = box.execOutputs.find(x => x.name === eventName);
             if (!execOutput) {
                 throw new Error(`no execOutput found for event: ${eventName}`);
             }
 
+            
             for (let a of execOutput.arrows) {
                 if (callbacks.onEmit) {
                     callbacks.onEmit(a);
                 }
                 await runBox(a.input.box!, callbacks);
+            }
+
+            for (let b of getImplicitExecBoxesForBox(box)) {
+                await runBox(b, callbacks);
             }
         }
     };

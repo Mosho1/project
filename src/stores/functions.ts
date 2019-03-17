@@ -1,9 +1,6 @@
 import { ICodeBlockSnapshot } from './models/code-block';
 import { RuntimeContext } from './run';
-
 /* istanbul ignore file */
-
-
 
 const getMathFunc = (name: string, code: (a: number, b: number) => number) => {
     return {
@@ -23,8 +20,8 @@ export const functions: { [index: string]: ICodeBlockSnapshot } = {
         name: 'start',
         id: 'start',
         runOnStart: true,
-        code: function code(this: RuntimeContext) {
-            this.emit('');
+        code: async function code(this: RuntimeContext) {
+            await this.emit('');
         },
         execOutputs: [{}],
     },
@@ -81,6 +78,19 @@ export const functions: { [index: string]: ICodeBlockSnapshot } = {
         execInputs: [{}],
         returns: { type: 'void' }
     },
+    watch: {
+        name: 'watch',
+        id: 'watch',
+        implicitExec: true,
+        values: [
+            { name: 'value', type: 'any' }
+        ],
+        code: function code(this: RuntimeContext, value: any) {
+            this.setValue('value', value);
+        },
+        inputs: [{ name: '', type: 'any' }],
+        returns: { type: 'void' }
+    },
     number: {
         name: 'number',
         id: 'number',
@@ -127,11 +137,11 @@ export const functions: { [index: string]: ICodeBlockSnapshot } = {
         name: 'ifElse',
         id: 'ifElse',
         inputs: [{ name: 'condition', type: 'boolean' }],
-        code: function code(this: RuntimeContext, condition: boolean) {
+        code: async function code(this: RuntimeContext, condition: boolean) {
             if (condition) {
-                this.emit('true');
+                await this.emit('true');
             } else {
-                this.emit('false');
+                await this.emit('false');
             }
         },
         execInputs: [{}],
@@ -147,16 +157,15 @@ export const functions: { [index: string]: ICodeBlockSnapshot } = {
     Boolean: {
         name: 'Boolean',
         id: 'Boolean',
-        inputs: [{type: 'any'}],
+        inputs: [{ type: 'any' }],
         code: (x: any) => Boolean(x),
         returns: { type: 'boolean' }
     },
     parallel: {
         name: 'parallel',
         id: 'parallel',
-        code: function code(this: RuntimeContext) {
-            this.emit('1');
-            this.emit('2');
+        code: async function code(this: RuntimeContext) {
+            await Promise.all([this.emit('1'), this.emit('2')]);
         },
         execInputs: [{}],
         execOutputs: [{ name: '1' }, { name: '2' }],

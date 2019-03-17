@@ -124,7 +124,7 @@ export const Box = pouch.model('Box',
         },
         get height() {
             return 50 + Math.max(
-                self.execInputs.length + self.inputs.length,
+                self.execInputs.length + self.inputs.length + self.values.length,
                 self.execOutputs.length + self.outputs.length)
                 * 30;
         },

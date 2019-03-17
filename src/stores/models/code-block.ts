@@ -45,6 +45,7 @@ export const CodeBlock = types.model('CodeBlock', {
     name: types.string,
     code: codeType,
     runOnStart: types.optional(types.boolean, false),
+    implicitExec: types.optional(types.boolean, false),
     values: types.optional(types.array(CodeBlockIO), []),
     inputs: types.optional(types.array(CodeBlockIO), []),
     returns: types.maybe(types.refinement(CodeBlockIO, io => io.type !== 'any') as typeof CodeBlockIO),
